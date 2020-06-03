@@ -13,36 +13,37 @@
 <body>
   <header class="page-header">
     <a class="logo" href="#">
-      <img class="logo__image" src="img/logo.svg" width="125" height="25">
+      <img class="logo__image" src="img/logo.svg" width="149" height="25">
     </a>
 
     <ul class="menu">
       <li class="menu__item"><a class="menu__ref" href="#services">Услуги</a></li>
       <li class="menu__item"><a class="menu__ref" href="#calculate">Рассчитать кредит</a></li>
       <li class="menu__item"><a class="menu__ref" href="#contacts">Контакты</a></li>
-      <li class="menu__item"><a class="menu__ref" href="#question">Задать вопрос</a></li> </ul>
+      <li class="menu__item"><a class="menu__ref" href="#question">Задать вопрос</a></li>
+    </ul>
 
-      <button class="enter" type="button"></button>
+    <button class="enter" type="button"></button>
 
-      <div class="loginPopup">
-        <header class="loginPopup__header">
-          <a class="logoInternetBank">
-            <img class="logoInternetBank__image" src="img/logo-internet-bank.svg">
-          </a>
-          <button class="close" type="button"></button>
-        </header>
+    <div class="loginPopup loginPopup__close">
+      <header class="loginPopup__header">
+        <a class="logoInternetBank">
+          <img class="logoInternetBank__image" src="img/logo-internet-bank.svg">
+        </a>
+        <button class="close" type="button"></button>
+      </header>
 
-        <form class="loginPopup__form">
-          <label for="loginPopup__login">Логин</label>
-          <input class="loginPopup__login" type="text" id="loginPopup__login">
-          <label for="loginPopup__password">Пароль</label>
-          <input class="loginPopup__password" type="password" id="loginPopup__password">
-          <input class="loginPopup__enterButton" type="submit" value="Войти">
-        </form>
-      </div>
+      <form class="loginPopup__form">
+        <label for="loginPopup__login">Логин</label>
+        <input class="loginPopup__login" type="text" id="loginPopup__login" name="loginPopup__login">
+        <label for="loginPopup__password">Пароль</label>
+        <input class="loginPopup__password" type="password" id="loginPopup__password" name="loginPopup__password">
+        <input class="loginPopup__enterButton" type="submit" value="Войти">
+      </form>
+    </div>
   </header>
 
-  <script src="js/app.js"></script>
+  <script src="js/popup.js"></script>
 </body>
 
 </html>
