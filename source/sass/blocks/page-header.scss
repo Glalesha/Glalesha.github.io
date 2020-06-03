@@ -2,14 +2,26 @@
   display: flex;
   align-items: center;
   height: 90px;
+
+  @media (max-width: 1023px) {
+    height: 69px;
+  }
+
+  @media (max-width: 767px) {
+    height: 48px;
+  }
 }
 
 .logo {
   display: block;
+  position: relative;
+  top: -5px;
+  height: 30px;
   margin-left: 60px;
   margin-right: 60px;
 
   @media (max-width: 1023px) {
+    top: 2px; 
     margin-left: 45px;
     margin-right: 66px;
   }
@@ -17,6 +29,21 @@
   @media (max-width: 767px) {
     margin-left: 15px;
     margin-right: 15px;
+  }
+}
+
+.logo__image {
+  width: 149px;
+  height: 30px;
+
+  @media (max-width: 1023px) {
+    width: 133px;
+    height: 24px;
+  }
+
+  @media (max-width: 767px) {
+    width: 118px;
+    height: 21px;
   }
 }
 
@@ -74,7 +101,7 @@
 
 .menu__ref {
   color:  $black;
-  font-family: "Roboto";
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   text-decoration: none;
   transition: color 0.3s ease;
@@ -109,11 +136,19 @@
     margin-right: 45px;
   }
 
+  @media (max-width: 767px) {
+    width: 17px;
+    height: 16px;
+    margin-right: 8px;
+    background-size: contain;
+  }
+
   &:before {
     content: 'Войти в Интернет-банк';
     position: absolute;
-    top: 0px;
+    top: 3px;
     left: 30px;
+    font-family: "Roboto", sans-serif;
     white-space: nowrap;
 
     @media (max-width: 1023px){

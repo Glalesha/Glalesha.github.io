@@ -2,30 +2,58 @@
   position: fixed;
   top: 50%;
   left: 50%;
+  z-index: 1001;
   visibility: hidden;
   box-sizing: border-box;
   width: 544px;
   height: 493px;
-  padding: 60px;
+  padding: 56px;
   border: 4px solid $blue;
   opacity: 0;
+  background-color: #F6F7FF;
   transform: translate(-50%, -40%);
   transition: opacity 0.3s, transform 0.3s;
+
+  @media (max-width: 1023px) {
+    width: 678px;
+    padding: 56px 84px;
+  }
+
+  @media (max-width: 767px) {
+    width: calc(100% - 30px);
+    height: 455px;
+    padding: 44px 17px;
+  }
 }
 
-.loginPopup__open {
+.loginPopup_open {
   opacity: 1;
   transform: translate(-50%, -50%);
 }
 
 .loginPopup__header {
   display: flex;
+  margin-bottom: 33px;
+
+  @media (max-width: 767px) {
+    margin-bottom: 25px;
+  }
+}
+
+.logoInternetBank {
+
+  @media (max-width: 767px) {
+    position: relative;
+    right: 6px;
+  }
 }
 
 .close {
   position: relative;
-  width: 16px;
-  height: 16px;
+  top: -2px;
+  left: 1px;
+  width: 20px;
+  height: 20px;
   margin-left: auto;
   padding: 0;
   border: none;
@@ -36,8 +64,9 @@
   &:before {
     content: '';
     position: absolute;
+    top: 0;
     width: 2px;
-    height: 22px;
+    height: 23px;
     background-color: $black;
     transform: rotate(45deg);
   }
@@ -45,44 +74,131 @@
   &:after {
     content: '';
     position: absolute;
+    top: 0;
     width: 2px;
-    height: 22px;
+    height: 23px;
     background-color: $black;
     transform: rotate(-45deg);
   }
 }
 
-.loginPopup__form {
+.loginForm {
   display: flex;
   flex-direction: column;
 }
 
-.loginPopup__login,
-.loginPopup__password,
-.loginPopup__enterButton {
-  width: 424px;
+.login,
+.password__input,
+.enterButton {
+  width: 100%;
   height: 60px;
-  margin-bottom: 50px;
   padding: 0;
   border: 1px solid $black;
   border-radius: 4px;
   outline: none;
 }
 
-.loginPopup__login:focus,
-.loginPopup__password:focus {
+.login {
+  margin-bottom: 26px;
+
+  @media (max-width: 767px) {
+    margin-bottom: 21px;
+  }
+}
+
+.login:focus,
+.password__input:focus {
   transition: border-color 0.3s;
   border-color: $blue;
 }
 
-.loginPopup__enterButton {
-  color: white;
+.login,
+.password__input {
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: #F6F7FF;
+}
+
+.password {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.password__forget {
+  align-self: flex-end;
+  margin-top: 8px;
+  margin-bottom: 29px;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+  text-decoration: none;
+  color: #707C87;
+
+  @media (max-width: 767px) {
+    position: relative;
+    top: 85px;
+    align-self: center;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+}
+
+.enterButton {
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  color: #F6F7FF;
   border: none;
   background-color: $blue;
   cursor: pointer;
+
+  @media (max-width: 767px) {
+    height: 50px;
+    font-size: 14px;
+  }
 }
 
-.loginPopup__form label {
-  margin-bottom: 10px;
+.loginForm label {
+  margin-bottom: 7px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
 }
 
+.password__show {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 22px;
+  height: 12px;
+  background: url('../../img/showPassword-icon.svg');
+  cursor: pointer;
+
+  @media (max-width: 767px) {
+    right: 15px;
+  }
+}
+
+.password__show_hold {
+
+  &:after {
+  content: "";
+  position: relative;
+  top: 0px;
+  left: 8px;
+  display: block;
+  width: 5px;
+  height: 5px;
+  background-color: $black;
+  border-radius: 100%;
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}

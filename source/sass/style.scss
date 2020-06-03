@@ -3,3 +3,7 @@
 @import "fonts.scss";
 @import "./blocks/page-header.scss";
 @import "./blocks/loginPopup.scss";
+
+* {
+  box-sizing: border-box;
+}

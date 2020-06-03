@@ -13,7 +13,7 @@
 <body>
   <header class="page-header">
     <a class="logo" href="#">
-      <img class="logo__image" src="img/logo.svg" width="149" height="25">
+      <img class="logo__image" src="img/logo.svg" width="149" height="30" alt="ЛИГА Банк">
     </a>
 
     <ul class="menu">
@@ -27,22 +27,27 @@
 
     <div class="loginPopup loginPopup__close">
       <header class="loginPopup__header">
-        <a class="logoInternetBank">
+        <a class="logoInternetBank" href="#">
           <img class="logoInternetBank__image" src="img/logo-internet-bank.svg">
         </a>
         <button class="close" type="button"></button>
       </header>
 
-      <form class="loginPopup__form">
-        <label for="loginPopup__login">Логин</label>
-        <input class="loginPopup__login" type="text" id="loginPopup__login" name="loginPopup__login">
-        <label for="loginPopup__password">Пароль</label>
-        <input class="loginPopup__password" type="password" id="loginPopup__password" name="loginPopup__password">
-        <input class="loginPopup__enterButton" type="submit" value="Войти">
+      <form class="loginForm">
+        <label class="label" for="login">Логин</label>
+        <input class="login" type="text" id="login" name="login">
+        <label class="label" for="password">Пароль</label>
+        <div class="password">
+          <input class="password__input" type="password" id="password" name="password">
+          <div class="password__show"></div>
+          <a class="password__forget" href="#">Забыли пароль?</a>
+        </div>
+        <input class="enterButton" type="submit" value="Войти">
       </form>
     </div>
   </header>
 
+  <div class="overlay"></div>
   <script src="js/popup.js"></script>
 </body>
 
