@@ -1,54 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ЛИГА Банк</title>
+    <link rel="icon" href="img/logo-favicon.svg" />
+    <link rel="stylesheet" href="css/style.min.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>ЛИГА Банк</title>
-  <link rel="icon" href="img/logo-favicon.svg">
-  <link rel="stylesheet" href="css/style.min.css">
-</head>
+  <body>
+    <header class="page-header">
+      <a class="logo" href="#">
+        <img
+          class="logo__image"
+          src="img/logo.svg"
+          width="149"
+          height="30"
+          alt="ЛИГА Банк"
+        />
+      </a>
 
-<body>
-  <header class="page-header">
-    <a class="logo" href="#">
-      <img class="logo__image" src="img/logo.svg" width="149" height="30" alt="ЛИГА Банк">
-    </a>
+      <ul class="menu">
+        <li class="menu__item">
+          <a class="menu__link" href="#services">Услуги</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="#calculate">Рассчитать кредит</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="#contacts">Контакты</a>
+        </li>
+        <li class="menu__item">
+          <a class="menu__link" href="#question">Задать вопрос</a>
+        </li>
+      </ul>
 
-    <ul class="menu">
-      <li class="menu__item"><a class="menu__ref" href="#services">Услуги</a></li>
-      <li class="menu__item"><a class="menu__ref" href="#calculate">Рассчитать кредит</a></li>
-      <li class="menu__item"><a class="menu__ref" href="#contacts">Контакты</a></li>
-      <li class="menu__item"><a class="menu__ref" href="#question">Задать вопрос</a></li>
-    </ul>
+      <button class="enter-button" type="button"></button>
 
-    <button class="enter" type="button"></button>
+      <div class="login-popup login-popup__close">
+        <header class="login-popup__header">
+          <a class="logo-internet-bank" href="#">
+            <img
+              class="logo-internet-bank__image"
+              src="img/logo-internet-bank.svg"
+            />
+          </a>
+          <button class="close-button" type="button"></button>
+        </header>
 
-    <div class="loginPopup loginPopup__close">
-      <header class="loginPopup__header">
-        <a class="logoInternetBank" href="#">
-          <img class="logoInternetBank__image" src="img/logo-internet-bank.svg">
-        </a>
-        <button class="close" type="button"></button>
-      </header>
+        <form class="form-login">
+          <div class="login-input">
+            <label for="login">Логин</label>
+            <input type="text" id="login" name="login" />
+          </div>
 
-      <form class="loginForm">
-        <label class="label" for="login">Логин</label>
-        <input class="login" type="text" id="login" name="login">
-        <label class="label" for="password">Пароль</label>
-        <div class="password">
-          <input class="password__input" type="password" id="password" name="password">
-          <div class="password__show"></div>
-          <a class="password__forget" href="#">Забыли пароль?</a>
+          <div class="password-input">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" />
+            <div class="password__show"></div>
+            <a class="password__forget" href="#">Забыли пароль?</a>
+          </div>
+
+          <input class="enterButton" type="submit" value="Войти" />
+        </form>
+      </div>
+    </header>
+
+    <section class="slider">
+      <div class="slider__slides">
+        <div class="slider__slide slider__slide_1">
+          <h2 class="slide__title">Лига Банк</h2>
+          <p class="slide__tagline">Кредиты на любой случай</p>
+          <button class="slide__button" type="button">Рассчитать кредит</button>
         </div>
-        <input class="enterButton" type="submit" value="Войти">
-      </form>
-    </div>
-  </header>
+        <div class="slider__slide slider__slide_2">
+          <h2 class="slide__title slide__title_black-color-text">Лига Банк</h2>
+          <p class="slide__tagline slide__tagline_black-color-text">
+            Ваша уверенность в завтрашнем дне
+          </p>
+        </div>
+        <div class="slider__slide slider__slide_3">
+          <h2 class="slide__title slide__title_black-color-text">Лига Банк</h2>
+          <p class="slide__tagline slide__tagline_black-color-text">
+            Всегда рядом
+          </p>
+          <button class="slide__button slide__button_color-blue" type="button">
+            Найти отделение
+          </button>
+        </div>
+      </div>
 
-  <div class="overlay"></div>
-  <script src="js/popup.js"></script>
-</body>
+      <ul class="controls">
+        <li class="controls__item controls__item_active">
+          <div class="controls__button">
+            <input
+              id="control1"
+              type="radio"
+              name="controls"
+              value="1"
+              checked
+            />
+            <label for="control1"></label>
+          </div>
+        </li>
+        <li class="controls__item">
+          <div class="controls__button">
+            <input id="control2" type="radio" name="controls" value="2" />
+            <label for="control2"></label>
+          </div>
+        </li>
+        <li class="controls__item">
+          <div class="controls__button">
+            <input id="control3" type="radio" name="controls" value="3" />
+            <label for="control3"></label>
+          </div>
+        </li>
+      </ul>
+    </section>
 
+    <div class="overlay"></div>
+    <script src="js/main.js"></script>
+  </body>
 </html>

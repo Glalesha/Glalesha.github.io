@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   height: 90px;
+  background-color: $white;
 
   @media (max-width: 1023px) {
     height: 69px;
@@ -21,7 +22,7 @@
   margin-right: 60px;
 
   @media (max-width: 1023px) {
-    top: 2px; 
+    top: 2px;
     margin-left: 45px;
     margin-right: 66px;
   }
@@ -62,8 +63,7 @@
     margin-left: 15px;
     cursor: pointer;
 
-
-    .menu__item a{
+    .menu__item a {
       display: none;
     }
 
@@ -94,13 +94,13 @@
 .menu__item {
   margin-right: 25px;
 
-  @media (max-width: 1023px){
+  @media (max-width: 1023px) {
     margin-right: 20px;
   }
 }
 
-.menu__ref {
-  color:  $black;
+.menu__link {
+  color: $black;
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   text-decoration: none;
@@ -111,28 +111,28 @@
   }
 
   &:hover {
-    color: $blue
+    color: $blue;
   }
 }
 
-.enter {
+.enter-button {
   position: relative;
   width: 20px;
   height: 22px;
   margin-right: 280px;
   margin-left: auto;
   padding: 0;
-  background: url('../img/enter-icon.svg') no-repeat;
+  background: url("../img/enter-icon.svg") no-repeat;
   border: none;
   outline: none;
   cursor: pointer;
   transition: transform 0.3s ease;
 
   &:hover {
-      transform: translateX(5px);
+    transform: translateX(5px);
   }
 
-  @media (max-width: 1023px){
+  @media (max-width: 1023px) {
     margin-right: 45px;
   }
 
@@ -144,16 +144,15 @@
   }
 
   &:before {
-    content: 'Войти в Интернет-банк';
+    content: "Войти в Интернет-банк";
     position: absolute;
     top: 3px;
     left: 30px;
     font-family: "Roboto", sans-serif;
     white-space: nowrap;
 
-    @media (max-width: 1023px){
-      content: '';
-   }
+    @media (max-width: 1023px) {
+      content: "";
+    }
   }
 }
-

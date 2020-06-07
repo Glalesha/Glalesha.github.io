@@ -1,0 +1,228 @@
+.slider {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+
+  @media (max-width: 1023px) {
+    height: 300px;
+  }
+
+  @media (max-width: 767px) {
+    height: 226px;
+  }
+}
+
+.slider__slides {
+  display: flex;
+  width: 300%;
+  height: 100%;
+  transform: translateX(-100vw);
+}
+
+.shifting {
+  transition: transform 0.3s ease;
+}
+
+.slider__slide {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 100vw;
+  height: 100%;
+  padding: 104px 267px 0;
+
+  @media (max-width: 1023px) {
+    padding: 66px 86px 0;
+  }
+
+  @media (max-width: 767px) {
+    padding: 41px 15px 0;
+  }
+}
+
+.slider__slide_1 {
+  background-color: $blue;
+  background-image: url("../../img/credit-cards.png"),
+    linear-gradient(rgba(56, 65, 255, 0) 0%, #3841ff 100%),
+    linear-gradient(rgba(32, 39, 179, 0) 32.81%, #2027b3 100%),
+    linear-gradient(rgba(32, 39, 179, 0) 36.25%, #2027b3 100%),
+    linear-gradient(rgba(56, 65, 255, 0) 55.86%, #3841ff 100%);
+  background-repeat: no-repeat;
+  background-size: 444px 287px, 19% 67%, 23% 100%, 11% 100%, 11% 67.5%;
+  background-position: 74.4% 62px, 72% 100%, right, left, 11.8% bottom;
+
+  @media (max-width: 1023px) {
+    background-image: url("../../img/credit-cards.png"),
+      linear-gradient(rgba(56, 65, 255, 0) 0%, #3841ff 100%),
+      linear-gradient(rgba(32, 39, 179, 0) 32.81%, #2027b3 100%);
+    background-size: 348px 221px, 23% 67%, 23% 100%;
+    background-position: 80.6% 42px, 75% 100%, right;
+  }
+
+  @media (max-width: 767px) {
+    background-image: url("../../img/credit-cards.png");
+    background-size: 348px 211px;
+    background-position: right -245px top -10px;
+  }
+}
+
+.slider__slide_2 {
+  background-image: url("../../img/man-slide-1.png"),
+    linear-gradient(to right, #dde2ec 40%, #f2f8ff);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 76.6%;
+
+  @media (max-width: 1023px) {
+    background-position: 86.6%;
+  }
+
+  @media (max-width: 767px) {
+    background-position: 112.6%;
+  }
+}
+
+.slider__slide_3 {
+  background-color: #e6f1fe;
+  background-image: url("../../img/woman-slide-3.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 75.4%;
+
+  @media (max-width: 1023px) {
+    background-position: 90%;
+  }
+
+  @media (max-width: 767px) {
+    background-position: 115.6%;
+  }
+}
+
+.slide__title {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: $white;
+  font-family: "Roboto", sans-serif;
+  font-size: 54px;
+  font-weight: bold;
+
+  @media (max-width: 1023px) {
+    font-size: 46px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 38px;
+  }
+}
+
+.slide__tagline {
+  margin-top: 0;
+  margin-bottom: 35px;
+  color: #e0e1ea;
+  font-family: "Roboto", sans-serif;
+  font-size: 22px;
+
+  @media (max-width: 1023px) {
+    margin-bottom: 30px;
+    font-size: 18px;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: 25px;
+    font-size: 16px;
+  }
+}
+
+.slide__button {
+  padding: 17px 36px;
+  width: 234px;
+  height: 53px;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: $black;
+  background-color: $white;
+  border: none;
+  outline: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  @media (max-width: 1024px) {
+    width: 206px;
+    height: 48px;
+    padding: 15px 31px;
+    font-size: 16px;
+  }
+
+  @media (max-width: 767px) {
+    width: 188px;
+    height: 43px;
+    font-size: 14px;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.slide__title_black-color-text,
+.slide__tagline_black-color-text {
+  color: $black;
+}
+
+.slide__button_color-blue {
+  background-color: $blue;
+  color: $white;
+}
+
+.controls {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  display: flex;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  transform: translateX(-50%);
+
+  @media (max-width: 1023px) {
+    bottom: 15px;
+    pointer-events: none;
+  }
+
+  @media (max-width: 767px) {
+    bottom: 10px;
+  }
+}
+
+.controls__item:not(:last-child) {
+  margin-right: 6px;
+}
+
+.controls__button input {
+  display: none;
+}
+
+.controls__button label {
+  display: block;
+  width: 8px;
+  height: 8px;
+  background-color: #2028b6;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  @media (max-width: 767px) {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+.controls__button input:checked + label {
+  background-color: $white;
+}
+
+.controls__item:last-child .controls__button input:checked + label {
+  background-color: #e0e0e0;
+}
