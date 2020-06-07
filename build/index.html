@@ -60,18 +60,18 @@
 
     <section class="slider">
       <div class="slider__slides">
-        <div class="slider__slide slider__slide_1">
+        <div class="slider__slide slider__slide-1">
           <h2 class="slide__title">Лига Банк</h2>
           <p class="slide__tagline">Кредиты на любой случай</p>
           <button class="slide__button" type="button">Рассчитать кредит</button>
         </div>
-        <div class="slider__slide slider__slide_2">
+        <div class="slider__slide slider__slide-2">
           <h2 class="slide__title slide__title_black-color-text">Лига Банк</h2>
           <p class="slide__tagline slide__tagline_black-color-text">
             Ваша уверенность в завтрашнем дне
           </p>
         </div>
-        <div class="slider__slide slider__slide_3">
+        <div class="slider__slide slider__slide-3">
           <h2 class="slide__title slide__title_black-color-text">Лига Банк</h2>
           <p class="slide__tagline slide__tagline_black-color-text">
             Всегда рядом
@@ -85,24 +85,146 @@
       <ul class="controls">
         <li class="controls__item controls__item_active">
           <div class="controls__button">
-            <input id="control1" type="radio" name="controls" value="1" checked="">
-            <label for="control1"></label>
+            <input id="control-1" type="radio" name="controls" value="1" checked="">
+            <label for="control-1"></label>
           </div>
         </li>
         <li class="controls__item">
           <div class="controls__button">
-            <input id="control2" type="radio" name="controls" value="2">
-            <label for="control2"></label>
+            <input id="control-2" type="radio" name="controls" value="2">
+            <label for="control-2"></label>
           </div>
         </li>
         <li class="controls__item">
           <div class="controls__button">
-            <input id="control3" type="radio" name="controls" value="3">
-            <label for="control3"></label>
+            <input id="control-3" type="radio" name="controls" value="3">
+            <label for="control-3"></label>
           </div>
         </li>
       </ul>
     </section>
+
+    <main class="page-main">
+      <section class="services">
+        <form>
+          <ul class="service-menu">
+            <li class="service-menu__radio-button service-menu__deposit">
+              <input id="deposit" type="radio" name="service" value="0" tabindex="0" checked="">
+              <label for="deposit">Вклады</label>
+            </li>
+            <li class="service-menu__radio-button service-menu__credits">
+              <input id="credits" type="radio" name="service" value="1">
+              <label for="credits" tabindex="1">Кредиты</label>
+            </li>
+            <li class="service-menu__radio-button service-menu__insurance">
+              <input id="insurance" type="radio" name="service" value="2">
+              <label for="insurance" tabindex="2">Страхование</label>
+            </li>
+            <li class="service-menu__radio-button service-menu__online">
+              <input id="online" type="radio" name="service" value="3">
+              <label for="online" tabindex="3">Онлайн-сервисы</label>
+            </li>
+          </ul>
+        </form>
+
+        <div class="services-slider">
+          <div class="services-slider__slides">
+            <div class="service service-deposit">
+              <div class="service__content">
+                <h3 class="service__title">
+                  Вклады Лига Банка – это выгодная инвестиция в свое будущее
+                </h3>
+                <ul class="service__advantages">
+                  <li class="service__advantages-item">
+                    Проценты по вкладам до 7%
+                  </li>
+                  <li class="service__advantages-item">
+                    Разнообразные условия
+                  </li>
+                  <li class="service__advantages-item">
+                    Возможность ежемесячной капитализации или вывод процентов на
+                    банковскую карту
+                  </li>
+                </ul>
+                <button class="service__button" type="button">
+                  Узнать подробнее
+                </button>
+              </div>
+
+              <div class="service_image"></div>
+            </div>
+            <div class="service visually-hidden service-credits">
+              <div class="service__content">
+                <h3 class="service__title">
+                  Лига Банк выдает кредиты под любые цели
+                </h3>
+                <ul class="service__advantages">
+                  <li class="service__advantages-item">
+                    Ипотечный кредит
+                  </li>
+                  <li class="service__advantages-item">Автокредит</li>
+                  <li class="service__advantages-item">
+                    Потребительский кредит
+                  </li>
+                </ul>
+                <p class="service__link-to-calculator">
+                  Рассчитайте ежемесячный платеж и ставку по кредиту
+                  воспользовавшись нашим
+                  <a href="#calculator">кредитным калькулятором</a>
+                </p>
+              </div>
+
+              <div class="service_image"></div>
+            </div>
+            <div class="service visually-hidden service-insurance">
+              <div class="service__content">
+                <h3 class="service__title">
+                  Лига Страхование — застрахуем все что захотите
+                </h3>
+                <ul class="service__advantages">
+                  <li class="service__advantages-item">
+                    Автомобильное страхование
+                  </li>
+                  <li class="service__advantages-item">
+                    Страхование жизни и здоровья
+                  </li>
+                  <li class="service__advantages-item">
+                    Страхование недвижимости
+                  </li>
+                </ul>
+                <button class="service__button" type="button">
+                  Узнать подробнее
+                </button>
+              </div>
+
+              <div class="service_image"></div>
+            </div>
+            <div class="service visually-hidden service-online">
+              <div class="service__content">
+                <h3 class="service__title">
+                  Лига Банк — это огромное количество онлайн-сервисов для вашего
+                  удобства
+                </h3>
+                <ul class="service__advantages">
+                  <li class="service__advantages-item">
+                    Мобильный банк, который всегда под рукой
+                  </li>
+                  <li class="service__advantages-item">
+                    Приложение Лига-проездной позволит вам оплачивать билеты по
+                    всему миру
+                  </li>
+                </ul>
+                <button class="service__button" type="button">
+                  Узнать подробнее
+                </button>
+              </div>
+
+              <div class="service_image"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <div class="overlay"></div>
     <script src="js/main.js"></script>

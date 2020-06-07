@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  function moduleLoginPopup() {
+  function loginPopup() {
     const popup = document.querySelector(".login-popup");
     const loginForm = document.querySelector(".form-login");
     const enterButton = document.querySelector(".enter-button");
@@ -80,12 +80,11 @@
     }
   }
 
-  function moduleSlider() {
-    const slider = document.querySelector(".slider");
+  function slider() {
     const sliderItems = document.querySelector(".slider__slides");
     const slides = document.querySelectorAll(".slider__slide");
     const controls = document.querySelectorAll(".controls__button input");
-    const slideWidth = document.documentElement.clientWidth;
+    let slideWidth = document.documentElement.clientWidth;
 
     const firstSlide = slides[0];
     const lastSlide = slides[slides.length - 1];
@@ -99,6 +98,7 @@
     let threshold = 100;
     let index = 0;
     let allowShift = true;
+    let slideWidth2 = 0;
 
     sliderItems.addEventListener("transitionend", checkIndex);
     sliderItems.addEventListener("touchstart", dragStart);
@@ -107,6 +107,18 @@
     controls.forEach((item) => {
       item.addEventListener("input", () => goTo(item.value - 1));
     });
+
+    window.addEventListener("resize", function (event) {
+      slideWidth2 = slideWidth;
+      slideWidth = document.documentElement.clientWidth;
+
+      sliderItems.style.transform = `translateX(${-(
+      (index + 1) * slideWidth -
+      (slideWidth - slideWidth2)
+    )}px)`;
+    });
+
+    sliderItems.style.transform = `translateX(${-slideWidth}px)`;
 
     firstSlide.before(cloneLast);
     lastSlide.after(cloneFirst);
@@ -208,8 +220,35 @@
     }
   }
 
-  moduleLoginPopup();
-  moduleSlider();
+  function services() {
+    const servicesSection = document.querySelector(".services");
+    const services = document.querySelectorAll(".service");
+    const serviceInput = document.querySelectorAll(".services input");
+    const serviceLabel = document.querySelectorAll(".services label");
+
+    serviceInput.forEach((item) => {
+      item.addEventListener("change", () => tabService(item.value));
+    });
+
+    serviceLabel.forEach((item, index) => {
+      item.addEventListener("focus", () => {
+        serviceInput[index].checked = true;
+        tabService(index);
+      });
+    });
+
+    function tabService(serviceIndex) {
+      servicesSection
+        .querySelector(".service:not(.visually-hidden)")
+        .classList.add("visually-hidden");
+
+      services[serviceIndex].classList.remove("visually-hidden");
+    }
+  }
+
+  loginPopup();
+  slider();
+  services();
 
 }());
 

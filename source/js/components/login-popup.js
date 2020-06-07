@@ -1,4 +1,4 @@
-export default function moduleLoginPopup() {
+export default function loginPopup() {
   const popup = document.querySelector(".login-popup");
   const loginForm = document.querySelector(".form-login");
   const enterButton = document.querySelector(".enter-button");

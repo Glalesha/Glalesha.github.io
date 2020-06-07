@@ -2,8 +2,10 @@
 @import "variables.scss";
 @import "fonts.scss";
 @import "./blocks/page-header.scss";
-@import "./blocks/loginPopup.scss";
+@import "./blocks/login-popup.scss";
 @import "./blocks/slider.scss";
+@import "./blocks/services.scss";
+@import "./blocks/page-main.scss";
 
 * {
   box-sizing: border-box;

@@ -16,11 +16,15 @@
   display: flex;
   width: 300%;
   height: 100%;
-  transform: translateX(-100vw);
+  // transform: translateX(-100vw);
 }
 
 .shifting {
   transition: transform 0.3s ease;
+
+  + .controls {
+    pointer-events: none;
+  }
 }
 
 .slider__slide {
@@ -29,6 +33,7 @@
   flex-shrink: 0;
   width: 100vw;
   height: 100%;
+  max-width: 33.3333%;
   padding: 104px 267px 0;
 
   @media (max-width: 1023px) {
@@ -40,7 +45,7 @@
   }
 }
 
-.slider__slide_1 {
+.slider__slide-1 {
   background-color: $blue;
   background-image: url("../../img/credit-cards.png"),
     linear-gradient(rgba(56, 65, 255, 0) 0%, #3841ff 100%),
@@ -62,11 +67,11 @@
   @media (max-width: 767px) {
     background-image: url("../../img/credit-cards.png");
     background-size: 348px 211px;
-    background-position: right -245px top -10px;
+    background-position: 216px -10px;
   }
 }
 
-.slider__slide_2 {
+.slider__slide-2 {
   background-image: url("../../img/man-slide-1.png"),
     linear-gradient(to right, #dde2ec 40%, #f2f8ff);
   background-repeat: no-repeat;
@@ -78,11 +83,12 @@
   }
 
   @media (max-width: 767px) {
-    background-position: 112.6%;
+    //112.6%
+    background-position: 150px, left;
   }
 }
 
-.slider__slide_3 {
+.slider__slide-3 {
   background-color: #e6f1fe;
   background-image: url("../../img/woman-slide-3.png");
   background-repeat: no-repeat;
@@ -94,7 +100,8 @@
   }
 
   @media (max-width: 767px) {
-    background-position: 115.6%;
+    //background-position: 115.6%;
+    background-position: 158px;
   }
 }
 
@@ -128,13 +135,14 @@
   }
 
   @media (max-width: 767px) {
+    max-width: 190px;
     margin-bottom: 25px;
     font-size: 16px;
   }
 }
 
 .slide__button {
-  padding: 17px 36px;
+  padding: 17px 33px;
   width: 234px;
   height: 53px;
   font-family: "Roboto", sans-serif;
@@ -197,7 +205,11 @@
 }
 
 .controls__item:not(:last-child) {
-  margin-right: 6px;
+  margin-right: 8px;
+
+  @media (max-width: 767px) {
+    margin-right: 6px;
+  }
 }
 
 .controls__button input {

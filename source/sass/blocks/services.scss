@@ -1,0 +1,227 @@
+.service {
+  display: flex;
+  height: 410px;
+  padding: 57px 135px 60px 70px;
+  opacity: 1;
+  background-color: $white;
+  transition: opacity 0.5s ease;
+
+  @media (max-width: 1023px) {
+    padding: 60px 45px;
+  }
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    padding: 60px 15px;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  opacity: 0;
+  white-space: nowrap;
+  word-wrap: normal;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.service-menu {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (max-width: 1023px) {
+    display: none;
+  }
+}
+
+.service-menu__radio-button {
+  width: 25%;
+  height: 93px;
+}
+
+.service-menu__radio-button input {
+  display: none;
+}
+
+.service-menu__radio-button label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: $black;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+
+  &:before {
+    content: "";
+    position: relative;
+    right: 10px;
+    display: block;
+  }
+}
+
+.service-menu__deposit label {
+  &:before {
+    width: 34px;
+    height: 33px;
+    background: url("../../img/deposit-icon.svg") no-repeat;
+  }
+}
+
+.service-menu__credits label {
+  &:before {
+    width: 34px;
+    height: 30px;
+    background: url("../../img/credits-icon.svg") no-repeat;
+  }
+}
+
+.service-menu__insurance label {
+  &:before {
+    width: 28px;
+    height: 34px;
+    background: url("../../img/insurance-icon.svg") no-repeat;
+  }
+}
+
+.service-menu__online label {
+  &:before {
+    width: 20px;
+    height: 34px;
+    background: url("../../img/online-icon.svg") no-repeat;
+  }
+}
+
+.service-menu__radio-button input:checked + label {
+  background-color: $white;
+}
+
+.service__title {
+  margin-top: 0;
+  margin-bottom: 26px;
+  font-size: 22px;
+  font-family: "Roboto", sans-serif;
+  line-height: 31px;
+  color: $black;
+
+  @media (max-width: 1023px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
+}
+
+.service__advantages {
+  margin-top: 0;
+  margin-bottom: 35px;
+  padding-left: 20px;
+  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+  color: $black;
+  list-style: none;
+
+  @media (max-width: 1023px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: 30px;
+    font-size: 14px;
+  }
+}
+
+.service__advantages-item {
+  position: relative;
+  margin-bottom: 18px;
+  line-height: 21px;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: -23px;
+    width: 13px;
+    height: 10px;
+    background: url("../../img/advantage-mark.svg") no-repeat;
+  }
+}
+
+.service__button {
+  width: 198px;
+  height: 51px;
+  background-color: $blue;
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  color: $white;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+.service_image {
+  flex-shrink: 0;
+  width: 440px;
+  height: 290px;
+  margin-left: 120px;
+
+  @media (max-width: 1023px) {
+    width: 289px;
+    height: 260px;
+    background-size: contain;
+  }
+}
+
+.service-deposit .service_image {
+  background-image: url("../../img/service-1-image.png");
+}
+
+.service-credits .service_image {
+  background-image: url("../../img/service-2-image.png");
+}
+
+.service-insurance .service_image {
+  background-image: url("../../img/service-3-image.png");
+}
+
+.service-online .service_image {
+  background-image: url("../../img/service-4-image.png");
+}
+
+.service__link-to-calculator {
+  margin-top: -6px;
+  color: $black;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.service__link-to-calculator a {
+  color: $black;
+  font-weight: bold;
+}

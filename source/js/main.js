@@ -1,5 +1,9 @@
-import moduleLoginPopup from "./components/loginPopup";
-import moduleSlider from "./components/slider";
+import loginPopup from "./components/login-popup";
+import slider from "./components/slider";
+import services from "./components/services";
+import servicesSlider from "./components/services-slider";
 
-moduleLoginPopup();
-moduleSlider();
+loginPopup();
+slider();
+services();
+servicesSlider();
