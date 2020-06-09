@@ -61,7 +61,7 @@
       linear-gradient(rgba(56, 65, 255, 0) 0%, #3841ff 100%),
       linear-gradient(rgba(32, 39, 179, 0) 32.81%, #2027b3 100%);
     background-size: 348px 221px, 23% 67%, 23% 100%;
-    background-position: 80.6% 42px, 75% 100%, right;
+    background-position: 83.6% 42px, 75% 100%, right;
   }
 
   @media (max-width: 767px) {
@@ -148,13 +148,11 @@
   font-family: "Roboto", sans-serif;
   font-size: 18px;
   font-weight: bold;
-  color: $black;
-  background-color: $white;
   border: none;
   outline: 0;
   border-radius: 4px;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: background-color 0.3s ease;
 
   @media (max-width: 1024px) {
     width: 206px;
@@ -168,10 +166,6 @@
     height: 43px;
     font-size: 14px;
   }
-
-  &:hover {
-    transform: scale(1.05);
-  }
 }
 
 .slide__title_black-color-text,
@@ -182,6 +176,19 @@
 .slide__button_color-blue {
   background-color: $blue;
   color: $white;
+
+  &:hover {
+    background-color: $blue-button-hover;
+  }
+}
+
+.slide__button_color-white {
+  color: $black;
+  background-color: $white;
+
+  &:hover {
+    background-color: $white-button-hover;
+  }
 }
 
 .controls {

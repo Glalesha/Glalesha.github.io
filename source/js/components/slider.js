@@ -96,6 +96,7 @@ export default function slider() {
 
   function dragStart(e) {
     e.preventDefault();
+
     clearInterval(timer);
 
     posX1 = e.touches[0].clientX;

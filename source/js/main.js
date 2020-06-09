@@ -6,4 +6,7 @@ import servicesSlider from "./components/services-slider";
 loginPopup();
 slider();
 services();
-servicesSlider();
+
+if (window.matchMedia("(max-width: 1023px)").matches) {
+  servicesSlider();
+}

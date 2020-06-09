@@ -72,7 +72,7 @@
         <div class="slider__slide slider__slide-1">
           <h2 class="slide__title">Лига Банк</h2>
           <p class="slide__tagline">Кредиты на любой случай</p>
-          <button class="slide__button" type="button">Рассчитать кредит</button>
+          <button class="slide__button " type="button">Рассчитать кредит</button>
         </div>
         <div class="slider__slide slider__slide-2">
           <h2 class="slide__title slide__title_black-color-text">Лига Банк</h2>
@@ -120,10 +120,12 @@
     </section>
 
     <main class="page-main">
-      <section class="services">
+      <section class="services-section services-section_slider">
         <form>
-          <ul class="service-menu">
-            <li class="service-menu__radio-button service-menu__deposit">
+          <ul class="service-menu service-menu_bullets">
+            <li
+              class="service-menu__item service-menu__item_bullet service-menu__deposit"
+            >
               <input
                 id="deposit"
                 type="radio"
@@ -132,30 +134,57 @@
                 tabindex="0"
                 checked
               />
-              <label for="deposit">Вклады</label>
+              <label
+                class="service-menu__label service-menu__label_bullet"
+                for="deposit"
+                ><span class="service-menu__text">Вклады</span></label
+              >
             </li>
-            <li class="service-menu__radio-button service-menu__credits">
+            <li
+              class="service-menu__item service-menu__item_bullet service-menu__credits"
+            >
               <input id="credits" type="radio" name="service" value="1" />
-              <label for="credits" tabindex="1">Кредиты</label>
+              <label
+                class="service-menu__label service-menu__label_bullet"
+                for="credits"
+                tabindex="1"
+                ><span class="service-menu__text">Кредиты</span></label
+              >
             </li>
-            <li class="service-menu__radio-button service-menu__insurance">
+            <li
+              class="service-menu__item service-menu__item_bullet service-menu__insurance"
+            >
               <input id="insurance" type="radio" name="service" value="2" />
-              <label for="insurance" tabindex="2">Страхование</label>
+              <label
+                class="service-menu__label service-menu__label_bullet"
+                for="insurance"
+                tabindex="2"
+                ><span class="service-menu__text">Страхование</span></label
+              >
             </li>
-            <li class="service-menu__radio-button service-menu__online">
+            <li
+              class="service-menu__item service-menu__item_bullet service-menu__online"
+            >
               <input id="online" type="radio" name="service" value="3" />
-              <label for="online" tabindex="3">Онлайн-сервисы</label>
+              <label
+                class="service-menu__label service-menu__label_bullet"
+                for="online"
+                tabindex="3"
+                ><span class="service-menu__text">Онлайн-сервисы</span></label
+              >
             </li>
           </ul>
         </form>
 
         <div class="services-slider">
           <div class="services-slider__slides">
-            <div class="service service-deposit">
+            <div class="service services-slider__slide service-deposit">
               <div class="service__content">
                 <h3 class="service__title">
                   Вклады Лига Банка – это выгодная инвестиция в свое будущее
                 </h3>
+
+                <div class="service_image-mobile"></div>
                 <ul class="service__advantages">
                   <li class="service__advantages-item">
                     Проценты по вкладам до 7%
@@ -168,6 +197,7 @@
                     банковскую карту
                   </li>
                 </ul>
+
                 <button class="service__button" type="button">
                   Узнать подробнее
                 </button>
@@ -175,11 +205,15 @@
 
               <div class="service_image"></div>
             </div>
-            <div class="service visually-hidden service-credits">
+            <div
+              class="service services-slider__slide visually-hidden service-credits"
+            >
               <div class="service__content">
                 <h3 class="service__title">
                   Лига Банк выдает кредиты под любые цели
                 </h3>
+
+                <div class="service_image-mobile"></div>
                 <ul class="service__advantages">
                   <li class="service__advantages-item">
                     Ипотечный кредит
@@ -198,11 +232,15 @@
 
               <div class="service_image"></div>
             </div>
-            <div class="service visually-hidden service-insurance">
+            <div
+              class="service services-slider__slide visually-hidden service-insurance"
+            >
               <div class="service__content">
                 <h3 class="service__title">
                   Лига Страхование — застрахуем все что захотите
                 </h3>
+
+                <div class="service_image-mobile"></div>
                 <ul class="service__advantages">
                   <li class="service__advantages-item">
                     Автомобильное страхование
@@ -221,12 +259,16 @@
 
               <div class="service_image"></div>
             </div>
-            <div class="service visually-hidden service-online">
+            <div
+              class="service services-slider__slide visually-hidden service-online"
+            >
               <div class="service__content">
                 <h3 class="service__title">
                   Лига Банк — это огромное количество онлайн-сервисов для вашего
                   удобства
                 </h3>
+
+                <div class="service_image-mobile"></div>
                 <ul class="service__advantages">
                   <li class="service__advantages-item">
                     Мобильный банк, который всегда под рукой

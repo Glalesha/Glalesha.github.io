@@ -1,8 +1,8 @@
 export default function services() {
-  const servicesSection = document.querySelector(".services");
+  const servicesSection = document.querySelector(".services-section");
   const services = document.querySelectorAll(".service");
-  const serviceInput = document.querySelectorAll(".services input");
-  const serviceLabel = document.querySelectorAll(".services label");
+  const serviceInput = document.querySelectorAll(".service-menu input");
+  const serviceLabel = document.querySelectorAll(".service-menu__label");
 
   serviceInput.forEach((item) => {
     item.addEventListener("change", () => tabService(item.value));
