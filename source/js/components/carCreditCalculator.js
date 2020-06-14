@@ -34,11 +34,11 @@ export default class CarCreditCalculator extends CalculatorElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.append(
-      document.querySelector(".car-credit-checkbox").content.cloneNode(true)
+    this.querySelector(".checkbox-container").append(
+      document.querySelector(".calculator__template-checkbox_car-credit").content.cloneNode(true)
     );
 
-    this.querySelector(".calculator__input-checkbox_casco").addEventListener(
+    this.querySelector(".input-checkbox_casco").addEventListener(
       "change",
       () => {
         this.casco = event.currentTarget.checked;
@@ -47,7 +47,7 @@ export default class CarCreditCalculator extends CalculatorElement {
     );
 
     this.querySelector(
-      ".calculator__input-checkbox_life-insurance"
+      ".input-checkbox_life-insurance"
     ).addEventListener("change", () => {
       this.lifeInsurance = event.currentTarget.checked;
       this.updateForm();
@@ -58,7 +58,7 @@ export default class CarCreditCalculator extends CalculatorElement {
     ).textContent = `Наш банк не выдаёт автокредиты меньше ${this.minCreditSum} рублей.`;
     document.querySelector(".calculator__label_price").textContent =
       "Стоимость автомобиля";
-    document.querySelector(".terms__label_credit-sum").textContent =
+    document.querySelector(".offer__label_credit-sum").textContent =
       "Сумму автокредита";
   }
 }

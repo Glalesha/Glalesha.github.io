@@ -1,32 +1,33 @@
 .offer {
-  flex-shrink: 0;
   width: 500px;
   height: 389px;
   padding: 60px;
   background-color: $white;
+  transition: opacity 0.3s;
 }
 
 .offer__title {
-  margin-bottom: 40px;
+  margin-bottom: 29px;
   font-size: 22px;
 }
 
-.terms {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
+.offer__terms {
+  display: grid;
+  grid-template-columns: auto minmax(auto, max-content);
+  row-gap: 30px;
+  margin-bottom: 37px;
 }
 
-.terms__item {
-  width: 50%;
+.offer__item {
 }
 
-.terms__value {
-  margin-bottom: 15px;
+.offer__value {
+  margin-bottom: 7px;
   font-size: 22px;
+  font-weight: bold;
 }
 
-.terms__label {
+.offer__label {
   font-size: 16px;
   color: #394959;
 }
@@ -37,6 +38,7 @@
   background-color: $blue;
   color: $white;
   border: none;
+  border-radius: 4px;
   outline: none;
   cursor: pointer;
 }

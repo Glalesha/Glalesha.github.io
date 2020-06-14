@@ -39,23 +39,23 @@ export default class ConsumerCreditCalculator extends CalculatorElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.append(
+    this.querySelector(".checkbox-container").append(
       document
-        .querySelector(".consumer-credit-checkbox")
+        .querySelector(".calculator__template-checkbox_consumer-credit")
         .content.cloneNode(true)
     );
 
     this.querySelector(".calculator__input-container_initial-fee").remove();
 
     this.querySelector(
-      ".calculator__input-checkbox_bank-member"
+      ".input-checkbox_bank-member"
     ).addEventListener("change", () => {
       this.bankMember = event.currentTarget.checked;
       this.updateForm();
     });
     document.querySelector(".calculator__label_price").textContent =
       "Сумма потребительского кредита";
-    document.querySelector(".terms__label_credit-sum").textContent =
+    document.querySelector(".offer__label_credit-sum").textContent =
       "Сумма кредита";
   }
 }

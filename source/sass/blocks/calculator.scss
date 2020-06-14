@@ -1,8 +1,15 @@
-.calculator {
+.calculator__wrap {
   display: flex;
+  justify-content: space-between;
 }
 
-.calculator__calculator-step_margin {
+.calculator__form {
+  flex-grow: 1;
+  max-width: 600px;
+  margin-right: 70px;
+}
+
+.calculator__step_margin {
   margin-bottom: 36px;
 }
 
@@ -12,11 +19,13 @@
 }
 
 .calculator__input {
-  width: 600px;
+  width: 100%;
   height: 60px;
   border: 1px solid $black;
   border-radius: 4px;
   text-align: center;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .calculator__label {
@@ -24,6 +33,7 @@
   margin-bottom: 10px;
   font-size: 16px;
   color: #394959;
+  user-select: none;
 }
 
 .calculator__offer {
@@ -45,47 +55,44 @@
   font-weight: bold;
 }
 
-.calculator__rangeText {
-  margin-bottom: 30px;
-  font-size: 14px;
-  color: #707c87;
-}
-
-.number-input-with-buttons {
+.calculator__input-wrap {
   margin-bottom: 10px;
 }
 
-.calculator__input-checkbox {
+.input-checkbox {
   display: none;
 }
 
-.calculator__input-checkbox:checked + .calculator__checkbox-label {
+.input-checkbox:checked + .checkbox-label_square {
   &:before {
-    background-color: $black;
+    background-image: url("../../img/check-mark.svg");
+    background-repeat: no-repeat;
+    background-position: 50%;
   }
 }
 
-.calculator__checkbox-label {
+.checkbox-label_square {
   &:before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 1px;
+    left: -24px;
     width: 16px;
     height: 16px;
     border-radius: 2px;
     background-color: $blue;
+    cursor: pointer;
   }
 }
 
-.number-input-with-buttons {
+.calculator__input-wrap {
   position: relative;
 }
 
-.step-down {
+.calculator__step-down {
   position: absolute;
   top: 50%;
-  left: 24px;
+  left: 12px;
   width: 40px;
   height: 40px;
   border: none;
@@ -106,10 +113,10 @@
   }
 }
 
-.step-up {
+.calculator__step-up {
   position: absolute;
   top: 50%;
-  right: 24px;
+  right: 12px;
   width: 40px;
   height: 40px;
   border: none;
@@ -141,20 +148,39 @@
   }
 }
 
-.calculator__input-price_invalid {
+.calculator__input_price_invalid {
   border: 2px solid red;
 }
 
-.input-error-message {
+.calculator__invalid-input-message {
   position: absolute;
   bottom: 5px;
-  left: 20px;
-  //transform: translateX(-50%);
+  left: 50%;
+  transform: translateX(-50%);
   color: red;
   pointer-events: none;
 }
 
-.range-min-and-max {
+.calculator__range-extra-text {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 22px;
+  font-size: 14px;
+  color: $grey;
+}
+
+.calculator__range_term {
+  margin-bottom: -7px;
+}
+
+.calculator__range-extra-text_term {
+  margin-bottom: 0;
+}
+
+.calculator__input-container_term {
+  margin-bottom: 26px;
+}
+
+.checkbox-container {
+  padding-left: 23px;
 }

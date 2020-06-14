@@ -22,23 +22,6 @@
   }
 }
 
-.visually-hidden {
-  @media (min-width: 1023px) {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    border: 0;
-    padding: 0;
-    opacity: 0;
-    white-space: nowrap;
-    word-wrap: normal;
-    clip-path: inset(100%);
-    clip: rect(0 0 0 0);
-    overflow: hidden;
-  }
-}
-
 .service-menu {
   display: flex;
   margin: 0;
@@ -216,7 +199,7 @@
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: $blue-button-hover;
+    background-color: $blue-light;
   }
 
   @media (max-width: 767px) {

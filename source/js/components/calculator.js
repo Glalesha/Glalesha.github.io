@@ -1,23 +1,23 @@
 import showOffer from "./showOffer";
 
 export default function calculator() {
-  const inputPrice = document.querySelector(".calculator__input-price");
+  const inputPrice = document.querySelector(".calculator__input_price");
   const inputInitialFee = document.querySelector(
-    ".calculator__input-initial-fee"
+    ".calculator__input_initial-fee"
   );
   const rangeInitialFee = document.querySelector(
-    ".calculator__input-range-initial-fee"
+    ".calculator__input-range_initial-fee"
   );
   const outputInitialFee = document.querySelector(
-    ".calculator__input-range-initial-fee-output"
+    ".calculator__input-range_initial-fee-output"
   );
   const checkBoxMaternalCapital = document.querySelector(
     ".calculator__input-maternal-capital"
   );
-  const inputTerm = document.querySelector(".calculator__input-term");
-  const rangeTerm = document.querySelector(".calculator__input-range-term");
+  const inputTerm = document.querySelector(".calculator__input_term");
+  const rangeTerm = document.querySelector(".calculator__range_term");
   const outputTerm = document.querySelector(
-    ".calculator__input-range-term-output"
+    ".calculator__range_term-output"
   );
   const maternalCapitalSum = 470000;
 

@@ -5,15 +5,15 @@ export default function showOffer(
   requiredIncome
 ) {
   const offer = document.querySelector(".offer");
-  const creditSumOutput = document.querySelector(".terms__value_credit-sum");
+  const creditSumOutput = document.querySelector(".offer__value_credit-sum");
   const monthlyPaymentOutput = document.querySelector(
-    ".terms__value_monthly-payment"
+    ".offer__value_monthly-payment"
   );
   const interestRateOutput = document.querySelector(
-    ".terms__value_interest-rate"
+    ".offer__value_interest-rate"
   );
   const requiredIncomeOutput = document.querySelector(
-    ".terms__value_required-income"
+    ".offer__value_required-income"
   );
 
   creditSumOutput.textContent = creditSum;

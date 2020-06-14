@@ -291,52 +291,66 @@
         </div>
       </section>
 
-      <section class="calculator-section">
+      <section class="calculator">
         <h2 class="calculator__title">Кредитный калькулятор</h2>
 
-        <div class="calculator">
-          <form class="calculator__calculator-form">
-            <fieldset
-              class="calculator__calculator-step calculator__calculator-step_margin"
-            >
+        <div class="calculator__wrap">
+          <form class="calculator__form">
+            <fieldset class="calculator__step calculator__step_margin">
               <legend class="calculator__legend">
                 Шаг 1. Цель кредита
               </legend>
 
-              <div class="calculator__input-container">
-                <select class="calculator__input calculator__input-purpose">
-                  <option selected>Выберите цель кредита</option>
-                  <option value="mortgage">Ипотечное кредитование</option>
-                  <option value="carCredit">Автомобильное кредитование</option>
-                  <option value="consumerCredit">Потребительский кредит</option>
-                </select>
+              <div class="calculator__select-wrap">
+                <div class="calculator__select">
+                  <div class="calculator__selected">
+                    <span class="calculator__select-value"
+                      >Выберите цель кредита</span
+                    >
+                  </div>
+
+                  <div class="calculator__options">
+                    <div class="calculator__option" data-value="mortgage">
+                      Ипотечное кредитование
+                    </div>
+                    <div class="calculator__option" data-value="car-credit">
+                      Автомобильное кредитование
+                    </div>
+                    <div
+                      class="calculator__option calculator__option_last"
+                      data-value="consumer-credit"
+                    >
+                      Потребительский кредит
+                    </div>
+                  </div>
+                </div>
               </div>
             </fieldset>
 
             <fieldset
-              class="calculator__calculator-step calculator__custom-calculator-container"
+              class="calculator__step calculator__custom-calculator-container"
             ></fieldset>
           </form>
 
           <div class="offer visually-hidden">
             <h3 class="offer__title">Наше предложение</h3>
 
-            <ul class="terms">
-              <li class="terms__item">
-                <p class="terms__value terms__value_credit-sum"></p>
-                <p class="terms__label terms__label_credit-sum"> </p>
+            <ul class="offer__terms">
+              <li class="offer__item">
+                <p class="offer__value offer__value_credit-sum"></p>
+                <p class="offer__label offer__label_credit-sum"></p>
               </li>
-              <li class="terms__item">
-                <p class="terms__value terms__value_interest-rate"></p>
-                <p class="terms__label">Процентная ставка</p>
+              <li class="offer__item">
+                <p class="offer__value offer__value_interest-rate"></p>
+                <p class="offer__label">Процентная ставка</p>
               </li>
-              <li class="terms__item">
-                <p class="terms__value terms__value_monthly-payment"></p>
-                <p class="terms__label">Ежемесячный платеж</p>
+              <li class="offer__item">
+                <p class="offer__value offer__value_monthly-payment"></p>
+                <p class="offer__label">Ежемесячный платеж</p>
               </li>
-              <li class="terms__item">
-                <p class="terms__value terms__value_required-income"></p>
-                <p class="terms__label">Необходимый доход</p>
+              <li class="offer__item">
+                <p class="offer__value offer__value_required-income"></p>
+                <p class="offer__label">Необходимый доход</p>
               </li>
             </ul>
 
@@ -365,18 +379,20 @@
           for="price"
         ></label>
 
-        <div class="number-input-with-buttons">
-          <button class="step-down" type="button"></button>
+        <div class="calculator__input-wrap">
+          <button class="calculator__step-down" type="button"></button>
           <input
-            class="calculator__input calculator__input-price"
+            class="calculator__input calculator__input_price"
             type="text"
             id="price"
           />
-          <button class="step-up" type="button"></button>
-          <span class="input-error-message"></span>
+          <button class="calculator__step-up" type="button"></button>
+          <span class="calculator__invalid-input-message"></span>
         </div>
 
-        <p class="calculator__rangeText"></p>
+        <p
+          class="calculator__range-extra-text calculator__range-extra-text_price"
+        ></p>
       </div>
 
       <div
@@ -384,75 +400,85 @@
       >
         <label class="calculator__label">Первоначальный взнос</label>
         <input
-          class="calculator__input calculator__input-initial-fee"
+          class="calculator__input calculator__input_initial-fee"
           type="text"
         />
         <input
-          class="calculator__input calculator__input-range-initial-fee"
+          class="calculator__input calculator__input-range_initial-fee"
           type="range"
         />
         <output
-          class="calculator__output calculator__input-range-initial-fee-output"
+          class="calculator__range-extra-text calculator__range-extra-text_initial-fee-output"
         ></output>
       </div>
 
-      <div class="calculator__input-container">
+      <div class="calculator__input-container calculator__input-container_term">
         <label class="calculator__label">Срок кредитования</label>
-        <input class="calculator__input calculator__input-term" type="text" />
+        <input class="calculator__input calculator__input_term" type="text" />
         <input
-          class="calculator__input calculator__input-range-term"
+          class="calculator__input calculator__range calculator__range_term"
           type="range"
         />
-        <div class="range-min-and-max">
-          <span class="range-min-and-max__min"></span>
-          <span class="range-min-and-max__max"></span>
+        <div
+          class="calculator__range-extra-text calculator__range-extra-text_term"
+        >
+          <span class="calculator__range-extra-text__min"></span>
+          <span class="calculator__range-extra-text__max"></span>
         </div>
       </div>
+
+      <div class="checkbox-container"></div>
     </template>
 
-    <template class="mortgage-checkbox">
+    <template class="calculator__template-checkbox_mortgage">
       <input
-        class="calculator__input calculator__input-checkbox"
+        class="calculator__input input-checkbox"
         type="checkbox"
         id="useMaternalCapital"
       />
       <label
-        class="calculator__label calculator__checkbox-label"
+        class="calculator__label checkbox-label checkbox-label_square"
         for="useMaternalCapital"
         >Использовать материнский капитал</label
       >
     </template>
 
-    <template class="car-credit-checkbox">
-      <input
-        class="calculator__input calculator__input-checkbox calculator__input-checkbox_casco"
-        type="checkbox"
-        id="casco"
-      />
-      <label class="calculator__label calculator__checkbox-label" for="casco"
-        >Оформить КАСКО в нашем банке</label
-      >
+    <template class="calculator__template-checkbox_car-credit">
+      <div>
+        <input
+          class="calculator__input input-checkbox input-checkbox_casco"
+          type="checkbox"
+          id="casco"
+        />
+        <label
+          class="calculator__label checkbox-label checkbox-label_square"
+          for="casco"
+          >Оформить КАСКО в нашем банке</label
+        >
+      </div>
 
-      <input
-        class="calculator__input calculator__input-checkbox calculator__input-checkbox_life-insurance"
-        type="checkbox"
-        id="lifeInsurance"
-      />
-      <label
-        class="calculator__label calculator__checkbox-label"
-        for="lifeInsurance"
-        >Оформить Страхование жизни в нашем банке</label
-      >
+      <div>
+        <input
+          class="calculator__input input-checkbox input-checkbox_life-insurance"
+          type="checkbox"
+          id="lifeInsurance"
+        />
+        <label
+          class="calculator__label checkbox-label checkbox-label_square"
+          for="lifeInsurance"
+          >Оформить Страхование жизни в нашем банке</label
+        >
+      </div>
     </template>
 
-    <template class="consumer-credit-checkbox">
+    <template class="calculator__template-checkbox_consumer-credit">
       <input
-        class="calculator__input calculator__input-checkbox calculator__input-checkbox_bank-member"
+        class="calculator__input input-checkbox input-checkbox_bank-member"
         type="checkbox"
         id="bankMember"
       />
       <label
-        class="calculator__label calculator__checkbox-label"
+        class="calculator__label checkbox-label checkbox-label_square"
         for="bankMember"
         >Участник зарплатного проекта нашего банка
       </label>

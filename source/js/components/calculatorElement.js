@@ -12,16 +12,18 @@ export default class CalculatorElement extends HTMLElement {
     this.term = 0;
     this.monthlyPayment = 0;
     this.requiredIncome = 0;
+    this.requiredIncomCoefficient = 45;
+    this.cursorPositionInputPosition = null;
   }
 
   updateForm() {
-    this.inputPrice.value = this.breakNumber(this.price);
-    this.inputInitialFee.value = this.breakNumber(this.initialFee);
+    this.inputPrice.value = `${this.transformValueForInput(this.price)} рублей`;
+    this.inputPrice.selectionStart = this.cursorPositionInputPosition;
+    this.inputPrice.selectionEnd = this.cursorPositionInputPosition;
+    this.inputInitialFee.value = this.transformValueForInput(this.initialFee);
     this.rangeInitialFee.value = this.initialFeePercantage;
-    this.outputInitialFee.value = `${this.breakNumber(
-      this.initialFeePercantage
-    )}%`;
-    this.inputTerm.value = this.breakNumber(this.term);
+    this.outputInitialFee.value = `${this.initialFeePercantage}%`;
+    this.inputTerm.value = this.transformValueForInput(this.term);
     this.rangeTerm.value = this.term;
 
     this.updateOffer();
@@ -48,13 +50,17 @@ export default class CalculatorElement extends HTMLElement {
             ((1 + monthlyInterestRate) ** (this.term * 12) - 1))
     );
 
-    this.requiredIncome = Math.ceil((this.monthlyPayment * 100) / 45);
+    this.requiredIncome = Math.ceil(
+      (this.monthlyPayment * 100) / this.requiredIncomCoefficient
+    );
 
     showOffer(
-      this.creditSum,
-      this.monthlyPayment,
-      this.interestRate,
-      this.requiredIncome
+      this.transformValueForInput(this.creditSum),
+      this.transformValueForInput(this.monthlyPayment),
+      `${this.transformValueForInput(
+        this.interestRate.toFixed(2).replace(/\./, ",")
+      )}%`,
+      this.transformValueForInput(this.requiredIncome)
     );
   }
 
@@ -62,6 +68,7 @@ export default class CalculatorElement extends HTMLElement {
     if (priceValue) {
       this.price += priceValue;
     } else {
+      this.cursorPositionInputPosition = this.inputPrice.selectionStart;
       this.digitsPattern(this.inputPrice);
       this.price = this.stringToNumber(this.inputPrice.value);
     }
@@ -73,7 +80,9 @@ export default class CalculatorElement extends HTMLElement {
 
   updateInitialFee() {
     this.digitsPattern(this.inputInitialFee);
-    this.initialFee = this.stringToNumber(this.inputInitialFee.value);
+    this.initialFee = Math.ceil(
+      this.stringToNumber(this.inputInitialFee.value)
+    );
     this.initialFeePercantage = this.calculateInitialFeePercantage();
 
     this.updateForm();
@@ -81,7 +90,7 @@ export default class CalculatorElement extends HTMLElement {
 
   updateInitialFeePercantage() {
     this.initialFeePercantage = this.rangeInitialFee.value;
-    this.initialFee = (this.initialFeePercantage * this.price) / 100;
+    this.initialFee = Math.ceil((this.initialFeePercantage * this.price) / 100);
 
     this.updateForm();
   }
@@ -95,13 +104,14 @@ export default class CalculatorElement extends HTMLElement {
 
   checkValidPrice() {
     if (this.price > this.maxPrice || this.price < this.minPrice) {
-      this.inputPrice.classList.add("calculator__input-price_invalid");
+      this.inputPrice.classList.add("calculator__input_price_invalid");
       document.querySelector(
-        ".input-error-message"
+        ".calculator__invalid-input-message"
       ).textContent = ERROR_MESSAGE;
     } else {
-      this.inputPrice.classList.remove("calculator__input-price_invalid");
-      document.querySelector(".input-error-message").textContent = "";
+      this.inputPrice.classList.remove("calculator__input_price_invalid");
+      document.querySelector(".calculator__invalid-input-message").textContent =
+        "";
     }
   }
 
@@ -128,7 +138,9 @@ export default class CalculatorElement extends HTMLElement {
   }
 
   calculateMinInitialFee() {
-    this.initialFee = Math.ceil(this.price / this.minInitialFeePercantage);
+    this.initialFee = Math.ceil(
+      (this.price / 100) * this.minInitialFeePercantage
+    );
     this.initialFeePercantage = this.calculateInitialFeePercantage();
   }
 
@@ -136,7 +148,7 @@ export default class CalculatorElement extends HTMLElement {
     return Math.round((this.initialFee / this.price) * 100);
   }
 
-  breakNumber(number) {
+  transformValueForInput(number) {
     return number.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ");
   }
 
@@ -145,7 +157,15 @@ export default class CalculatorElement extends HTMLElement {
   }
 
   stringToNumber(str) {
-    return +str.split(" ").join("");
+    return +str.replace(/\D/g, "");
+  }
+
+  plural(number, one, two, five) {
+    if (number % 10 === 1) {
+      return one;
+    } else {
+      return two;
+    }
   }
 
   connectedCallback() {
@@ -153,27 +173,27 @@ export default class CalculatorElement extends HTMLElement {
       document.querySelector(".calculator-template").content.cloneNode(true)
     );
 
-    this.inputPrice = this.querySelector(".calculator__input-price");
-    this.inputInitialFee = this.querySelector(".calculator__input-initial-fee");
+    this.inputPrice = this.querySelector(".calculator__input_price");
+    this.inputInitialFee = this.querySelector(".calculator__input_initial-fee");
     this.rangeInitialFee = this.querySelector(
-      ".calculator__input-range-initial-fee"
+      ".calculator__input-range_initial-fee"
     );
     this.outputInitialFee = this.querySelector(
-      ".calculator__input-range-initial-fee-output"
+      ".calculator__range-extra-text_initial-fee-output"
     );
-    this.inputTerm = this.querySelector(".calculator__input-term");
-    this.rangeTerm = this.querySelector(".calculator__input-range-term");
-    this.querySelector(".range-min-and-max__min").textContent = `${
+    this.inputTerm = this.querySelector(".calculator__input_term");
+    this.rangeTerm = this.querySelector(".calculator__range_term");
+    this.querySelector(".calculator__range-extra-text__min").textContent = `${
       this.minTerm
     } ${this.minTerm === 1 ? "год" : "лет"}`;
     this.querySelector(
-      ".range-min-and-max__max"
+      ".calculator__range-extra-text__max"
     ).textContent = `${this.maxTerm} лет`;
-    this.rangeText = this.querySelector(".calculator__rangeText");
+    this.priceLabel = this.querySelector(".calculator__range-extra-text_price");
 
-    this.rangeText.textContent = `От ${this.breakNumber(
+    this.priceLabel.textContent = `От ${this.transformValueForInput(
       this.minPrice
-    )} до ${this.breakNumber(this.maxPrice)} рублей`;
+    )} до ${this.transformValueForInput(this.maxPrice)} рублей`;
 
     this.inputPrice.min = this.minPrice;
     this.inputPrice.max = this.maxPrice;
@@ -214,11 +234,14 @@ export default class CalculatorElement extends HTMLElement {
       this.updateTerm(this.rangeTerm)
     );
     this.inputTerm.addEventListener("change", () => this.checkValidTerm());
-    this.querySelector(".step-up").addEventListener("click", () => {
+    this.querySelector(".calculator__step-up").addEventListener("click", () => {
       this.updatePrice(this.priceStep);
     });
-    this.querySelector(".step-down").addEventListener("click", () => {
-      this.updatePrice(-this.priceStep);
-    });
+    this.querySelector(".calculator__step-down").addEventListener(
+      "click",
+      () => {
+        this.updatePrice(-this.priceStep);
+      }
+    );
   }
 }

@@ -30,11 +30,13 @@ export default class MortgageCalculator extends CalculatorElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.append(
-      document.querySelector(".mortgage-checkbox").content.cloneNode(true)
+    this.querySelector(".checkbox-container").append(
+      document
+        .querySelector(".calculator__template-checkbox_mortgage")
+        .content.cloneNode(true)
     );
 
-    this.querySelector(".calculator__input-checkbox").addEventListener(
+    this.querySelector(".input-checkbox").addEventListener(
       "change",
       () => {
         this.useMaternalCapital = event.currentTarget.checked;
@@ -47,7 +49,7 @@ export default class MortgageCalculator extends CalculatorElement {
     ).textContent = `Наш банк не выдаёт ипотечные кредиты меньше ${this.minCreditSum} рублей.`;
     document.querySelector(".calculator__label_price").textContent =
       "Стоимость недвижимости";
-    document.querySelector(".terms__label_credit-sum").textContent =
+    document.querySelector(".offer__label_credit-sum").textContent =
       "Сумма ипотеки";
   }
 }
