@@ -240,10 +240,10 @@
 
     function tabService(serviceIndex) {
       servicesSection
-        .querySelector(".service:not(.visually-hidden)")
-        .classList.add("visually-hidden");
+        .querySelector(".service:not(.visually-hidden_mobile)")
+        .classList.add("visually-hidden_mobile");
 
-      services[serviceIndex].classList.remove("visually-hidden");
+      services[serviceIndex].classList.remove("visually-hidden_mobile");
     }
   }
 
