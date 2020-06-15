@@ -1,4 +1,5 @@
 import showOffer from "./showOffer";
+import makeRequest from "./makeRequest";
 
 const ERROR_MESSAGE = `Некорректное значение`;
 
@@ -13,17 +14,35 @@ export default class CalculatorElement extends HTMLElement {
     this.monthlyPayment = 0;
     this.requiredIncome = 0;
     this.requiredIncomCoefficient = 45;
-    this.cursorPositionInputPosition = null;
+    this.cursorPositionInputPrice = null;
   }
 
   updateForm() {
-    this.inputPrice.value = `${this.transformValueForInput(this.price)} рублей`;
-    this.inputPrice.selectionStart = this.cursorPositionInputPosition;
-    this.inputPrice.selectionEnd = this.cursorPositionInputPosition;
-    this.inputInitialFee.value = this.transformValueForInput(this.initialFee);
+    this.inputPrice.value = this.transformValueToString(this.price, [
+      "рубль",
+      "рубля",
+      "рублей",
+    ]);
+
+    this.inputPrice.selectionStart =
+      this.inputPrice.value.length - this.cursorPositionInputPrice;
+    this.inputPrice.selectionEnd = this.inputPrice.selectionStart;
+
+    this.inputInitialFee.value = this.transformValueToString(this.initialFee, [
+      "рубль",
+      "рубля",
+      "рублей",
+    ]);
+
     this.rangeInitialFee.value = this.initialFeePercantage;
     this.outputInitialFee.value = `${this.initialFeePercantage}%`;
-    this.inputTerm.value = this.transformValueForInput(this.term);
+
+    this.inputTerm.value = this.transformValueToString(this.term, [
+      "год",
+      "года",
+      "лет",
+    ]);
+
     this.rangeTerm.value = this.term;
 
     this.updateOffer();
@@ -55,12 +74,22 @@ export default class CalculatorElement extends HTMLElement {
     );
 
     showOffer(
-      this.transformValueForInput(this.creditSum),
-      this.transformValueForInput(this.monthlyPayment),
-      `${this.transformValueForInput(
+      this.transformValueToString(this.creditSum, ["рубль", "рубля", "рублей"]),
+      this.transformValueToString(this.monthlyPayment, [
+        "рубль",
+        "рубля",
+        "рублей",
+      ]),
+      `${this.transformValueToString(
         this.interestRate.toFixed(2).replace(/\./, ",")
       )}%`,
-      this.transformValueForInput(this.requiredIncome)
+      this.transformValueToString(this.requiredIncome, [
+        "рубль",
+        "рубля",
+        "рублей",
+      ]),
+      this.purpose,
+      this.minCreditSum
     );
   }
 
@@ -68,9 +97,10 @@ export default class CalculatorElement extends HTMLElement {
     if (priceValue) {
       this.price += priceValue;
     } else {
-      this.cursorPositionInputPosition = this.inputPrice.selectionStart;
+      this.saveCursorPosition(this.inputPrice, "cursorPositionInputPrice");
+
       this.digitsPattern(this.inputPrice);
-      this.price = this.stringToNumber(this.inputPrice.value);
+      this.price = this.transformStringToNumber(this.inputPrice.value);
     }
 
     this.checkValidPrice();
@@ -80,8 +110,12 @@ export default class CalculatorElement extends HTMLElement {
 
   updateInitialFee() {
     this.digitsPattern(this.inputInitialFee);
+    this.saveCursorPosition(
+      this.inputInitialFee,
+      "cursorPositionInputInitialFee"
+    );
     this.initialFee = Math.ceil(
-      this.stringToNumber(this.inputInitialFee.value)
+      this.transformStringToNumber(this.inputInitialFee.value)
     );
     this.initialFeePercantage = this.calculateInitialFeePercantage();
 
@@ -97,9 +131,18 @@ export default class CalculatorElement extends HTMLElement {
 
   updateTerm(termInput) {
     this.digitsPattern(termInput);
-    this.term = this.stringToNumber(termInput.value);
+    this.saveCursorPosition(this.inputTerm, "cursorPositionInputTerm");
+    this.term = this.transformStringToNumber(termInput.value);
 
     this.updateForm();
+  }
+
+  saveCursorPosition(input, cursorName) {
+    if (/[0-9]/.test(input.value[input.selectionStart - 1])) {
+      this[cursorName] = input.value.length - input.selectionStart;
+    } else {
+      this[cursorName] = input.value.length - input.selectionStart + 1;
+    }
   }
 
   checkValidPrice() {
@@ -148,24 +191,40 @@ export default class CalculatorElement extends HTMLElement {
     return Math.round((this.initialFee / this.price) * 100);
   }
 
-  transformValueForInput(number) {
-    return number.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ");
+  transformValueToString(number, units) {
+    let unit;
+    if (units) {
+      unit = ` ${this.plural(number, units)}`;
+    } else {
+      unit = "";
+    }
+    return `${number
+      .toString()
+      .replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ")}${unit}`;
   }
 
   digitsPattern(input) {
     input.value = input.value.replace(/[^0-9 ]/, "");
   }
 
-  stringToNumber(str) {
+  transformStringToNumber(str) {
     return +str.replace(/\D/g, "");
   }
 
-  plural(number, one, two, five) {
-    if (number % 10 === 1) {
-      return one;
-    } else {
-      return two;
+  plural(number, units) {
+    number = Math.abs(number);
+    number %= 100;
+    if (number >= 5 && number <= 20) {
+      return units[2];
     }
+    number %= 10;
+    if (number === 1) {
+      return units[0];
+    }
+    if (number >= 2 && number <= 4) {
+      return units[1];
+    }
+    return units[2];
   }
 
   connectedCallback() {
@@ -185,15 +244,15 @@ export default class CalculatorElement extends HTMLElement {
     this.rangeTerm = this.querySelector(".calculator__range_term");
     this.querySelector(".calculator__range-extra-text__min").textContent = `${
       this.minTerm
-    } ${this.minTerm === 1 ? "год" : "лет"}`;
-    this.querySelector(
-      ".calculator__range-extra-text__max"
-    ).textContent = `${this.maxTerm} лет`;
+    } ${this.plural(this.minTerm, ["год", "лет", "лет"])}`;
+    this.querySelector(".calculator__range-extra-text__max").textContent = `${
+      this.maxTerm
+    } ${this.plural(this.maxTerm, ["год", "лет", "лет"])}`;
     this.priceLabel = this.querySelector(".calculator__range-extra-text_price");
 
-    this.priceLabel.textContent = `От ${this.transformValueForInput(
+    this.priceLabel.textContent = `От ${this.transformValueToString(
       this.minPrice
-    )} до ${this.transformValueForInput(this.maxPrice)} рублей`;
+    )} до ${this.transformValueToString(this.maxPrice)} рублей`;
 
     this.inputPrice.min = this.minPrice;
     this.inputPrice.max = this.maxPrice;
@@ -243,5 +302,19 @@ export default class CalculatorElement extends HTMLElement {
         this.updatePrice(-this.priceStep);
       }
     );
+    document
+      .querySelector(".offer__button")
+      .addEventListener("click", () =>
+        makeRequest(
+          this.transformValueToString(this.purpose),
+          this.transformValueToString(this.price, ["рубль", "рубля", "рублей"]),
+          this.transformValueToString(this.initialFee, [
+            "рубль",
+            "рубля",
+            "рублей",
+          ]),
+          this.transformValueToString(this.term, ["год", "лет", "лет"])
+        )
+      );
   }
 }

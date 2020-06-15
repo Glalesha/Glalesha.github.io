@@ -1,5 +1,13 @@
 .services-section {
   margin-bottom: 105px;
+
+  @media (max-width: 1023px) {
+    margin-bottom: 73px;
+  }
+  
+  @media (max-width: 1023px) {
+    margin-bottom: 56px;
+  }
 }
 
 .service {
@@ -110,13 +118,14 @@
 
 .service__title {
   margin-top: 0;
-  margin-bottom: 26px;
+  margin-bottom: 34px;
   font-size: 22px;
   font-family: "Roboto", sans-serif;
   line-height: 27px;
   color: $black;
 
   @media (max-width: 1023px) {
+    margin-bottom: 26px;
     font-size: 18px;
   }
 
@@ -150,7 +159,7 @@
 
 .service__advantages-item {
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: 17px;
   line-height: 21px;
 
   &:last-child {
@@ -176,6 +185,7 @@
   }
 
   @media (max-width: 1023px) {
+    margin-bottom: 12px;
     line-height: 23px;
   }
 

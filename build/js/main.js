@@ -4,7 +4,7 @@
   function loginPopup() {
     const popup = document.querySelector(".login-popup");
     const loginForm = document.querySelector(".form-login");
-    const enterButton = document.querySelector(".enter-button");
+    const enterButton = document.querySelector(".page-header__button-open");
     const closeButton = document.querySelector(".close-button");
     const showPasswordButton = document.querySelector(".password__show");
     const overlay = document.querySelector(".overlay");
@@ -363,7 +363,9 @@
     creditSum,
     monthlyPayment,
     interestRate,
-    requiredIncome
+    requiredIncome,
+    purpose,
+    minCreditSum
   ) {
     const offer = document.querySelector(".offer");
     const creditSumOutput = document.querySelector(".offer__value_credit-sum");
@@ -381,6 +383,138 @@
     monthlyPaymentOutput.textContent = monthlyPayment;
     interestRateOutput.textContent = interestRate;
     requiredIncomeOutput.textContent = requiredIncome;
+
+    let title;
+    let priceLabel;
+    let creditSumLabel;
+
+    if (purpose === "mortgage") {
+      title = `Наш банк не выдаёт ипотечные кредиты меньше ${minCreditSum} рублей.`;
+      priceLabel = "Стоимость недвижимости";
+      creditSumLabel = "Сумма ипотеки";
+    } else if (purpose === "car-credit") {
+      title = `Наш банк не выдаёт автокредиты меньше ${minCreditSum} рублей.`;
+      priceLabel = "Стоимость автомобиля";
+      creditSumLabel = "Сумма автокредита";
+    } else if (purpose === "consumer-credit") {
+      title = "";
+      priceLabel = "Сумма потребительского кредита";
+      creditSumLabel = "Сумма кредита";
+    }
+
+    document.querySelector(".refuse__title").textContent = title;
+    document.querySelector(".calculator__label_price").textContent = priceLabel;
+    document.querySelector(
+      ".offer__label_credit-sum"
+    ).textContent = creditSumLabel;
+  }
+
+  function makeRequest(purpose, price, initialFee, term) {
+    const request = document.querySelector(".request");
+    const requestForm = document.querySelector(".request__form");
+    const inputRequestNumber = request.querySelector(
+      ".request__input_request-number"
+    );
+    const inputPurpose = request.querySelector(".request__input_purpose");
+    const inputPrice = request.querySelector(".request__input_price");
+    const inputInitialFee = request.querySelector(".request__input_initial-fee");
+    const inputTerm = request.querySelector(".request__input_term");
+    const labelPrice = request.querySelector(".request__label_price");
+    const userInfoInputs = request.querySelectorAll(".request__input");
+    const inputFullname = request.querySelector(".request__input_fullname");
+    const inputTelephone = request.querySelector(".request__input_phone-number");
+    const inputEmail = request.querySelector(".request__input_email");
+
+    inputFullname.focus();
+    userInfoInputs.forEach((item) => {
+      item.addEventListener("change", () => checkEmpty(item));
+    });
+    requestForm.addEventListener("submit", submitForm);
+
+    function checkEmpty(input) {
+      input.nextElementSibling;
+      if (!input.value.length) {
+        input.nextElementSibling.classList.remove("request__label_moved");
+      } else {
+        input.nextElementSibling.classList.add("request__label_moved");
+      }
+    }
+
+    if (localStorage.getItem("user-data") === null) {
+      localStorage.setItem("user-data", []);
+    }
+
+    //slice(-4) добавляет числу лишние нули
+    inputRequestNumber.value = `№ ${(
+    "0000" +
+    (+localStorage.getItem("requestsNumber") + 1)
+  ).slice(-4)}`;
+
+    function submitForm() {
+      event.preventDefault();
+
+      if (!isFormVaild()) {
+        request.classList.add("request_invalid");
+
+        request.addEventListener("animationend", removeAnimation);
+
+        function removeAnimation() {
+          request.classList.remove("request_invalid");
+          request.removeEventListener("animationend", removeAnimation);
+        }
+        return;
+      }
+
+      localStorage.setItem(
+        "requestsNumber",
+        +localStorage.getItem("requestsNumber") + 1
+      );
+
+      localStorage.getItem("user-data");
+
+      localStorage.setItem("user-data", [
+        //...localStorage.getItem("user-data"),
+        {
+          fullName: inputFullname.value,
+          telephone: inputTelephone.value,
+          email: inputEmail.value,
+          number: +localStorage.getItem("requestsNumber") + 1,
+        },
+      ]);
+
+      inputFullname.value = "";
+      inputTelephone.value = "";
+      inputEmail.value = "";
+    }
+
+    function isFormVaild() {
+      if (
+        inputFullname.value.length &&
+        inputTelephone.value.length &&
+        inputEmail.value.length
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    request.classList.remove("visually-hidden");
+
+    if (purpose === "mortgage") {
+      inputPurpose.value = "Ипотека";
+      labelPrice.textContent = "Стоимость недвижимости";
+    } else if (purpose === "car-credit") {
+      inputPurpose.value = "Автокредит";
+      labelPrice.textContent = "Стоимость автомобиля";
+    } else {
+      inputPurpose.value = "Потребительский кредит";
+      labelPrice.textContent = "Сумма кредита";
+    }
+
+    inputPrice.value = price;
+    inputInitialFee.value = initialFee;
+    inputTerm.value = term;
   }
 
   const ERROR_MESSAGE = `Некорректное значение`;
@@ -396,17 +530,35 @@
       this.monthlyPayment = 0;
       this.requiredIncome = 0;
       this.requiredIncomCoefficient = 45;
-      this.cursorPositionInputPosition = null;
+      this.cursorPositionInputPrice = null;
     }
 
     updateForm() {
-      this.inputPrice.value = `${this.transformValueForInput(this.price)} рублей`;
-      this.inputPrice.selectionStart = this.cursorPositionInputPosition;
-      this.inputPrice.selectionEnd = this.cursorPositionInputPosition;
-      this.inputInitialFee.value = this.transformValueForInput(this.initialFee);
+      this.inputPrice.value = this.transformValueToString(this.price, [
+        "рубль",
+        "рубля",
+        "рублей",
+      ]);
+
+      this.inputPrice.selectionStart =
+        this.inputPrice.value.length - this.cursorPositionInputPrice;
+      this.inputPrice.selectionEnd = this.inputPrice.selectionStart;
+
+      this.inputInitialFee.value = this.transformValueToString(this.initialFee, [
+        "рубль",
+        "рубля",
+        "рублей",
+      ]);
+
       this.rangeInitialFee.value = this.initialFeePercantage;
       this.outputInitialFee.value = `${this.initialFeePercantage}%`;
-      this.inputTerm.value = this.transformValueForInput(this.term);
+
+      this.inputTerm.value = this.transformValueToString(this.term, [
+        "год",
+        "года",
+        "лет",
+      ]);
+
       this.rangeTerm.value = this.term;
 
       this.updateOffer();
@@ -438,12 +590,22 @@
       );
 
       showOffer(
-        this.transformValueForInput(this.creditSum),
-        this.transformValueForInput(this.monthlyPayment),
-        `${this.transformValueForInput(
+        this.transformValueToString(this.creditSum, ["рубль", "рубля", "рублей"]),
+        this.transformValueToString(this.monthlyPayment, [
+          "рубль",
+          "рубля",
+          "рублей",
+        ]),
+        `${this.transformValueToString(
         this.interestRate.toFixed(2).replace(/\./, ",")
       )}%`,
-        this.transformValueForInput(this.requiredIncome)
+        this.transformValueToString(this.requiredIncome, [
+          "рубль",
+          "рубля",
+          "рублей",
+        ]),
+        this.purpose,
+        this.minCreditSum
       );
     }
 
@@ -451,9 +613,10 @@
       if (priceValue) {
         this.price += priceValue;
       } else {
-        this.cursorPositionInputPosition = this.inputPrice.selectionStart;
+        this.saveCursorPosition(this.inputPrice, "cursorPositionInputPrice");
+
         this.digitsPattern(this.inputPrice);
-        this.price = this.stringToNumber(this.inputPrice.value);
+        this.price = this.transformStringToNumber(this.inputPrice.value);
       }
 
       this.checkValidPrice();
@@ -463,8 +626,12 @@
 
     updateInitialFee() {
       this.digitsPattern(this.inputInitialFee);
+      this.saveCursorPosition(
+        this.inputInitialFee,
+        "cursorPositionInputInitialFee"
+      );
       this.initialFee = Math.ceil(
-        this.stringToNumber(this.inputInitialFee.value)
+        this.transformStringToNumber(this.inputInitialFee.value)
       );
       this.initialFeePercantage = this.calculateInitialFeePercantage();
 
@@ -480,9 +647,18 @@
 
     updateTerm(termInput) {
       this.digitsPattern(termInput);
-      this.term = this.stringToNumber(termInput.value);
+      this.saveCursorPosition(this.inputTerm, "cursorPositionInputTerm");
+      this.term = this.transformStringToNumber(termInput.value);
 
       this.updateForm();
+    }
+
+    saveCursorPosition(input, cursorName) {
+      if (/[0-9]/.test(input.value[input.selectionStart - 1])) {
+        this[cursorName] = input.value.length - input.selectionStart;
+      } else {
+        this[cursorName] = input.value.length - input.selectionStart + 1;
+      }
     }
 
     checkValidPrice() {
@@ -531,24 +707,40 @@
       return Math.round((this.initialFee / this.price) * 100);
     }
 
-    transformValueForInput(number) {
-      return number.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ");
+    transformValueToString(number, units) {
+      let unit;
+      if (units) {
+        unit = ` ${this.plural(number, units)}`;
+      } else {
+        unit = "";
+      }
+      return `${number
+      .toString()
+      .replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ")}${unit}`;
     }
 
     digitsPattern(input) {
       input.value = input.value.replace(/[^0-9 ]/, "");
     }
 
-    stringToNumber(str) {
+    transformStringToNumber(str) {
       return +str.replace(/\D/g, "");
     }
 
-    plural(number, one, two, five) {
-      if (number % 10 === 1) {
-        return one;
-      } else {
-        return two;
+    plural(number, units) {
+      number = Math.abs(number);
+      number %= 100;
+      if (number >= 5 && number <= 20) {
+        return units[2];
       }
+      number %= 10;
+      if (number === 1) {
+        return units[0];
+      }
+      if (number >= 2 && number <= 4) {
+        return units[1];
+      }
+      return units[2];
     }
 
     connectedCallback() {
@@ -568,15 +760,15 @@
       this.rangeTerm = this.querySelector(".calculator__range_term");
       this.querySelector(".calculator__range-extra-text__min").textContent = `${
       this.minTerm
-    } ${this.minTerm === 1 ? "год" : "лет"}`;
-      this.querySelector(
-        ".calculator__range-extra-text__max"
-      ).textContent = `${this.maxTerm} лет`;
+    } ${this.plural(this.minTerm, ["год", "лет", "лет"])}`;
+      this.querySelector(".calculator__range-extra-text__max").textContent = `${
+      this.maxTerm
+    } ${this.plural(this.maxTerm, ["год", "лет", "лет"])}`;
       this.priceLabel = this.querySelector(".calculator__range-extra-text_price");
 
-      this.priceLabel.textContent = `От ${this.transformValueForInput(
+      this.priceLabel.textContent = `От ${this.transformValueToString(
       this.minPrice
-    )} до ${this.transformValueForInput(this.maxPrice)} рублей`;
+    )} до ${this.transformValueToString(this.maxPrice)} рублей`;
 
       this.inputPrice.min = this.minPrice;
       this.inputPrice.max = this.maxPrice;
@@ -626,12 +818,27 @@
           this.updatePrice(-this.priceStep);
         }
       );
+      document
+        .querySelector(".offer__button")
+        .addEventListener("click", () =>
+          makeRequest(
+            this.transformValueToString(this.purpose),
+            this.transformValueToString(this.price, ["рубль", "рубля", "рублей"]),
+            this.transformValueToString(this.initialFee, [
+              "рубль",
+              "рубля",
+              "рублей",
+            ]),
+            this.transformValueToString(this.term, ["год", "лет", "лет"])
+          )
+        );
     }
   }
 
   class MortgageCalculator extends CalculatorElement {
     constructor() {
       super();
+      this.purpose = "mortgage";
       this.minPrice = 1200000;
       this.maxPrice = 25000000;
       this.priceStep = 100000;
@@ -665,27 +872,17 @@
           .content.cloneNode(true)
       );
 
-      this.querySelector(".input-checkbox").addEventListener(
-        "change",
-        () => {
-          this.useMaternalCapital = event.currentTarget.checked;
-          this.updateForm();
-        }
-      );
-
-      document.querySelector(
-        ".refuse__title"
-      ).textContent = `Наш банк не выдаёт ипотечные кредиты меньше ${this.minCreditSum} рублей.`;
-      document.querySelector(".calculator__label_price").textContent =
-        "Стоимость недвижимости";
-      document.querySelector(".offer__label_credit-sum").textContent =
-        "Сумма ипотеки";
+      this.querySelector(".input-checkbox").addEventListener("change", () => {
+        this.useMaternalCapital = event.currentTarget.checked;
+        this.updateForm();
+      });
     }
   }
 
   class ConsumerCreditCalculator extends CalculatorElement {
     constructor() {
       super();
+      this.purpose = "consumer-credit";
       this.minPrice = 800000;
       this.maxPrice = 5000000;
       this.priceStep = 50000;
@@ -730,22 +927,20 @@
 
       this.querySelector(".calculator__input-container_initial-fee").remove();
 
-      this.querySelector(
-        ".input-checkbox_bank-member"
-      ).addEventListener("change", () => {
-        this.bankMember = event.currentTarget.checked;
-        this.updateForm();
-      });
-      document.querySelector(".calculator__label_price").textContent =
-        "Сумма потребительского кредита";
-      document.querySelector(".offer__label_credit-sum").textContent =
-        "Сумма кредита";
+      this.querySelector(".input-checkbox_bank-member").addEventListener(
+        "change",
+        () => {
+          this.bankMember = event.currentTarget.checked;
+          this.updateForm();
+        }
+      );
     }
   }
 
   class CarCreditCalculator extends CalculatorElement {
     constructor() {
       super();
+      this.purpose = "car-credit";
       this.minPrice = 500000;
       this.maxPrice = 5000000;
       this.priceStep = 50000;
@@ -778,7 +973,9 @@
     connectedCallback() {
       super.connectedCallback();
       this.querySelector(".checkbox-container").append(
-        document.querySelector(".calculator__template-checkbox_car-credit").content.cloneNode(true)
+        document
+          .querySelector(".calculator__template-checkbox_car-credit")
+          .content.cloneNode(true)
       );
 
       this.querySelector(".input-checkbox_casco").addEventListener(
@@ -789,20 +986,13 @@
         }
       );
 
-      this.querySelector(
-        ".input-checkbox_life-insurance"
-      ).addEventListener("change", () => {
-        this.lifeInsurance = event.currentTarget.checked;
-        this.updateForm();
-      });
-
-      document.querySelector(
-        ".refuse__title"
-      ).textContent = `Наш банк не выдаёт автокредиты меньше ${this.minCreditSum} рублей.`;
-      document.querySelector(".calculator__label_price").textContent =
-        "Стоимость автомобиля";
-      document.querySelector(".offer__label_credit-sum").textContent =
-        "Сумму автокредита";
+      this.querySelector(".input-checkbox_life-insurance").addEventListener(
+        "change",
+        () => {
+          this.lifeInsurance = event.currentTarget.checked;
+          this.updateForm();
+        }
+      );
     }
   }
 
@@ -810,8 +1000,14 @@
     const select = document.querySelector(".calculator__select");
     const selected = select.querySelector(".calculator__selected");
     const selectValue = select.querySelector(".calculator__select-value");
+    const optionsWrap = select.querySelector(".calculator__options-wrap");
     const optionsContainer = select.querySelector(".calculator__options");
     const options = select.querySelectorAll(".calculator__option");
+    const customCalculatorContainer = document.querySelector(
+      ".calculator__custom-calculator-container"
+    );
+    const offer = document.querySelector(".offer");
+    const request = document.querySelector(".request");
     const optionsOpenedClass = "calculator__options_opened";
     const noBottomRadiusClass = "calculator__selected_no-bottom-radius";
 
@@ -821,22 +1017,51 @@
     });
     window.addEventListener("click", checkClockOutside);
 
+    function hideOptions() {
+      optionsContainer.classList.remove(optionsOpenedClass);
+      selected.classList.remove(noBottomRadiusClass);
+      optionsContainer.addEventListener("transitionend", addVisuallyHiddenClass);
+    }
+
+    function addVisuallyHiddenClass() {
+      optionsWrap.classList.add("visually-hidden");
+      optionsContainer.removeEventListener(
+        "transitionend",
+        addVisuallyHiddenClass
+      );
+    }
+
     function checkClockOutside() {
-      if (!select.contains(event.target)) {
-        optionsContainer.classList.remove(optionsOpenedClass);
-        selected.classList.remove(noBottomRadiusClass);
+      if (
+        !select.contains(event.target) &&
+        optionsContainer.classList.contains(optionsOpenedClass)
+      ) {
+        hideOptions();
       }
     }
 
     function toggleOptions() {
-      optionsContainer.classList.toggle(optionsOpenedClass);
-      selected.classList.toggle(noBottomRadiusClass);
+      if (optionsWrap.classList.contains("visually-hidden")) {
+        optionsWrap.classList.remove("visually-hidden");
+        optionsContainer.classList.add(optionsOpenedClass);
+        selected.classList.add(noBottomRadiusClass);
+      } else {
+        hideOptions();
+        changeCalculator();
+      }
     }
 
     function selectOption(option) {
+      select.querySelector(".calculator__option_selected") &&
+        select
+          .querySelector(".calculator__option_selected")
+          .classList.remove("calculator__option_selected");
+
+      option.classList.add("calculator__option_selected");
       selectValue.textContent = option.textContent;
       optionsContainer.classList.remove(optionsOpenedClass);
       selected.classList.remove(noBottomRadiusClass);
+      hideOptions();
 
       changeCalculator(option.dataset.value);
     }
@@ -844,39 +1069,24 @@
     function changeCalculator(calculatorName) {
       let calculator;
 
+      customCalculatorContainer.firstElementChild &&
+        customCalculatorContainer.firstElementChild.remove();
+
       if (calculatorName === "mortgage") {
         calculator = document.createElement("mortgage-calculator");
-
-        document.querySelector(".calculator__custom-calculator-container")
-          .firstElementChild &&
-          document
-            .querySelector(".calculator__custom-calculator-container")
-            .firstElementChild.remove();
-        document
-          .querySelector(".calculator__custom-calculator-container")
-          .append(calculator);
+        customCalculatorContainer.append(calculator);
+        customCalculatorContainer.classList.remove("visually-hidden");
       } else if (calculatorName === "car-credit") {
         calculator = document.createElement("car-credit-calculator");
-
-        document.querySelector(".calculator__custom-calculator-container")
-          .firstElementChild &&
-          document
-            .querySelector(".calculator__custom-calculator-container")
-            .firstElementChild.remove();
-        document
-          .querySelector(".calculator__custom-calculator-container")
-          .append(calculator);
-      } else {
-        document.querySelector(".calculator__custom-calculator-container")
-          .firstElementChild &&
-          document
-            .querySelector(".calculator__custom-calculator-container")
-            .firstElementChild.remove();
+        customCalculatorContainer.append(calculator);
+        customCalculatorContainer.classList.remove("visually-hidden");
+      } else if (calculatorName === "consumer-credit") {
         calculator = document.createElement("consumer-credit-calculator");
-
-        document
-          .querySelector(".calculator__custom-calculator-container")
-          .append(calculator);
+        customCalculatorContainer.append(calculator);
+        customCalculatorContainer.classList.remove("visually-hidden");
+      } else {
+        offer.classList.add("visually-hidden");
+        request.classList.add("visually-hidden");
       }
     }
   }

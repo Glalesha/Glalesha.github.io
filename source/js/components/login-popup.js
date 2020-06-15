@@ -1,7 +1,7 @@
 export default function loginPopup() {
   const popup = document.querySelector(".login-popup");
   const loginForm = document.querySelector(".form-login");
-  const enterButton = document.querySelector(".enter-button");
+  const enterButton = document.querySelector(".page-header__button-open");
   const closeButton = document.querySelector(".close-button");
   const showPasswordButton = document.querySelector(".password__show");
   const overlay = document.querySelector(".overlay");

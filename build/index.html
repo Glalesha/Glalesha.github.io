@@ -11,50 +11,54 @@
 
   <body>
     <header class="page-header">
-      <a class="logo" href="#">
-        <img class="logo__image" src="img/logo.svg" width="149" height="30" alt="ЛИГА Банк">
-      </a>
+      <div class="page-header__container">
+        <a class="logo" href="#">
+          <img class="logo__image" src="img/logo.svg" width="149" height="30" alt="ЛИГА Банк">
+        </a>
 
-      <ul class="menu">
-        <li class="menu__item">
-          <a class="menu__link" href="#services">Услуги</a>
-        </li>
-        <li class="menu__item">
-          <a class="menu__link" href="#calculate">Рассчитать кредит</a>
-        </li>
-        <li class="menu__item">
-          <a class="menu__link" href="#contacts">Контакты</a>
-        </li>
-        <li class="menu__item">
-          <a class="menu__link" href="#question">Задать вопрос</a>
-        </li>
-      </ul>
+        <ul class="menu">
+          <li class="menu__item">
+            <a class="menu__link" href="#services">Услуги</a>
+          </li>
+          <li class="menu__item">
+            <a class="menu__link" href="#calculator">Рассчитать кредит</a>
+          </li>
+          <li class="menu__item">
+            <a class="menu__link" href="#contacts">Контакты</a>
+          </li>
+          <li class="menu__item">
+            <a class="menu__link" href="#question">Задать вопрос</a>
+          </li>
+        </ul>
 
-      <button class="enter-button" type="button"></button>
+        <button class="page-header__button-open" type="button"></button>
 
-      <div class="login-popup login-popup__close">
-        <header class="login-popup__header">
-          <a class="logo-internet-bank" href="#">
-            <img class="logo-internet-bank__image" src="img/logo-internet-bank.svg">
-          </a>
-          <button class="close-button" type="button"></button>
-        </header>
+        <div class="login-popup login-popup__close">
+          <header class="login-popup__header">
+            <a class="logo-internet-bank" href="#">
+              <img class="logo-internet-bank__image" src="img/logo-internet-bank.svg">
+            </a>
+            <button class="close-button" type="button"></button>
+          </header>
 
-        <form class="form-login">
-          <div class="login-input">
-            <label for="login">Логин</label>
-            <input type="text" id="login" name="login">
-          </div>
+          <form class="form-login">
+            <div class="login-input">
+              <label for="login">Логин</label>
+              <input type="text" id="login" name="login">
+            </div>
 
-          <div class="password-input">
-            <label for="password">Пароль</label>
-            <input type="password" id="password" name="password">
-            <div class="password__show"></div>
-            <a class="password__forget" href="#">Забыли пароль?</a>
-          </div>
+            <div class="password-input">
+              <label for="password">Пароль</label>
+              <input type="password" id="password" name="password">
+              <div class="password__show"></div>
+              <a class="password__forget" href="#">Забыли пароль?</a>
+            </div>
 
-          <input class="enterButton" type="submit" value="Войти">
-        </form>
+            <button class="login-popup__submit-button" type="submit">
+              Войти
+            </button>
+          </form>
+        </div>
       </div>
     </header>
 
@@ -63,9 +67,10 @@
         <div class="slider__slide slider__slide-1">
           <h2 class="slide__title">Лига Банк</h2>
           <p class="slide__tagline">Кредиты на любой случай</p>
-          <button class="slide__button slide__button_color-white" type="button">
-            Рассчитать кредит
-          </button>
+          <a class="slide__link-b" href="#calculator">
+            <button class="slide__button slide__button_color-white" type="button">
+              Рассчитать кредит
+            </button></a>
         </div>
         <div class="slider__slide slider__slide-2">
           <h2 class="slide__title slide__title_black-color-text">Лига Банк</h2>
@@ -107,7 +112,7 @@
     </section>
 
     <main class="page-main">
-      <section class="services-section services-section_slider">
+      <section class="services-section services-section_slider" id="services">
         <form>
           <ul class="service-menu service-menu_bullets">
             <li class="service-menu__item service-menu__item_bullet service-menu__deposit">
@@ -236,7 +241,7 @@
         </div>
       </section>
 
-      <section class="calculator">
+      <section class="calculator" id="calculator">
         <h2 class="calculator__title">Кредитный калькулятор</h2>
 
         <div class="calculator__wrap">
@@ -246,12 +251,12 @@
                 Шаг 1. Цель кредита
               </legend>
 
-              <div class="calculator__select-wrap">
-                <div class="calculator__select">
-                  <div class="calculator__selected">
-                    <span class="calculator__select-value">Выберите цель кредита</span>
-                  </div>
+              <div class="calculator__select">
+                <div class="calculator__selected">
+                  <span class="calculator__select-value">Выберите цель кредита</span>
+                </div>
 
+                <div class="calculator__options-wrap visually-hidden">
                   <div class="calculator__options">
                     <div class="calculator__option" data-value="mortgage">
                       Ипотечное кредитование
@@ -267,7 +272,7 @@
               </div>
             </fieldset>
 
-            <fieldset class="calculator__step calculator__custom-calculator-container"></fieldset>
+            <fieldset class="calculator__step calculator__custom-calculator-container visually-hidden"></fieldset>
           </form>
 
           <div class="offer visually-hidden">
@@ -301,6 +306,59 @@
             <p>Попробуйте использовать другие параметры для расчёта.</p>
           </div>
         </div>
+
+        <div class="request visually-hidden">
+          <form class="request__form">
+            <legend class="request__title">Шаг 3. Оформление заявки</legend>
+
+            <fieldset class="request__credit-info">
+              <div class="request__input-container request__input-container_credit-data">
+                <input class="request__input_credit-data request__input_request-number" readonly="">
+                <label class="request__label request__label_request-number">Номер заявки</label>
+              </div>
+              <div class="request__input-container request__input-container_credit-data">
+                <input class="request__input_credit-data request__input_purpose" readonly="">
+                <label class="request__label request__label_purpose">Цель кредита</label>
+              </div>
+              <div class="request__input-container request__input-container_credit-data">
+                <input class="request__input_credit-data request__input_price" readonly="">
+                <label class="request__label request__label_price">Стоимость недвижимости</label>
+              </div>
+              <div class="request__input-container request__input-container_credit-data">
+                <input class="request__input_credit-data request__input_initial-fee" readonly="">
+                <label class="request__label request__label_initial-fee">Первоначальный взнос</label>
+              </div>
+              <div class="request__input-container request__input-container_credit-data">
+                <input class="request__input_credit-data request__input_term" readonly="">
+                <label class="request__label request__label_term">Срок кредитования</label>
+              </div>
+            </fieldset>
+
+            <fieldset class="request__user-data">
+              <div class="request__input-container request__input-container_user-data request__input-container_big">
+                <input class="request__input request__input_user-data request__input_fullname" type="text">
+                <label class="request__label request__label_user-data request__label_fullname">ФИО</label>
+              </div>
+
+              <div class="request__flex-container">
+                <div class="request__input-container request__input-container_user-data request__input-container_small request__input-container_margin">
+                  <input class="request__input request__input_user-data request__input_phone-number" type="tel">
+                  <label class="request__label request__label_user-data request__label_phone-number">Телефон</label>
+                </div>
+                <div class="request__input-container request__input-container_user-data request__input-container_small">
+                  <input class="request__input request__input_user-data request__input_email" type="email">
+                  <label class="request__label request__label_user-data request__label_gmail">E-mail</label>
+                </div>
+              </div>
+
+              <button class="request__button" type="submit">Отправить</button>
+            </fieldset>
+          </form>
+        </div>
+      </section>
+
+      <section class="branches">
+        <h2 class="braches__title">Отделения Лига Банка</h2>
       </section>
     </main>
 
@@ -350,7 +408,7 @@
     </template>
 
     <template class="calculator__template-checkbox_car-credit">
-      <div>
+      <div class="checkbox-container-casco__margin">
         <input class="calculator__input input-checkbox input-checkbox_casco" type="checkbox" id="casco">
         <label class="calculator__label checkbox-label checkbox-label_square" for="casco">Оформить КАСКО в нашем банке</label>
       </div>

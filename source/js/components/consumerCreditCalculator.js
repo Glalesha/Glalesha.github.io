@@ -3,6 +3,7 @@ import CalculatorElement from "./calculatorElement";
 export default class ConsumerCreditCalculator extends CalculatorElement {
   constructor() {
     super();
+    this.purpose = "consumer-credit";
     this.minPrice = 800000;
     this.maxPrice = 5000000;
     this.priceStep = 50000;
@@ -47,15 +48,12 @@ export default class ConsumerCreditCalculator extends CalculatorElement {
 
     this.querySelector(".calculator__input-container_initial-fee").remove();
 
-    this.querySelector(
-      ".input-checkbox_bank-member"
-    ).addEventListener("change", () => {
-      this.bankMember = event.currentTarget.checked;
-      this.updateForm();
-    });
-    document.querySelector(".calculator__label_price").textContent =
-      "Сумма потребительского кредита";
-    document.querySelector(".offer__label_credit-sum").textContent =
-      "Сумма кредита";
+    this.querySelector(".input-checkbox_bank-member").addEventListener(
+      "change",
+      () => {
+        this.bankMember = event.currentTarget.checked;
+        this.updateForm();
+      }
+    );
   }
 }

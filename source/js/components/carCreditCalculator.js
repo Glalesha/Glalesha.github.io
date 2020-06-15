@@ -3,6 +3,7 @@ import CalculatorElement from "./calculatorElement";
 export default class CarCreditCalculator extends CalculatorElement {
   constructor() {
     super();
+    this.purpose = "car-credit";
     this.minPrice = 500000;
     this.maxPrice = 5000000;
     this.priceStep = 50000;
@@ -35,7 +36,9 @@ export default class CarCreditCalculator extends CalculatorElement {
   connectedCallback() {
     super.connectedCallback();
     this.querySelector(".checkbox-container").append(
-      document.querySelector(".calculator__template-checkbox_car-credit").content.cloneNode(true)
+      document
+        .querySelector(".calculator__template-checkbox_car-credit")
+        .content.cloneNode(true)
     );
 
     this.querySelector(".input-checkbox_casco").addEventListener(
@@ -46,19 +49,12 @@ export default class CarCreditCalculator extends CalculatorElement {
       }
     );
 
-    this.querySelector(
-      ".input-checkbox_life-insurance"
-    ).addEventListener("change", () => {
-      this.lifeInsurance = event.currentTarget.checked;
-      this.updateForm();
-    });
-
-    document.querySelector(
-      ".refuse__title"
-    ).textContent = `Наш банк не выдаёт автокредиты меньше ${this.minCreditSum} рублей.`;
-    document.querySelector(".calculator__label_price").textContent =
-      "Стоимость автомобиля";
-    document.querySelector(".offer__label_credit-sum").textContent =
-      "Сумму автокредита";
+    this.querySelector(".input-checkbox_life-insurance").addEventListener(
+      "change",
+      () => {
+        this.lifeInsurance = event.currentTarget.checked;
+        this.updateForm();
+      }
+    );
   }
 }
