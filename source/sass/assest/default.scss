@@ -149,3 +149,9 @@ input[type="range"]:focus::-ms-fill-upper {
     overflow: hidden;
   }
 }
+
+.body-lock {
+  position: fixed;
+  width: 100%;
+  overflow-y: scroll;
+}

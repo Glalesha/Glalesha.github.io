@@ -1,3 +1,5 @@
+import forbidScroll from "./forbidScroll";
+
 export default function loginPopup() {
   const popup = document.querySelector(".login-popup");
   const loginForm = document.querySelector(".form-login");
@@ -11,6 +13,8 @@ export default function loginPopup() {
   enterButton.addEventListener("click", showLoginPopup);
   showPasswordButton.addEventListener("mousedown", showPassword);
   loginForm.addEventListener("submit", loginFormSubmit);
+
+  forbidScroll(enterButton, closeButton);
 
   function close() {
     overlay.style.display = "none";

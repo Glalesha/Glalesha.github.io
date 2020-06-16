@@ -1,3 +1,5 @@
+import forbidScroll from "./forbidScroll";
+
 export default function makeRequest(purpose, price, initialFee, term) {
   const requestContainer = document.querySelector(".request-container");
   const requestTemplate = document.querySelector(".request-template");
@@ -110,6 +112,7 @@ export default function makeRequest(purpose, price, initialFee, term) {
     ]);
 
     openPopup();
+    forbidScroll(null, closeButton);
 
     inputFullname.value = "";
     inputTelephone.value = "";
