@@ -17,6 +17,7 @@ export default function showOffer(
   const requiredIncomeOutput = document.querySelector(
     ".offer__value_required-income"
   );
+  const requestContainer = document.querySelector(".request-container");
 
   creditSumOutput.textContent = creditSum;
   monthlyPaymentOutput.textContent = monthlyPayment;

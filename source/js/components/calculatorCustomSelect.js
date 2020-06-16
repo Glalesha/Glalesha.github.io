@@ -9,19 +9,30 @@ export default function CalculatorCustomSelect() {
     ".calculator__custom-calculator-container"
   );
   const offer = document.querySelector(".offer");
-  const request = document.querySelector(".request");
+  const requestContainer = document.querySelector(".request-container");
+  const arrow = document.querySelector(".calculator__arrow");
+
   const optionsOpenedClass = "calculator__options_opened";
   const noBottomRadiusClass = "calculator__selected_no-bottom-radius";
+  const arrowUpsidedown = "calculator__arrow_upside-down";
 
-  selected.addEventListener("click", toggleOptions);
-  options.forEach((item) => {
-    item.addEventListener("click", () => selectOption(item));
-  });
-  window.addEventListener("click", checkClockOutside);
+  initCustomSelect();
+
+  function initCustomSelect() {
+    selected.addEventListener("click", () => {
+      toggleOptions();
+    });
+    options.forEach((item) => {
+      item.addEventListener("click", () => selectOption(item));
+    });
+    window.addEventListener("click", checkClickOutside);
+  }
 
   function hideOptions() {
     optionsContainer.classList.remove(optionsOpenedClass);
     selected.classList.remove(noBottomRadiusClass);
+    arrow.classList.remove(arrowUpsidedown);
+
     optionsContainer.addEventListener("transitionend", addVisuallyHiddenClass);
   }
 
@@ -33,7 +44,7 @@ export default function CalculatorCustomSelect() {
     );
   }
 
-  function checkClockOutside() {
+  function checkClickOutside() {
     if (
       !select.contains(event.target) &&
       optionsContainer.classList.contains(optionsOpenedClass)
@@ -47,9 +58,18 @@ export default function CalculatorCustomSelect() {
       optionsWrap.classList.remove("visually-hidden");
       optionsContainer.classList.add(optionsOpenedClass);
       selected.classList.add(noBottomRadiusClass);
+      arrow.classList.add(arrowUpsidedown);
     } else {
       hideOptions();
+      selectValue.textContent = "Выберите цель кредита";
+      select.querySelector(".calculator__option_selected") &&
+        select
+          .querySelector(".calculator__option_selected")
+          .classList.remove("calculator__option_selected");
+      arrow.classList.remove(arrowUpsidedown);
+
       changeCalculator();
+      document.querySelector(".request").classList.add("visually-hidden");
     }
   }
 
@@ -59,6 +79,7 @@ export default function CalculatorCustomSelect() {
         .querySelector(".calculator__option_selected")
         .classList.remove("calculator__option_selected");
 
+    arrow.classList.add(arrowUpsidedown);
     option.classList.add("calculator__option_selected");
     selectValue.textContent = option.textContent;
     optionsContainer.classList.remove(optionsOpenedClass);
@@ -88,7 +109,6 @@ export default function CalculatorCustomSelect() {
       customCalculatorContainer.classList.remove("visually-hidden");
     } else {
       offer.classList.add("visually-hidden");
-      request.classList.add("visually-hidden");
     }
   }
 }

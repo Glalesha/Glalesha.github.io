@@ -30,6 +30,7 @@ export default class MortgageCalculator extends CalculatorElement {
   }
 
   connectedCallback() {
+    console.log(this);
     super.connectedCallback();
     this.querySelector(".checkbox-container").append(
       document

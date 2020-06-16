@@ -1,6 +1,6 @@
 .offer {
+  align-self: flex-start;
   width: 500px;
-  height: 389px;
   padding: 60px;
   background-color: $white;
   transition: opacity 0.3s;
@@ -30,6 +30,7 @@
   display: grid;
   grid-template-columns: auto minmax(auto, max-content);
   row-gap: 30px;
+  column-gap: 20px;
   margin-bottom: 37px;
 
   @media (max-width: 1023px) {

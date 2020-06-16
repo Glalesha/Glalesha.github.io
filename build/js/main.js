@@ -378,6 +378,7 @@
     const requiredIncomeOutput = document.querySelector(
       ".offer__value_required-income"
     );
+    const requestContainer = document.querySelector(".request-container");
 
     creditSumOutput.textContent = creditSum;
     monthlyPaymentOutput.textContent = monthlyPayment;
@@ -409,118 +410,10 @@
     ).textContent = creditSumLabel;
   }
 
-  function makeRequest(purpose, price, initialFee, term) {
-    const request = document.querySelector(".request");
-    const requestForm = document.querySelector(".request__form");
-    const inputRequestNumber = request.querySelector(
-      ".request__input_request-number"
-    );
-    const inputPurpose = request.querySelector(".request__input_purpose");
-    const inputPrice = request.querySelector(".request__input_price");
-    const inputInitialFee = request.querySelector(".request__input_initial-fee");
-    const inputTerm = request.querySelector(".request__input_term");
-    const labelPrice = request.querySelector(".request__label_price");
-    const userInfoInputs = request.querySelectorAll(".request__input");
-    const inputFullname = request.querySelector(".request__input_fullname");
-    const inputTelephone = request.querySelector(".request__input_phone-number");
-    const inputEmail = request.querySelector(".request__input_email");
-
-    inputFullname.focus();
-    userInfoInputs.forEach((item) => {
-      item.addEventListener("change", () => checkEmpty(item));
-    });
-    requestForm.addEventListener("submit", submitForm);
-
-    function checkEmpty(input) {
-      input.nextElementSibling;
-      if (!input.value.length) {
-        input.nextElementSibling.classList.remove("request__label_moved");
-      } else {
-        input.nextElementSibling.classList.add("request__label_moved");
-      }
-    }
-
-    if (localStorage.getItem("user-data") === null) {
-      localStorage.setItem("user-data", []);
-    }
-
-    //slice(-4) добавляет числу лишние нули
-    inputRequestNumber.value = `№ ${(
-    "0000" +
-    (+localStorage.getItem("requestsNumber") + 1)
-  ).slice(-4)}`;
-
-    function submitForm() {
-      event.preventDefault();
-
-      if (!isFormVaild()) {
-        request.classList.add("request_invalid");
-
-        request.addEventListener("animationend", removeAnimation);
-
-        function removeAnimation() {
-          request.classList.remove("request_invalid");
-          request.removeEventListener("animationend", removeAnimation);
-        }
-        return;
-      }
-
-      localStorage.setItem(
-        "requestsNumber",
-        +localStorage.getItem("requestsNumber") + 1
-      );
-
-      localStorage.getItem("user-data");
-
-      localStorage.setItem("user-data", [
-        //...localStorage.getItem("user-data"),
-        {
-          fullName: inputFullname.value,
-          telephone: inputTelephone.value,
-          email: inputEmail.value,
-          number: +localStorage.getItem("requestsNumber") + 1,
-        },
-      ]);
-
-      inputFullname.value = "";
-      inputTelephone.value = "";
-      inputEmail.value = "";
-    }
-
-    function isFormVaild() {
-      if (
-        inputFullname.value.length &&
-        inputTelephone.value.length &&
-        inputEmail.value.length
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    request.classList.remove("visually-hidden");
-
-    if (purpose === "mortgage") {
-      inputPurpose.value = "Ипотека";
-      labelPrice.textContent = "Стоимость недвижимости";
-    } else if (purpose === "car-credit") {
-      inputPurpose.value = "Автокредит";
-      labelPrice.textContent = "Стоимость автомобиля";
-    } else {
-      inputPurpose.value = "Потребительский кредит";
-      labelPrice.textContent = "Сумма кредита";
-    }
-
-    inputPrice.value = price;
-    inputInitialFee.value = initialFee;
-    inputTerm.value = term;
-  }
-
   const ERROR_MESSAGE = `Некорректное значение`;
 
   class CalculatorElement extends HTMLElement {
-    constructor(defaultPrice, defaultTerm) {
+    constructor() {
       super();
       this.price = 0;
       this.initialFee = 0;
@@ -530,8 +423,9 @@
       this.monthlyPayment = 0;
       this.requiredIncome = 0;
       this.requiredIncomCoefficient = 45;
-      this.cursorPositionInputPrice = null;
     }
+
+    // Рендеринг формы и предложния
 
     updateForm() {
       this.inputPrice.value = this.transformValueToString(this.price, [
@@ -539,10 +433,6 @@
         "рубля",
         "рублей",
       ]);
-
-      this.inputPrice.selectionStart =
-        this.inputPrice.value.length - this.cursorPositionInputPrice;
-      this.inputPrice.selectionEnd = this.inputPrice.selectionStart;
 
       this.inputInitialFee.value = this.transformValueToString(this.initialFee, [
         "рубль",
@@ -607,34 +497,96 @@
         this.purpose,
         this.minCreditSum
       );
+
+      this.hideRequest();
     }
 
-    updatePrice(priceValue) {
-      if (priceValue) {
-        this.price += priceValue;
-      } else {
-        this.saveCursorPosition(this.inputPrice, "cursorPositionInputPrice");
+    hideRequest() {
+      this.request.classList.add("visually-hidden");
+    }
 
-        this.digitsPattern(this.inputPrice);
-        this.price = this.transformStringToNumber(this.inputPrice.value);
+    updateRequest() {
+      this.requestInputsUserData.forEach((input) => {
+        input.value = "";
+        input.classList.remove("request__input_invalid");
+        input.parentNode.querySelector(
+          ".request__invalid-input-message"
+        ).textContent = "";
+      });
+
+      if (!this.request.classList.contains("visually-hidden")) {
+        this.request.querySelector(".request__input_fullname").focus();
       }
+
+      //slice(-4) добавляет числу лишние нули
+      this.inputRequestNumber.value = `№ ${(
+      "0000" +
+      (+localStorage.getItem("requestsNumber") + 1)
+    ).slice(-4)}`;
+
+      if (this.purpose === "mortgage") {
+        this.requestInputPurpose.value = "Ипотека";
+        this.requestLabelPrice.textContent = "Стоимость недвижимости";
+      } else if (this.purpose === "car-credit") {
+        this.requestInputPurpose.value = "Автокредит";
+        this.requestLabelPrice.textContent = "Стоимость автомобиля";
+      } else if (this.purpose === "consumer-credit") {
+        this.requestInputPurpose.value = "Потребительский кредит";
+        this.requestLabelPrice.textContent = "Сумма кредита";
+      }
+
+      this.requestInputPrice.value = this.transformValueToString(this.price, [
+        "рубль",
+        "рубля",
+        "рублей",
+      ]);
+      (this.requestInputInitialFee.value = this.transformValueToString(
+        this.initialFee,
+        ["рубль", "рубля", "рублей"]
+      )),
+        (this.requestInputTerm.value = this.transformValueToString(this.term, [
+          "год",
+          "лет",
+          "лет",
+        ]));
+    }
+
+    // Обновление значений формы
+
+    updatePriceOnInput(priceValue) {
+      this.digitsPattern(this.inputPrice);
+      this.price = this.transformStringToNumber(this.inputPrice.value);
+
+      //this.inputPrice.value = this.addSpacesInNumber(this.price);
+      this.checkValidPrice();
+      this.calculateMinInitialFee();
+    }
+
+    updatePriceOnStep(stepValue) {
+      this.price += stepValue;
 
       this.checkValidPrice();
       this.calculateMinInitialFee();
       this.updateForm();
     }
 
+    updatePriceOnBlur() {
+      this.updatePriceOnInput();
+      this.updateForm();
+    }
+
     updateInitialFee() {
       this.digitsPattern(this.inputInitialFee);
-      this.saveCursorPosition(
-        this.inputInitialFee,
-        "cursorPositionInputInitialFee"
-      );
+
       this.initialFee = Math.ceil(
         this.transformStringToNumber(this.inputInitialFee.value)
       );
       this.initialFeePercantage = this.calculateInitialFeePercantage();
+    }
 
+    updateInitialFeeOnBlur() {
+      this.updateInitialFee();
+      this.checkValidInitialFee();
       this.updateForm();
     }
 
@@ -645,21 +597,25 @@
       this.updateForm();
     }
 
-    updateTerm(termInput) {
-      this.digitsPattern(termInput);
-      this.saveCursorPosition(this.inputTerm, "cursorPositionInputTerm");
-      this.term = this.transformStringToNumber(termInput.value);
+    updateTerm() {
+      this.digitsPattern(this.inputTerm);
+      this.term = this.transformStringToNumber(this.inputTerm.value);
+    }
+
+    updateTermWithRange() {
+      this.digitsPattern(this.rangeTerm);
+      this.term = this.transformStringToNumber(this.rangeTerm.value);
 
       this.updateForm();
     }
 
-    saveCursorPosition(input, cursorName) {
-      if (/[0-9]/.test(input.value[input.selectionStart - 1])) {
-        this[cursorName] = input.value.length - input.selectionStart;
-      } else {
-        this[cursorName] = input.value.length - input.selectionStart + 1;
-      }
+    updateTermOnBlur() {
+      this.updateTerm();
+      this.checkValidTerm();
+      this.updateForm();
     }
+
+    // Вспомогательные функции
 
     checkValidPrice() {
       if (this.price > this.maxPrice || this.price < this.minPrice) {
@@ -689,10 +645,8 @@
     checkValidTerm() {
       if (this.term > this.maxTerm) {
         this.term = this.maxTerm;
-        this.updateForm();
-      } else if (this.term < this.maxTerm) {
+      } else if (this.term < this.minTerm) {
         this.term = this.minTerm;
-        this.updateForm();
       }
     }
 
@@ -714,9 +668,11 @@
       } else {
         unit = "";
       }
-      return `${number
-      .toString()
-      .replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ")}${unit}`;
+      return `${this.addSpacesInNumber(number)}${unit}`;
+    }
+
+    addSpacesInNumber(number) {
+      return number.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ");
     }
 
     digitsPattern(input) {
@@ -725,6 +681,13 @@
 
     transformStringToNumber(str) {
       return +str.replace(/\D/g, "");
+    }
+
+    hideWords(input) {
+      input.value = this.transformStringToNumber(input.value);
+      // this.addSpacesInNumber(
+      //   this.transformStringToNumber(input.value)
+      // );
     }
 
     plural(number, units) {
@@ -757,6 +720,7 @@
         ".calculator__range-extra-text_initial-fee-output"
       );
       this.inputTerm = this.querySelector(".calculator__input_term");
+
       this.rangeTerm = this.querySelector(".calculator__range_term");
       this.querySelector(".calculator__range-extra-text__min").textContent = `${
       this.minTerm
@@ -764,7 +728,37 @@
       this.querySelector(".calculator__range-extra-text__max").textContent = `${
       this.maxTerm
     } ${this.plural(this.maxTerm, ["год", "лет", "лет"])}`;
+
       this.priceLabel = this.querySelector(".calculator__range-extra-text_price");
+      this.request = document.querySelector(".request");
+      this.inputRequestNumber = this.request.querySelector(
+        ".request__input_request-number"
+      );
+      this.requestInputPurpose = this.request.querySelector(
+        ".request__input_purpose"
+      );
+      this.requestInputPrice = this.request.querySelector(
+        ".request__input_price"
+      );
+      this.requestInputInitialFee = this.request.querySelector(
+        ".request__input_initial-fee"
+      );
+      this.requestInputTerm = this.request.querySelector(".request__input_term");
+      this.requestLabelPrice = this.request.querySelector(
+        ".request__label_price"
+      );
+      this.requestInputsUserData = this.request.querySelectorAll(
+        ".request__input_user-data"
+      );
+      const requestInputFullname = this.request.querySelector(
+        ".request__input_fullname"
+      );
+      const requestInputTelephone = this.request.querySelector(
+        ".request__input_phone-number"
+      );
+      const requestInputEmail = this.request.querySelector(
+        ".request__input_email"
+      );
 
       this.priceLabel.textContent = `От ${this.transformValueToString(
       this.minPrice
@@ -789,12 +783,20 @@
       this.calculateMinInitialFee();
       this.updateForm();
 
-      this.inputPrice.addEventListener("input", () => this.updatePrice());
+      this.inputPrice.addEventListener("focus", () =>
+        this.hideWords(this.inputPrice)
+      );
+      this.inputPrice.addEventListener("blur", () => this.updatePriceOnBlur());
+      this.inputPrice.addEventListener("input", () => this.updatePriceOnInput());
+
+      this.inputInitialFee.addEventListener("focus", () =>
+        this.hideWords(this.inputInitialFee)
+      );
+      this.inputInitialFee.addEventListener("blur", () =>
+        this.updateInitialFeeOnBlur()
+      );
       this.inputInitialFee.addEventListener("input", () =>
         this.updateInitialFee()
-      );
-      this.inputInitialFee.addEventListener("change", () =>
-        this.checkValidInitialFee()
       );
       this.inputInitialFee.addEventListener("input", () =>
         this.updateInitialFee()
@@ -802,36 +804,34 @@
       this.rangeInitialFee.addEventListener("input", () =>
         this.updateInitialFeePercantage()
       );
+
+      this.inputTerm.addEventListener("focus", () =>
+        this.hideWords(this.inputTerm)
+      );
+      this.inputTerm.addEventListener("blur", () => {
+        this.updateTermOnBlur();
+      });
       this.inputTerm.addEventListener("input", () =>
         this.updateTerm(this.inputTerm)
       );
       this.rangeTerm.addEventListener("input", () =>
-        this.updateTerm(this.rangeTerm)
+        this.updateTermWithRange(this.rangeTerm)
       );
-      this.inputTerm.addEventListener("change", () => this.checkValidTerm());
+
       this.querySelector(".calculator__step-up").addEventListener("click", () => {
-        this.updatePrice(this.priceStep);
+        this.updatePriceOnStep(this.priceStep);
       });
+
       this.querySelector(".calculator__step-down").addEventListener(
         "click",
         () => {
-          this.updatePrice(-this.priceStep);
+          this.updatePriceOnStep(-this.priceStep);
         }
       );
-      document
-        .querySelector(".offer__button")
-        .addEventListener("click", () =>
-          makeRequest(
-            this.transformValueToString(this.purpose),
-            this.transformValueToString(this.price, ["рубль", "рубля", "рублей"]),
-            this.transformValueToString(this.initialFee, [
-              "рубль",
-              "рубля",
-              "рублей",
-            ]),
-            this.transformValueToString(this.term, ["год", "лет", "лет"])
-          )
-        );
+      document.querySelector(".offer__button").addEventListener("click", () => {
+        this.request.classList.remove("visually-hidden");
+        this.updateRequest();
+      });
     }
   }
 
@@ -865,6 +865,7 @@
     }
 
     connectedCallback() {
+      console.log(this);
       super.connectedCallback();
       this.querySelector(".checkbox-container").append(
         document
@@ -1007,19 +1008,30 @@
       ".calculator__custom-calculator-container"
     );
     const offer = document.querySelector(".offer");
-    const request = document.querySelector(".request");
+    const requestContainer = document.querySelector(".request-container");
+    const arrow = document.querySelector(".calculator__arrow");
+
     const optionsOpenedClass = "calculator__options_opened";
     const noBottomRadiusClass = "calculator__selected_no-bottom-radius";
+    const arrowUpsidedown = "calculator__arrow_upside-down";
 
-    selected.addEventListener("click", toggleOptions);
-    options.forEach((item) => {
-      item.addEventListener("click", () => selectOption(item));
-    });
-    window.addEventListener("click", checkClockOutside);
+    initCustomSelect();
+
+    function initCustomSelect() {
+      selected.addEventListener("click", () => {
+        toggleOptions();
+      });
+      options.forEach((item) => {
+        item.addEventListener("click", () => selectOption(item));
+      });
+      window.addEventListener("click", checkClickOutside);
+    }
 
     function hideOptions() {
       optionsContainer.classList.remove(optionsOpenedClass);
       selected.classList.remove(noBottomRadiusClass);
+      arrow.classList.remove(arrowUpsidedown);
+
       optionsContainer.addEventListener("transitionend", addVisuallyHiddenClass);
     }
 
@@ -1031,7 +1043,7 @@
       );
     }
 
-    function checkClockOutside() {
+    function checkClickOutside() {
       if (
         !select.contains(event.target) &&
         optionsContainer.classList.contains(optionsOpenedClass)
@@ -1045,9 +1057,18 @@
         optionsWrap.classList.remove("visually-hidden");
         optionsContainer.classList.add(optionsOpenedClass);
         selected.classList.add(noBottomRadiusClass);
+        arrow.classList.add(arrowUpsidedown);
       } else {
         hideOptions();
+        selectValue.textContent = "Выберите цель кредита";
+        select.querySelector(".calculator__option_selected") &&
+          select
+            .querySelector(".calculator__option_selected")
+            .classList.remove("calculator__option_selected");
+        arrow.classList.remove(arrowUpsidedown);
+
         changeCalculator();
+        document.querySelector(".request").classList.add("visually-hidden");
       }
     }
 
@@ -1057,6 +1078,7 @@
           .querySelector(".calculator__option_selected")
           .classList.remove("calculator__option_selected");
 
+      arrow.classList.add(arrowUpsidedown);
       option.classList.add("calculator__option_selected");
       selectValue.textContent = option.textContent;
       optionsContainer.classList.remove(optionsOpenedClass);
@@ -1086,8 +1108,205 @@
         customCalculatorContainer.classList.remove("visually-hidden");
       } else {
         offer.classList.add("visually-hidden");
-        request.classList.add("visually-hidden");
       }
+    }
+  }
+
+  function makeRequest(purpose, price, initialFee, term) {
+    const requestContainer = document.querySelector(".request-container");
+    const requestTemplate = document.querySelector(".request-template");
+    const request = document.querySelector(".request");
+    const requestForm = document.querySelector(".request__form");
+    const inputRequestNumber = request.querySelector(
+      ".request__input_request-number"
+    );
+    const inputPurpose = request.querySelector(".request__input_purpose");
+    const inputPrice = request.querySelector(".request__input_price");
+    const inputInitialFee = request.querySelector(".request__input_initial-fee");
+    const inputTerm = request.querySelector(".request__input_term");
+    const labelPrice = request.querySelector(".request__label_price");
+    const inputsUserData = request.querySelectorAll(".request__input_user-data");
+    const inputFullname = request.querySelector(".request__input_fullname");
+    const inputTelephone = request.querySelector(".request__input_phone-number");
+    const inputEmail = request.querySelector(".request__input_email");
+    const popup = document.querySelector(".thanks-popup");
+    const closeButton = document.querySelector(".thanks-popup__close");
+    const overlay = document.querySelector(".overlay");
+    const select = document.querySelector(".calculator__select");
+    const selected = select.querySelector(".calculator__selected");
+    const selectValue = select.querySelector(".calculator__select-value");
+    const optionsWrap = select.querySelector(".calculator__options-wrap");
+    const optionsContainer = select.querySelector(".calculator__options");
+    const options = select.querySelectorAll(".calculator__option");
+    const customCalculatorContainer = document.querySelector(
+      ".calculator__custom-calculator-container"
+    );
+    const offer = document.querySelector(".offer");
+    const arrow = document.querySelector(".calculator__arrow");
+    const arrowUpsidedown = "calculator__arrow_upside-down";
+
+    initRequest();
+
+    function initRequest() {
+      inputsUserData.forEach((input) => {
+        input.addEventListener("change", () => {
+          checkEmpty(input);
+          checkInputValidity(input);
+        });
+      });
+      requestForm.addEventListener("submit", submitForm);
+
+      if (localStorage.getItem("user-data") === null) {
+        localStorage.setItem("user-data", []);
+      }
+    }
+
+    function checkEmpty(input) {
+      input.nextElementSibling;
+      if (!input.value.length) {
+        input.nextElementSibling.classList.remove("request__label_moved");
+      } else {
+        input.nextElementSibling.classList.add("request__label_moved");
+      }
+    }
+
+    function checkInputValidity(input) {
+      if (input.value) {
+        input.classList.remove("request__input_invalid");
+        input.parentNode.querySelector(
+          ".request__invalid-input-message"
+        ).textContent = "";
+      }
+
+      if (
+        input.classList.contains("request__input_phone-number") &&
+        !/\W/.test(input.value)
+      ) {
+        input.classList.remove("request__input_invalid");
+        input.parentNode.querySelector(
+          ".request__invalid-input-message"
+        ).textContent = "";
+      }
+    }
+
+    function submitForm() {
+      event.preventDefault();
+
+      if (!isFormVaild()) {
+        request.classList.add("request_invalid");
+
+        request.addEventListener("animationend", removeAnimation);
+
+        function removeAnimation() {
+          request.classList.remove("request_invalid");
+          request.removeEventListener("animationend", removeAnimation);
+        }
+        return;
+      }
+
+      localStorage.setItem(
+        "requestsNumber",
+        +localStorage.getItem("requestsNumber") + 1
+      );
+
+      localStorage.getItem("user-data");
+
+      localStorage.setItem("user-data", [
+        //...localStorage.getItem("user-data"),
+        {
+          fullName: inputFullname.value,
+          telephone: inputTelephone.value,
+          email: inputEmail.value,
+          number: +localStorage.getItem("requestsNumber") + 1,
+        },
+      ]);
+
+      openPopup();
+
+      inputFullname.value = "";
+      inputTelephone.value = "";
+      inputEmail.value = "";
+    }
+
+    function isFormVaild() {
+      let errorCount = Array.from(inputsUserData).reduce((errorCount, item) => {
+        if (!item.value) {
+          item.classList.add("request__input_invalid");
+          item.parentNode.querySelector(
+            ".request__invalid-input-message"
+          ).textContent = "Требуется ввести значение";
+          errorCount++;
+        } else if (
+          item.classList.contains("request__input_phone-number") &&
+          /\D/.test(item.value)
+        ) {
+          item.classList.add("request__input_invalid");
+          item.parentNode.querySelector(
+            ".request__invalid-input-message"
+          ).textContent = "В номере телефона могут быть только цифры";
+          errorCount++;
+        }
+
+        return errorCount;
+      }, 0);
+
+      if (!errorCount) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function close() {
+      overlay.style.display = "none";
+      popup.classList.remove("login-popup_open");
+      popup.classList.add("visually-hidden");
+
+      selectValue.textContent = "Выберите цель кредита";
+      select.querySelector(".calculator__option_selected") &&
+        select
+          .querySelector(".calculator__option_selected")
+          .classList.remove("calculator__option_selected");
+      arrow.classList.remove(arrowUpsidedown);
+
+      customCalculatorContainer.firstElementChild &&
+        customCalculatorContainer.firstElementChild.remove();
+
+      request.classList.add("visually-hidden");
+      offer.classList.add("visually-hidden");
+    }
+
+    function closeOnEsc() {
+      if (event.key === "Escape") {
+        close();
+      }
+    }
+
+    function openPopup() {
+      popup.classList.remove("visually-hidden");
+      popup.classList.add("request-popup_open");
+      closeButton.addEventListener(
+        "click",
+        () => {
+          close();
+        },
+        { once: true }
+      );
+
+      overlay.style.height = `${Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight
+    )}px`;
+      overlay.style.display = "block";
+      overlay.onclick = function () {
+        close();
+      };
+
+      popup.addEventListener("keydown", closeOnEsc);
+      closeButton.addEventListener("click", close, { once: true });
     }
   }
 
@@ -1097,7 +1316,14 @@
   loginPopup();
   slider();
   services();
+  makeRequest();
   CalculatorCustomSelect();
+
+
+  // let thanksPopup = new Popup();
+  // document.querySelector(".thanks-popup").onclick = function () {
+  //   thanksPopup.createPopup();
+  // };
 
   if (window.matchMedia("(max-width: 1023px)").matches) {
     servicesSlider();

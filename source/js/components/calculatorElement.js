@@ -1,10 +1,9 @@
 import showOffer from "./showOffer";
-import makeRequest from "./makeRequest";
 
 const ERROR_MESSAGE = `Некорректное значение`;
 
 export default class CalculatorElement extends HTMLElement {
-  constructor(defaultPrice, defaultTerm) {
+  constructor() {
     super();
     this.price = 0;
     this.initialFee = 0;
@@ -14,8 +13,9 @@ export default class CalculatorElement extends HTMLElement {
     this.monthlyPayment = 0;
     this.requiredIncome = 0;
     this.requiredIncomCoefficient = 45;
-    this.cursorPositionInputPrice = null;
   }
+
+  // Рендеринг формы и предложния
 
   updateForm() {
     this.inputPrice.value = this.transformValueToString(this.price, [
@@ -23,10 +23,6 @@ export default class CalculatorElement extends HTMLElement {
       "рубля",
       "рублей",
     ]);
-
-    this.inputPrice.selectionStart =
-      this.inputPrice.value.length - this.cursorPositionInputPrice;
-    this.inputPrice.selectionEnd = this.inputPrice.selectionStart;
 
     this.inputInitialFee.value = this.transformValueToString(this.initialFee, [
       "рубль",
@@ -91,34 +87,96 @@ export default class CalculatorElement extends HTMLElement {
       this.purpose,
       this.minCreditSum
     );
+
+    this.hideRequest();
   }
 
-  updatePrice(priceValue) {
-    if (priceValue) {
-      this.price += priceValue;
-    } else {
-      this.saveCursorPosition(this.inputPrice, "cursorPositionInputPrice");
+  hideRequest() {
+    this.request.classList.add("visually-hidden");
+  }
 
-      this.digitsPattern(this.inputPrice);
-      this.price = this.transformStringToNumber(this.inputPrice.value);
+  updateRequest() {
+    this.requestInputsUserData.forEach((input) => {
+      input.value = "";
+      input.classList.remove("request__input_invalid");
+      input.parentNode.querySelector(
+        ".request__invalid-input-message"
+      ).textContent = "";
+    });
+
+    if (!this.request.classList.contains("visually-hidden")) {
+      this.request.querySelector(".request__input_fullname").focus();
     }
+
+    //slice(-4) добавляет числу лишние нули
+    this.inputRequestNumber.value = `№ ${(
+      "0000" +
+      (+localStorage.getItem("requestsNumber") + 1)
+    ).slice(-4)}`;
+
+    if (this.purpose === "mortgage") {
+      this.requestInputPurpose.value = "Ипотека";
+      this.requestLabelPrice.textContent = "Стоимость недвижимости";
+    } else if (this.purpose === "car-credit") {
+      this.requestInputPurpose.value = "Автокредит";
+      this.requestLabelPrice.textContent = "Стоимость автомобиля";
+    } else if (this.purpose === "consumer-credit") {
+      this.requestInputPurpose.value = "Потребительский кредит";
+      this.requestLabelPrice.textContent = "Сумма кредита";
+    }
+
+    this.requestInputPrice.value = this.transformValueToString(this.price, [
+      "рубль",
+      "рубля",
+      "рублей",
+    ]);
+    (this.requestInputInitialFee.value = this.transformValueToString(
+      this.initialFee,
+      ["рубль", "рубля", "рублей"]
+    )),
+      (this.requestInputTerm.value = this.transformValueToString(this.term, [
+        "год",
+        "лет",
+        "лет",
+      ]));
+  }
+
+  // Обновление значений формы
+
+  updatePriceOnInput(priceValue) {
+    this.digitsPattern(this.inputPrice);
+    this.price = this.transformStringToNumber(this.inputPrice.value);
+
+    //this.inputPrice.value = this.addSpacesInNumber(this.price);
+    this.checkValidPrice();
+    this.calculateMinInitialFee();
+  }
+
+  updatePriceOnStep(stepValue) {
+    this.price += stepValue;
 
     this.checkValidPrice();
     this.calculateMinInitialFee();
     this.updateForm();
   }
 
+  updatePriceOnBlur() {
+    this.updatePriceOnInput();
+    this.updateForm();
+  }
+
   updateInitialFee() {
     this.digitsPattern(this.inputInitialFee);
-    this.saveCursorPosition(
-      this.inputInitialFee,
-      "cursorPositionInputInitialFee"
-    );
+
     this.initialFee = Math.ceil(
       this.transformStringToNumber(this.inputInitialFee.value)
     );
     this.initialFeePercantage = this.calculateInitialFeePercantage();
+  }
 
+  updateInitialFeeOnBlur() {
+    this.updateInitialFee();
+    this.checkValidInitialFee();
     this.updateForm();
   }
 
@@ -129,21 +187,25 @@ export default class CalculatorElement extends HTMLElement {
     this.updateForm();
   }
 
-  updateTerm(termInput) {
-    this.digitsPattern(termInput);
-    this.saveCursorPosition(this.inputTerm, "cursorPositionInputTerm");
-    this.term = this.transformStringToNumber(termInput.value);
+  updateTerm() {
+    this.digitsPattern(this.inputTerm);
+    this.term = this.transformStringToNumber(this.inputTerm.value);
+  }
+
+  updateTermWithRange() {
+    this.digitsPattern(this.rangeTerm);
+    this.term = this.transformStringToNumber(this.rangeTerm.value);
 
     this.updateForm();
   }
 
-  saveCursorPosition(input, cursorName) {
-    if (/[0-9]/.test(input.value[input.selectionStart - 1])) {
-      this[cursorName] = input.value.length - input.selectionStart;
-    } else {
-      this[cursorName] = input.value.length - input.selectionStart + 1;
-    }
+  updateTermOnBlur() {
+    this.updateTerm();
+    this.checkValidTerm();
+    this.updateForm();
   }
+
+  // Вспомогательные функции
 
   checkValidPrice() {
     if (this.price > this.maxPrice || this.price < this.minPrice) {
@@ -173,10 +235,8 @@ export default class CalculatorElement extends HTMLElement {
   checkValidTerm() {
     if (this.term > this.maxTerm) {
       this.term = this.maxTerm;
-      this.updateForm();
-    } else if (this.term < this.maxTerm) {
+    } else if (this.term < this.minTerm) {
       this.term = this.minTerm;
-      this.updateForm();
     }
   }
 
@@ -198,9 +258,11 @@ export default class CalculatorElement extends HTMLElement {
     } else {
       unit = "";
     }
-    return `${number
-      .toString()
-      .replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ")}${unit}`;
+    return `${this.addSpacesInNumber(number)}${unit}`;
+  }
+
+  addSpacesInNumber(number) {
+    return number.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ");
   }
 
   digitsPattern(input) {
@@ -209,6 +271,13 @@ export default class CalculatorElement extends HTMLElement {
 
   transformStringToNumber(str) {
     return +str.replace(/\D/g, "");
+  }
+
+  hideWords(input) {
+    input.value = this.transformStringToNumber(input.value);
+    // this.addSpacesInNumber(
+    //   this.transformStringToNumber(input.value)
+    // );
   }
 
   plural(number, units) {
@@ -241,6 +310,7 @@ export default class CalculatorElement extends HTMLElement {
       ".calculator__range-extra-text_initial-fee-output"
     );
     this.inputTerm = this.querySelector(".calculator__input_term");
+
     this.rangeTerm = this.querySelector(".calculator__range_term");
     this.querySelector(".calculator__range-extra-text__min").textContent = `${
       this.minTerm
@@ -248,7 +318,37 @@ export default class CalculatorElement extends HTMLElement {
     this.querySelector(".calculator__range-extra-text__max").textContent = `${
       this.maxTerm
     } ${this.plural(this.maxTerm, ["год", "лет", "лет"])}`;
+
     this.priceLabel = this.querySelector(".calculator__range-extra-text_price");
+    this.request = document.querySelector(".request");
+    this.inputRequestNumber = this.request.querySelector(
+      ".request__input_request-number"
+    );
+    this.requestInputPurpose = this.request.querySelector(
+      ".request__input_purpose"
+    );
+    this.requestInputPrice = this.request.querySelector(
+      ".request__input_price"
+    );
+    this.requestInputInitialFee = this.request.querySelector(
+      ".request__input_initial-fee"
+    );
+    this.requestInputTerm = this.request.querySelector(".request__input_term");
+    this.requestLabelPrice = this.request.querySelector(
+      ".request__label_price"
+    );
+    this.requestInputsUserData = this.request.querySelectorAll(
+      ".request__input_user-data"
+    );
+    const requestInputFullname = this.request.querySelector(
+      ".request__input_fullname"
+    );
+    const requestInputTelephone = this.request.querySelector(
+      ".request__input_phone-number"
+    );
+    const requestInputEmail = this.request.querySelector(
+      ".request__input_email"
+    );
 
     this.priceLabel.textContent = `От ${this.transformValueToString(
       this.minPrice
@@ -273,12 +373,20 @@ export default class CalculatorElement extends HTMLElement {
     this.calculateMinInitialFee();
     this.updateForm();
 
-    this.inputPrice.addEventListener("input", () => this.updatePrice());
+    this.inputPrice.addEventListener("focus", () =>
+      this.hideWords(this.inputPrice)
+    );
+    this.inputPrice.addEventListener("blur", () => this.updatePriceOnBlur());
+    this.inputPrice.addEventListener("input", () => this.updatePriceOnInput());
+
+    this.inputInitialFee.addEventListener("focus", () =>
+      this.hideWords(this.inputInitialFee)
+    );
+    this.inputInitialFee.addEventListener("blur", () =>
+      this.updateInitialFeeOnBlur()
+    );
     this.inputInitialFee.addEventListener("input", () =>
       this.updateInitialFee()
-    );
-    this.inputInitialFee.addEventListener("change", () =>
-      this.checkValidInitialFee()
     );
     this.inputInitialFee.addEventListener("input", () =>
       this.updateInitialFee()
@@ -286,35 +394,33 @@ export default class CalculatorElement extends HTMLElement {
     this.rangeInitialFee.addEventListener("input", () =>
       this.updateInitialFeePercantage()
     );
+
+    this.inputTerm.addEventListener("focus", () =>
+      this.hideWords(this.inputTerm)
+    );
+    this.inputTerm.addEventListener("blur", () => {
+      this.updateTermOnBlur();
+    });
     this.inputTerm.addEventListener("input", () =>
       this.updateTerm(this.inputTerm)
     );
     this.rangeTerm.addEventListener("input", () =>
-      this.updateTerm(this.rangeTerm)
+      this.updateTermWithRange(this.rangeTerm)
     );
-    this.inputTerm.addEventListener("change", () => this.checkValidTerm());
+
     this.querySelector(".calculator__step-up").addEventListener("click", () => {
-      this.updatePrice(this.priceStep);
+      this.updatePriceOnStep(this.priceStep);
     });
+
     this.querySelector(".calculator__step-down").addEventListener(
       "click",
       () => {
-        this.updatePrice(-this.priceStep);
+        this.updatePriceOnStep(-this.priceStep);
       }
     );
-    document
-      .querySelector(".offer__button")
-      .addEventListener("click", () =>
-        makeRequest(
-          this.transformValueToString(this.purpose),
-          this.transformValueToString(this.price, ["рубль", "рубля", "рублей"]),
-          this.transformValueToString(this.initialFee, [
-            "рубль",
-            "рубля",
-            "рублей",
-          ]),
-          this.transformValueToString(this.term, ["год", "лет", "лет"])
-        )
-      );
+    document.querySelector(".offer__button").addEventListener("click", () => {
+      this.request.classList.remove("visually-hidden");
+      this.updateRequest();
+    });
   }
 }
