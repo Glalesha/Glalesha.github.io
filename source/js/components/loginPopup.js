@@ -14,8 +14,6 @@ export default function loginPopup() {
   showPasswordButton.addEventListener("mousedown", showPassword);
   loginForm.addEventListener("submit", loginFormSubmit);
 
-  forbidScroll(enterButton, closeButton);
-
   function close() {
     overlay.style.display = "none";
     popup.classList.remove("login-popup_open");
@@ -38,6 +36,8 @@ export default function loginPopup() {
   }
 
   function showLoginPopup() {
+    forbidScroll(enterButton, closeButton);
+
     popup.style.visibility = "visible";
     popup.classList.add("login-popup_open");
     login.focus();
