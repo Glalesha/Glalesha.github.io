@@ -9,6 +9,7 @@ import ConsumerCreditCalculator from "./components/consumerCreditCalculator";
 import CarCreditCalculator from "./components/carCreditCalculator";
 import CalculatorCustomSelect from "./components/calculatorCustomSelect";
 import makeRequest from "./components/makeRequest";
+import map from "./components/map";
 
 customElements.define("mortgage-calculator", MortgageCalculator);
 customElements.define("consumer-credit-calculator", ConsumerCreditCalculator);
@@ -18,7 +19,7 @@ slider();
 services();
 makeRequest();
 CalculatorCustomSelect();
-
+map();
 
 // let thanksPopup = new Popup();
 // document.querySelector(".thanks-popup").onclick = function () {

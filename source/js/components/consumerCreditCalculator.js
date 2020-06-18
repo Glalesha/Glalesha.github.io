@@ -40,7 +40,7 @@ export default class ConsumerCreditCalculator extends CalculatorElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this.querySelector(".checkbox-container").append(
+    this.querySelector(".calculator__extra-options").append(
       document
         .querySelector(".calculator__template-checkbox_consumer-credit")
         .content.cloneNode(true)

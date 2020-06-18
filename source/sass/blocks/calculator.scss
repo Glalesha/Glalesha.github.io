@@ -1,10 +1,14 @@
 .calculator {
+  margin-bottom: 67px;
+
   @media (max-width: 1023px) {
+    margin-bottom: 75px;
     padding-left: 45px;
     padding-right: 45px;
   }
 
   @media (max-width: 767px) {
+    margin-bottom: 57px;
     padding-left: 15px;
     padding-right: 15px;
   }
@@ -21,7 +25,7 @@
   }
 
   @media (max-width: 767px) {
-    margin-bottom: 45px;
+    margin-bottom: 50px;
   }
 }
 
@@ -139,6 +143,7 @@
 
 .input-checkbox:checked + .checkbox-label_square {
   &:before {
+    background-color: $blue;
     background-image: url("../../img/check-mark.svg");
     background-repeat: no-repeat;
     background-position: 50%;
@@ -146,7 +151,10 @@
 }
 
 .checkbox-label_square {
+  display: flex;
+  align-items: center;
   cursor: pointer;
+  user-select: none;
 
   @media (max-width: 767px) {
     font-size: 14px;
@@ -154,14 +162,16 @@
 
   &:before {
     content: "";
-    position: absolute;
-    top: 1px;
-    left: -24px;
+    display: block;
+    margin-right: 10px;
+    box-sizing: border-box;
     width: 16px;
     height: 16px;
     border-radius: 2px;
-    background-color: $blue;
+    border: 1px solid $blue;
+    background-color: $white;
     cursor: pointer;
+    transition: background-color 0.3s;
   }
 }
 
@@ -282,10 +292,6 @@
   }
 }
 
-.checkbox-container {
-  padding-left: 23px;
-}
-
-.checkbox-container-casco__margin {
+.calculator__extra-options-casco__margin {
   margin-bottom: 10px;
 }

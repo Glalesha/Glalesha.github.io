@@ -384,9 +384,101 @@
       </section>
 
       <section class="branches">
-        <h2 class="braches__title">Отделения Лига Банка</h2>
+        <h2 class="branches__title">Отделения Лига Банка</h2>
+
+        <div class="branches__map-container">
+          <div class="branches__filters">
+            <div class="branches__checkbox-container">
+              <input class="branches__checkbox input-checkbox" type="checkbox" id="russia" value="russia" checked="">
+              <label class="branches__label checkbox-label checkbox-label_square" for="russia">Россия</label>
+            </div>
+
+            <div class="branches__checkbox-container">
+              <input class="branches__checkbox input-checkbox" type="checkbox" id="cis" value="cis" checked="">
+              <label class="branches__label checkbox-label checkbox-label_square" for="cis">СНГ</label>
+            </div>
+
+            <div class="branches__checkbox-container">
+              <input class="branches__checkbox input-checkbox" type="checkbox" id="europe" value="europe" checked="">
+              <label class="branches__label checkbox-label checkbox-label_square" for="europe">Европа</label>
+            </div>
+          </div>
+
+          <div class="map"></div>
+        </div>
       </section>
     </main>
+
+    <footer class="footer">
+      <div class="footer__container">
+        <ul class="footer__list">
+          <li class="footer__item">
+            <a class="logo footer-logo" href="#">
+              <img class="logo__image" src="img/logo.svg" width="149" height="30" alt="ЛИГА Банк">
+            </a>
+
+            <p class="footer__addres">
+              150015, г. Москва, ул. Московская, д. 32 Генеральная лицензия
+              Банка России №1050 Ⓒ Лига Банк, 2019
+            </p>
+          </li>
+          <li class="footer__item">
+            <ul class="menu menu_column">
+              <li class="menu__item menu__item_no-right-margin">
+                <a class="menu__link" href="#services">Услуги</a>
+              </li>
+              <li class="menu__item menu__item_no-right-margin">
+                <a class="menu__link" href="#calculator">Рассчитать кредит</a>
+              </li>
+              <li class="menu__item menu__item_no-right-margin">
+                <a class="menu__link" href="#contacts">Контакты</a>
+              </li>
+              <li class="menu__item menu__item_no-right-margin">
+                <a class="menu__link" href="#question">Задать вопрос</a>
+              </li>
+            </ul>
+          </li>
+          <li class="footer__item">
+            <div class="footer__number-wrap">
+              <a class="footer__link-phone-call" href="tel:*0904">
+                <img class="footer_image-aside-item" src="img/footer-mobile-icon.svg"></a>
+              <div class="footer__number">
+                <a class="footer__link footer__link-phone-call" href="tel:*0904">*0904</a>
+                <p class="footer__info">
+                  Бесплатно для абонентов МТС, Билайн, Мегафон, Теле2
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="footer__item">
+            <div class="footer__number-wrap">
+              <a class="footer__link-phone-call" href="tel:8 800 111 22 33">
+                <img class="footer_image-aside-item" src="img/footer-phone-icon.svg"></a>
+              <div class="footer__number">
+                <a class="footer__link footer__link-phone-call" href="tel:8 800 111 22 33">8 800 111 22 33</a>
+                <p class="footer__info">Бесплатный для всех городов России</p>
+              </div>
+            </div>
+          </li>
+          <li class="footer__item">
+            <ul class="footer__social">
+              <li class="footer__social-item">
+                <a> <img src="img/facebook-icon.svg"></a>
+              </li>
+              <li class="footer__social-item">
+                <a> <img src="img/instagram-icon.svg"></a>
+              </li>
+              <li class="footer__social-item">
+                <a> <img src="img/twitter-icon.svg"></a>
+              </li>
+              <li class="footer__social-item">
+                <a> <img src="img/youtube-icon.svg"></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </footer>
 
     <div class="overlay"></div>
 
@@ -425,7 +517,7 @@
         </div>
       </div>
 
-      <div class="checkbox-container"></div>
+      <div class="calculator__extra-options"></div>
     </template>
 
     <template class="calculator__template-checkbox_mortgage">
@@ -434,7 +526,7 @@
     </template>
 
     <template class="calculator__template-checkbox_car-credit">
-      <div class="checkbox-container-casco__margin">
+      <div class="calculator__extra-options-casco__margin">
         <input class="calculator__input input-checkbox input-checkbox_casco" type="checkbox" id="casco">
         <label class="calculator__label checkbox-label checkbox-label_square" for="casco">Оформить КАСКО в нашем банке</label>
       </div>
@@ -451,6 +543,7 @@
       </label>
     </template>
 
+    <script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgSxrXRGnLYTMT2XxOwXcuTKlBZl2tAr0&callback=initMap" type="text/javascript"></script>
     <script src="https://unpkg.com/@webcomponents/custom-elements"></script>
     <script src="js/main.js"></script>
   </body>
