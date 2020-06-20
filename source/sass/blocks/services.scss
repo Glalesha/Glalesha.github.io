@@ -1,4 +1,5 @@
-.services-section {
+.services {
+  position: relative;
   margin-bottom: 105px;
 
   @media (max-width: 1023px) {
@@ -10,45 +11,52 @@
   }
 }
 
-.service {
-  display: flex;
-  padding: 57px 135px 60px 70px;
-  opacity: 1;
-  background-color: $white;
-  transition: opacity 0.5s ease;
-
-  @media (max-width: 1023px) {
-    justify-content: space-between;
-    padding: 52px 49px 47px;
-  }
-
-  @media (max-width: 767px) {
-    flex-direction: column;
-    padding: 52px 15px 0;
-  }
-}
-
-.service-menu {
+.services__controls {
   display: flex;
   margin: 0;
   padding: 0;
   list-style: none;
+
+  @media (max-width: 1023px) {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    z-index: 1;
+    width: auto;
+    height: auto;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  @media (max-width: 767px) {
+    bottom: 10px;
+  }
 }
 
-.service-menu__item {
+.services__controls-item {
   width: 25%;
   height: 93px;
 
   @media (max-width: 1023px) {
-    pointer-events: none;
+    height: auto;
+  }
+
+  &:not(:last-child) {
+    @media (max-width: 1023px) {
+      margin-right: 8px;
+    }
+
+    @media (max-width: 767px) {
+      margin-right: 6px;
+    }
   }
 }
 
-.service-menu__item input {
+.services__controls-item input {
   display: none;
 }
 
-.service-menu__label {
+.services__controls-label {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,9 +76,28 @@
     right: 10px;
     display: block;
   }
+
+  @media (max-width: 1023px) {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #2028b6;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:before {
+      display: none;
+    }
+
+    @media (max-width: 767px) {
+      width: 6px;
+      height: 6px;
+    }
+  }
 }
 
-.service-menu__deposit label {
+.services__controls-deposit label {
   &:before {
     width: 34px;
     height: 33px;
@@ -78,7 +105,7 @@
   }
 }
 
-.service-menu__credits label {
+.services__controls-credits label {
   &:before {
     width: 34px;
     height: 30px;
@@ -86,7 +113,7 @@
   }
 }
 
-.service-menu__insurance label {
+.services__controls-insurance label {
   &:before {
     width: 28px;
     height: 34px;
@@ -94,7 +121,7 @@
   }
 }
 
-.service-menu__online label {
+.services__controls-online label {
   &:before {
     width: 20px;
     height: 34px;
@@ -102,8 +129,44 @@
   }
 }
 
-.service-menu__item input:checked + label {
+.services__controls-item input:checked + label {
   background-color: $white;
+}
+
+.services__controls-text {
+  @media (max-width: 1023px) {
+    display: none;
+  }
+}
+
+.services__controls-item input:checked + .services__controls-label {
+  @media (max-width: 1023px) {
+    background: #e0e0e0;
+  }
+}
+
+.service {
+  display: flex;
+  flex-shrink: 0;
+  width: 25%;
+  padding: 57px 135px 60px 70px;
+  opacity: 0;
+  background-color: $white;
+  transition: opacity 0.5s ease;
+
+  @media (max-width: 1023px) {
+    flex-shrink: 0;
+    justify-content: space-between;
+    width: 100vw;
+    max-width: 25%;
+    padding: 52px 49px 47px;
+    opacity: 1;
+  }
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    padding: 52px 15px 0;
+  }
 }
 
 .service__content {
@@ -217,12 +280,12 @@
   @media (max-width: 767px) {
     width: 290px;
     height: 43px;
-    margin: auto auto 60px;
+    margin: auto auto 48px;
     font-size: 14px;
   }
 }
 
-.service_image {
+.service__image {
   flex-shrink: 0;
   width: 440px;
   height: 290px;
@@ -240,7 +303,7 @@
   }
 }
 
-.service-deposit .service_image {
+.service_deposit .service__image {
   background-image: url("../../img/piggybank.png");
 
   @media (max-width: 1023px) {
@@ -248,19 +311,19 @@
   }
 }
 
-.service-credits .service_image {
+.service_credits .service__image {
   background-image: url("../../img/car.png");
 }
 
-.service-insurance .service_image {
+.service_insurance .service__image {
   background-image: url("../../img/lock.png");
 }
 
-.service-online .service_image {
+.service_online .service__image {
   background-image: url("../../img/phone.png");
 }
 
-.service_image-mobile {
+.service__image-mobile {
   display: none;
 
   @media (max-width: 767px) {
@@ -276,31 +339,31 @@
   }
 }
 
-.service-deposit .service_image-mobile {
+.service_deposit .service__image-mobile {
   @media (max-width: 767px) {
     background-image: url("../../img/piggybank-mobile.png");
   }
 }
 
-.service-credits .service_image-mobile {
+.service_credits .service__image-mobile {
   @media (max-width: 767px) {
     background-image: url("../../img/car-mobile.png");
   }
 }
 
-.service-insurance .service_image-mobile {
+.service_insurance .service__image-mobile {
   @media (max-width: 767px) {
     background-image: url("../../img/lock-mobile.png");
   }
 }
 
-.service-online .service_image-mobile {
+.service_online .service__image-mobile {
   @media (max-width: 767px) {
     background-image: url("../../img/phone-mobile.png");
   }
 }
 
-.service__link-to-calculator {
+.service__link {
   margin-top: -6px;
   color: $black;
   font-family: "Roboto", sans-serif;
@@ -317,99 +380,29 @@
   }
 }
 
-.service__link-to-calculator a {
+.service__link a {
   color: $black;
   font-weight: bold;
 }
 
-.services-section_slider {
-  @media (max-width: 1023px) {
-    position: relative;
+.services__wrap {
+  overflow: hidden;
+}
+
+.services__list {
+  display: flex;
+  width: 400%;
+  height: 100%;
+
+  @media (min-width: 1024px) {
+    transition: opacity 0.3s;
   }
 }
 
-.services-slider {
-  @media (max-width: 1023px) {
-    overflow: hidden;
-  }
+.service_visible {
+  opacity: 1;
 }
 
-.services-slider__slides {
-  @media (max-width: 1023px) {
-    display: flex;
-    width: 400%;
-    height: 100%;
-  }
-}
-
-.services-slider__slide {
-  @media (max-width: 1023px) {
-    flex-shrink: 0;
-    width: 100vw;
-    max-width: 25%;
-  }
-}
-
-.service-menu__text {
-  @media (max-width: 1023px) {
-    display: none;
-  }
-}
-
-.service-menu_bullets {
-  @media (max-width: 1023px) {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    z-index: 1;
-    transform: translateX(-50%);
-  }
-
-  @media (max-width: 767px) {
-    bottom: 10px;
-  }
-}
-
-.service-menu__label_bullet {
-  @media (max-width: 1023px) {
-    display: block;
-    width: 8px;
-    height: 8px;
-    background-color: #2028b6;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-
-    &:before {
-      display: none;
-    }
-
-    @media (max-width: 767px) {
-      width: 6px;
-      height: 6px;
-    }
-  }
-}
-
-.service-menu__item input:checked + .service-menu__label_bullet {
-  @media (max-width: 1023px) {
-    background: #e0e0e0;
-  }
-}
-
-.service-menu__item_bullet {
-  @media (max-width: 1023px) {
-    width: auto;
-    height: auto;
-  }
-
-  &:not(:last-child) {
-    @media (max-width: 1023px) {
-      margin-right: 8px;
-    }
-
-    @media (max-width: 767px) {
-      margin-right: 6px;
-    }
-  }
+.services__controls_disabled {
+  pointer-events: none;
 }

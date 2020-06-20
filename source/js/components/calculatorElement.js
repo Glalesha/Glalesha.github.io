@@ -45,6 +45,7 @@ export default class CalculatorElement extends HTMLElement {
   }
 
   updateOffer() {
+    this.checkValidPrice();
     this.creditSum = this.price - this.initialFee - this.decreaseSum;
 
     if (this.creditSum < this.minCreditSum) {
@@ -148,7 +149,6 @@ export default class CalculatorElement extends HTMLElement {
     this.price = this.transformStringToNumber(this.inputPrice.value);
 
     //this.inputPrice.value = this.addSpacesInNumber(this.price);
-    this.checkValidPrice();
     this.calculateMinInitialFee();
   }
 
@@ -213,10 +213,16 @@ export default class CalculatorElement extends HTMLElement {
       document.querySelector(
         ".calculator__invalid-input-message"
       ).textContent = ERROR_MESSAGE;
+      document
+        .querySelector(".offer__button")
+        .classList.add("offer__button_disabled");
     } else {
       this.inputPrice.classList.remove("calculator__input_price_invalid");
       document.querySelector(".calculator__invalid-input-message").textContent =
         "";
+      document
+        .querySelector(".offer__button")
+        .classList.remove("offer__button_disabled");
     }
   }
 

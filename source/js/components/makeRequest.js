@@ -101,15 +101,18 @@ export default function makeRequest(purpose, price, initialFee, term) {
 
     localStorage.getItem("user-data");
 
-    localStorage.setItem("user-data", [
-      //...localStorage.getItem("user-data"),
-      {
-        fullName: inputFullname.value,
-        telephone: inputTelephone.value,
-        email: inputEmail.value,
-        number: +localStorage.getItem("requestsNumber") + 1,
-      },
-    ]);
+    localStorage.setItem(
+      "user-data",
+      JSON.stringify([
+        //...localStorage.getItem("user-data"),
+        {
+          fullName: inputFullname.value,
+          telephone: inputTelephone.value,
+          email: inputEmail.value,
+          number: localStorage.getItem("requestsNumber"),
+        },
+      ])
+    );
 
     openPopup();
     forbidScroll(null, closeButton);

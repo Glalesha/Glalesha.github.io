@@ -55,8 +55,6 @@ export default function map() {
   }
 
   function initMap() {
-    console.log(markers);
-
     let center = new google.maps.LatLng(56.804286, 60.644154);
     let mapOptions = {
       zoom: 5,

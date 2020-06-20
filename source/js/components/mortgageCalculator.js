@@ -30,7 +30,6 @@ export default class MortgageCalculator extends CalculatorElement {
   }
 
   connectedCallback() {
-    console.log(this);
     super.connectedCallback();
     this.querySelector(".calculator__extra-options").append(
       document

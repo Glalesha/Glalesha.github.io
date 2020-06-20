@@ -279,36 +279,13 @@
   }
 
   function services() {
-    const servicesSection = document.querySelector(".services-section");
-    const services = document.querySelectorAll(".service");
-    const serviceInput = document.querySelectorAll(".service-menu input");
-    const serviceLabel = document.querySelectorAll(".service-menu__label");
-
-    serviceInput.forEach((item) => {
-      item.addEventListener("change", () => tabService(item.value));
-    });
-
-    serviceLabel.forEach((item, index) => {
-      item.addEventListener("focus", () => {
-        serviceInput[index].checked = true;
-        tabService(index);
-      });
-    });
-
-    function tabService(serviceIndex) {
-      servicesSection
-        .querySelector(".service:not(.visually-hidden_mobile)")
-        .classList.add("visually-hidden_mobile");
-
-      services[serviceIndex].classList.remove("visually-hidden_mobile");
-    }
-  }
-
-  function servicesSlider() {
-    const sliderItems = document.querySelector(".services-slider__slides");
-    const slides = document.querySelectorAll(".services-slider__slide");
-    const controls = document.querySelectorAll(".service-menu__item input");
-    let slideWidth = document.documentElement.clientWidth;
+    const servicesSection = document.querySelector(".services");
+    const sliderItems = document.querySelector(".services__list");
+    const slides = document.querySelectorAll(".service");
+    const controlsContainer = document.querySelector(".services__controls");
+    const controls = document.querySelectorAll(".services__controls-item input");
+    const serviceLabel = document.querySelectorAll(".services__controls-label");
+    let slideWidth = servicesSection.clientWidth;
 
     const firstSlide = slides[0];
     const lastSlide = slides[slides.length - 1];
@@ -324,19 +301,37 @@
     let allowShift = true;
     let slideWidth2 = 0;
 
-    sliderItems.addEventListener("transitionend", checkIndex);
-    sliderItems.addEventListener("touchstart", dragStart);
-    sliderItems.addEventListener("touchend", dragEnd);
-    sliderItems.addEventListener("touchmove", dragAction);
+    isAllowSwipe();
+
+    function isAllowSwipe() {
+      if (window.matchMedia("(max-width: 1023px)").matches) {
+        sliderItems.addEventListener("touchstart", dragStart);
+        sliderItems.addEventListener("touchend", dragEnd);
+        sliderItems.addEventListener("touchmove", dragAction);
+      } else {
+        sliderItems.removeEventListener("touchstart", dragStart);
+        sliderItems.removeEventListener("touchend", dragEnd);
+        sliderItems.removeEventListener("touchmove", dragAction);
+      }
+    }
 
     window.addEventListener("resize", function (event) {
+      isAllowSwipe();
       slideWidth2 = slideWidth;
-      slideWidth = document.documentElement.clientWidth;
+      slideWidth = servicesSection.clientWidth;
 
       sliderItems.style.transform = `translateX(${-(
       (index + 1) * slideWidth -
       (slideWidth - slideWidth2)
     )}px)`;
+
+    });
+
+    sliderItems.addEventListener("transitionend", checkIndex);
+    controls.forEach((item) => {
+      item.addEventListener("input", () => {
+        goTo(item.value - 1);
+      });
     });
 
     sliderItems.style.transform = `translateX(${-slideWidth}px)`;
@@ -347,9 +342,17 @@
     function goTo(slideIndex) {
       if (allowShift) {
         sliderItems.classList.add("shifting");
+        controlsContainer.classList.add("services__controls_disabled");
         sliderItems.style.transform = `translateX(${
         -(slideIndex + 1) * slideWidth
       }px)`;
+
+        document.querySelector(".service_visible") &&
+          document
+            .querySelector(".service_visible")
+            .classList.remove("service_visible");
+
+        slides[slideIndex] && slides[slideIndex].classList.add("service_visible");
 
         index = slideIndex;
       }
@@ -369,6 +372,7 @@
       }
 
       sliderItems.classList.remove("shifting");
+      controlsContainer.classList.remove("services__controls_disabled");
       allowShift = true;
     }
 
@@ -512,6 +516,7 @@
     }
 
     updateOffer() {
+      this.checkValidPrice();
       this.creditSum = this.price - this.initialFee - this.decreaseSum;
 
       if (this.creditSum < this.minCreditSum) {
@@ -615,7 +620,6 @@
       this.price = this.transformStringToNumber(this.inputPrice.value);
 
       //this.inputPrice.value = this.addSpacesInNumber(this.price);
-      this.checkValidPrice();
       this.calculateMinInitialFee();
     }
 
@@ -680,10 +684,16 @@
         document.querySelector(
           ".calculator__invalid-input-message"
         ).textContent = ERROR_MESSAGE;
+        document
+          .querySelector(".offer__button")
+          .classList.add("offer__button_disabled");
       } else {
         this.inputPrice.classList.remove("calculator__input_price_invalid");
         document.querySelector(".calculator__invalid-input-message").textContent =
           "";
+        document
+          .querySelector(".offer__button")
+          .classList.remove("offer__button_disabled");
       }
     }
 
@@ -922,7 +932,6 @@
     }
 
     connectedCallback() {
-      console.log(this);
       super.connectedCallback();
       this.querySelector(".calculator__extra-options").append(
         document
@@ -1268,15 +1277,18 @@
 
       localStorage.getItem("user-data");
 
-      localStorage.setItem("user-data", [
-        //...localStorage.getItem("user-data"),
-        {
-          fullName: inputFullname.value,
-          telephone: inputTelephone.value,
-          email: inputEmail.value,
-          number: +localStorage.getItem("requestsNumber") + 1,
-        },
-      ]);
+      localStorage.setItem(
+        "user-data",
+        JSON.stringify([
+          //...localStorage.getItem("user-data"),
+          {
+            fullName: inputFullname.value,
+            telephone: inputTelephone.value,
+            email: inputEmail.value,
+            number: localStorage.getItem("requestsNumber"),
+          },
+        ])
+      );
 
       openPopup();
       forbidScroll(null, closeButton);
@@ -1425,8 +1437,6 @@
     }
 
     function initMap() {
-      console.log(markers);
-
       let center = new google.maps.LatLng(56.804286, 60.644154);
       let mapOptions = {
         zoom: 5,
@@ -1519,15 +1529,6 @@
   makeRequest();
   CalculatorCustomSelect();
   map();
-
-  // let thanksPopup = new Popup();
-  // document.querySelector(".thanks-popup").onclick = function () {
-  //   thanksPopup.createPopup();
-  // };
-
-  if (window.matchMedia("(max-width: 1023px)").matches) {
-    servicesSlider();
-  }
 
 }());
 
