@@ -101,7 +101,7 @@
   &:before {
     width: 34px;
     height: 33px;
-    background: url("../../img/deposit-icon.svg") no-repeat;
+    background: url("../img/deposit-icon.svg") no-repeat;
   }
 }
 
@@ -109,7 +109,7 @@
   &:before {
     width: 34px;
     height: 30px;
-    background: url("../../img/credits-icon.svg") no-repeat;
+    background: url("../img/credits-icon.svg") no-repeat;
   }
 }
 
@@ -117,7 +117,7 @@
   &:before {
     width: 28px;
     height: 34px;
-    background: url("../../img/insurance-icon.svg") no-repeat;
+    background: url("../img/insurance-icon.svg") no-repeat;
   }
 }
 
@@ -125,7 +125,7 @@
   &:before {
     width: 20px;
     height: 34px;
-    background: url("../../img/online-icon.svg") no-repeat;
+    background: url("../img/online-icon.svg") no-repeat;
   }
 }
 
@@ -238,7 +238,7 @@
     left: -23px;
     width: 13px;
     height: 10px;
-    background: url("../../img/advantage-mark.svg") no-repeat;
+    background: url("../img/advantage-mark.svg") no-repeat;
     background-size: cover;
 
     @media (max-width: 767px) {
@@ -304,23 +304,23 @@
 }
 
 .service_deposit .service__image {
-  background-image: url("../../img/piggybank.png");
+background-image: url("../img/piggybank.png");
 
   @media (max-width: 1023px) {
-    background-image: url("../../img/piggybank-tablet.png");
+    background-image: url("../img/piggybank-tablet.png");
   }
 }
 
 .service_credits .service__image {
-  background-image: url("../../img/car.png");
+  background-image: url("../img/car.png");
 }
 
 .service_insurance .service__image {
-  background-image: url("../../img/lock.png");
+  background-image: url("../img/lock.png");
 }
 
 .service_online .service__image {
-  background-image: url("../../img/phone.png");
+  background-image: url("../img/phone.png");
 }
 
 .service__image-mobile {
@@ -341,25 +341,25 @@
 
 .service_deposit .service__image-mobile {
   @media (max-width: 767px) {
-    background-image: url("../../img/piggybank-mobile.png");
+    background-image: url("../img/piggybank-mobile.png");
   }
 }
 
 .service_credits .service__image-mobile {
   @media (max-width: 767px) {
-    background-image: url("../../img/car-mobile.png");
+    background-image: url("../img/car-mobile.png");
   }
 }
 
 .service_insurance .service__image-mobile {
   @media (max-width: 767px) {
-    background-image: url("../../img/lock-mobile.png");
+    background-image: url("../img/lock-mobile.png");
   }
 }
 
 .service_online .service__image-mobile {
   @media (max-width: 767px) {
-    background-image: url("../../img/phone-mobile.png");
+    background-image: url("../img/phone-mobile.png");
   }
 }
 

@@ -1407,6 +1407,8 @@
 
     const checkboxs = document.querySelectorAll(".branches__checkbox");
 
+    window.initMap = initMap;
+
     let categories = {
       russia: true,
       cis: true,
@@ -1419,8 +1421,6 @@
         filterMarkers();
       });
     });
-
-    initMap();
 
     function updateCategories({ value, checked }) {
       categories[value] = checked;
@@ -1461,7 +1461,7 @@
           position: { lat: item.lat, lng: item.lng },
           category: item.category,
           map: map,
-          icon: "../../img/map-marker.svg",
+          icon: "../img/map-marker.svg",
         });
 
         markers.push(marker);

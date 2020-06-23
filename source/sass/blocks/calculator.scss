@@ -141,7 +141,7 @@
 .input-checkbox:checked + .checkbox-label_square {
   &:before {
     background-color: $blue;
-    background-image: url("../../img/check-mark.svg");
+    background-image: url("../img/check-mark.svg");
     background-repeat: no-repeat;
     background-position: 50%;
   }
