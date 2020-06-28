@@ -41,16 +41,16 @@ export default function slider() {
   firstSlide.before(cloneLast);
   lastSlide.after(cloneFirst);
 
+  let timerId;
+
   function createTimer() {
-    let timerId = setTimeout(function tick() {
+    timerId = setTimeout(function tick() {
       shiftSlide();
       timerId = setTimeout(tick, 4000);
     }, 4000);
-
-    return timerId;
   }
 
-  let timer = createTimer();
+  createTimer();
 
   function shiftSlide() {
     if (allowShift) {
@@ -68,16 +68,18 @@ export default function slider() {
   }
 
   function goTo(slideIndex) {
+    clearTimeout(timerId);
+
     if (allowShift) {
       sliderItems.classList.add("shifting");
-      clearTimeout(timer);
       sliderItems.style.transform = `translateX(${
         -(slideIndex + 1) * slideWidth
       }px)`;
 
       index = slideIndex;
-      timer = createTimer();
     }
+
+    createTimer();
 
     allowShift = false;
   }
@@ -98,9 +100,7 @@ export default function slider() {
   }
 
   function dragStart(e) {
-    e.preventDefault();
-
-    clearTimeout(timer);
+    clearTimeout(timerId);
 
     posX1 = e.touches[0].clientX;
     posInitial = -(index + 1) * slideWidth;
@@ -125,7 +125,7 @@ export default function slider() {
       checkRadio();
     } else {
       sliderItems.style.transform = `translateX(${posInitial}px)`;
-      timer = createTimer();
+      createTimer();
     }
 
     offset = 0;

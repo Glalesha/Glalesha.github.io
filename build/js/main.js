@@ -179,16 +179,16 @@
     firstSlide.before(cloneLast);
     lastSlide.after(cloneFirst);
 
+    let timerId;
+
     function createTimer() {
-      let timerId = setTimeout(function tick() {
+      timerId = setTimeout(function tick() {
         shiftSlide();
         timerId = setTimeout(tick, 4000);
       }, 4000);
-
-      return timerId;
     }
 
-    let timer = createTimer();
+    createTimer();
 
     function shiftSlide() {
       if (allowShift) {
@@ -206,16 +206,18 @@
     }
 
     function goTo(slideIndex) {
+      clearTimeout(timerId);
+
       if (allowShift) {
         sliderItems.classList.add("shifting");
-        clearTimeout(timer);
         sliderItems.style.transform = `translateX(${
         -(slideIndex + 1) * slideWidth
       }px)`;
 
         index = slideIndex;
-        timer = createTimer();
       }
+
+      createTimer();
 
       allowShift = false;
     }
@@ -236,9 +238,7 @@
     }
 
     function dragStart(e) {
-      e.preventDefault();
-
-      clearTimeout(timer);
+      clearTimeout(timerId);
 
       posX1 = e.touches[0].clientX;
       posInitial = -(index + 1) * slideWidth;
@@ -263,7 +263,7 @@
         checkRadio();
       } else {
         sliderItems.style.transform = `translateX(${posInitial}px)`;
-        timer = createTimer();
+        createTimer();
       }
 
       offset = 0;
@@ -325,7 +325,6 @@
       (index + 1) * slideWidth -
       (slideWidth - slideWidth2)
     )}px)`;
-
     });
 
     sliderItems.addEventListener("transitionend", checkIndex);
@@ -378,8 +377,6 @@
     }
 
     function dragStart(e) {
-      e.preventDefault();
-
       posX1 = e.touches[0].clientX;
       posInitial = -(index + 1) * slideWidth;
     }

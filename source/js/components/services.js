@@ -43,7 +43,6 @@ export default function services() {
       (index + 1) * slideWidth -
       (slideWidth - slideWidth2)
     )}px)`;
-
   });
 
   sliderItems.addEventListener("transitionend", checkIndex);
@@ -96,8 +95,6 @@ export default function services() {
   }
 
   function dragStart(e) {
-    e.preventDefault();
-
     posX1 = e.touches[0].clientX;
     posInitial = -(index + 1) * slideWidth;
   }
