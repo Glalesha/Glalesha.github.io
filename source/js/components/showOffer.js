@@ -6,7 +6,6 @@ export default function showOffer(
   purpose,
   minCreditSum
 ) {
-  const offer = document.querySelector(".offer");
   const creditSumOutput = document.querySelector(".offer__value_credit-sum");
   const monthlyPaymentOutput = document.querySelector(
     ".offer__value_monthly-payment"

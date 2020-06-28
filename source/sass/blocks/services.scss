@@ -261,6 +261,7 @@
 
 .service__button {
   display: block;
+  text-align: center;
   width: 198px;
   height: 51px;
   background-color: $blue;
@@ -272,6 +273,8 @@
   outline: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-decoration: none;
+  line-height: 51px;
 
   &:hover {
     background-color: $blue-light;
@@ -304,7 +307,7 @@
 }
 
 .service_deposit .service__image {
-background-image: url("../img/piggybank.png");
+  background-image: url("../img/piggybank.png");
 
   @media (max-width: 1023px) {
     background-image: url("../img/piggybank-tablet.png");
@@ -383,6 +386,11 @@ background-image: url("../img/piggybank.png");
 .service__link a {
   color: $black;
   font-weight: bold;
+  transition: color 0.3s;
+
+  &:hover {
+    color: $blue;
+  }
 }
 
 .services__wrap {

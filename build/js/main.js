@@ -14,7 +14,7 @@
       }
     });
 
-    body.dataset.scrollY = getBodyScrollTop(); // сохраним значение скролла
+    body.dataset.scrollY = getBodyScrollTop(); 
 
     if (existVerticalScroll()) {
       body.classList.add("body-lock");
@@ -40,7 +40,6 @@
         body.dataset.scrollY = getBodyScrollTop();
 
         if (existVerticalScroll()) {
-          // новая строка
           body.classList.add("body-lock");
           body.style.top = `-${body.dataset.scrollY}px`;
         }
@@ -181,9 +180,12 @@
     lastSlide.after(cloneFirst);
 
     function createTimer() {
-      return setInterval(() => {
+      let timerId = setTimeout(function tick() {
         shiftSlide();
+        timerId = setTimeout(tick, 4000);
       }, 4000);
+
+      return timerId;
     }
 
     let timer = createTimer();
@@ -206,7 +208,7 @@
     function goTo(slideIndex) {
       if (allowShift) {
         sliderItems.classList.add("shifting");
-        clearInterval(timer);
+        clearTimeout(timer);
         sliderItems.style.transform = `translateX(${
         -(slideIndex + 1) * slideWidth
       }px)`;
@@ -236,7 +238,7 @@
     function dragStart(e) {
       e.preventDefault();
 
-      clearInterval(timer);
+      clearTimeout(timer);
 
       posX1 = e.touches[0].clientX;
       posInitial = -(index + 1) * slideWidth;
@@ -284,7 +286,6 @@
     const slides = document.querySelectorAll(".service");
     const controlsContainer = document.querySelector(".services__controls");
     const controls = document.querySelectorAll(".services__controls-item input");
-    const serviceLabel = document.querySelectorAll(".services__controls-label");
     let slideWidth = servicesSection.clientWidth;
 
     const firstSlide = slides[0];
@@ -379,8 +380,6 @@
     function dragStart(e) {
       e.preventDefault();
 
-      //if (!window.matchMedia("(max-width: 1023px)").matches) return;
-
       posX1 = e.touches[0].clientX;
       posInitial = -(index + 1) * slideWidth;
     }
@@ -428,7 +427,6 @@
     purpose,
     minCreditSum
   ) {
-    const offer = document.querySelector(".offer");
     const creditSumOutput = document.querySelector(".offer__value_credit-sum");
     const monthlyPaymentOutput = document.querySelector(
       ".offer__value_monthly-payment"
@@ -485,8 +483,6 @@
       this.requiredIncome = 0;
       this.requiredIncomCoefficient = 45;
     }
-
-    // Рендеринг формы и предложния
 
     updateForm() {
       this.inputPrice.value = this.transformValueToString(this.price, [
@@ -565,6 +561,12 @@
 
     hideRequest() {
       this.request.classList.add("visually-hidden");
+
+      this.request
+        .querySelectorAll(".request__input_user-data")
+        .forEach((input) => {
+          input.nextElementSibling.classList.remove("request__label_moved");
+        });
     }
 
     updateRequest() {
@@ -580,7 +582,6 @@
         this.request.querySelector(".request__input_fullname").focus();
       }
 
-      //slice(-4) добавляет числу лишние нули
       this.inputRequestNumber.value = `№ ${(
       "0000" +
       (+localStorage.getItem("requestsNumber") + 1)
@@ -613,13 +614,10 @@
         ]));
     }
 
-    // Обновление значений формы
-
     updatePriceOnInput(priceValue) {
       this.digitsPattern(this.inputPrice);
       this.price = this.transformStringToNumber(this.inputPrice.value);
 
-      //this.inputPrice.value = this.addSpacesInNumber(this.price);
       this.calculateMinInitialFee();
     }
 
@@ -675,8 +673,6 @@
       this.checkValidTerm();
       this.updateForm();
     }
-
-    // Вспомогательные функции
 
     checkValidPrice() {
       if (this.price > this.maxPrice || this.price < this.minPrice) {
@@ -752,9 +748,6 @@
 
     hideWords(input) {
       input.value = this.transformStringToNumber(input.value);
-      // this.addSpacesInNumber(
-      //   this.transformStringToNumber(input.value)
-      // );
     }
 
     plural(number, units) {
@@ -775,7 +768,7 @@
 
     connectedCallback() {
       this.append(
-        document.querySelector(".calculator-template").content.cloneNode(true)
+        document.querySelector(".calculator__template").content.cloneNode(true)
       );
 
       this.inputPrice = this.querySelector(".calculator__input_price");
@@ -1074,7 +1067,6 @@
       ".calculator__custom-calculator-container"
     );
     const offer = document.querySelector(".offer");
-    const requestContainer = document.querySelector(".request-container");
     const arrow = document.querySelector(".calculator__arrow");
 
     const optionsOpenedClass = "calculator__options_opened";
@@ -1179,18 +1171,8 @@
   }
 
   function makeRequest(purpose, price, initialFee, term) {
-    const requestContainer = document.querySelector(".request-container");
-    const requestTemplate = document.querySelector(".request-template");
     const request = document.querySelector(".request");
     const requestForm = document.querySelector(".request__form");
-    const inputRequestNumber = request.querySelector(
-      ".request__input_request-number"
-    );
-    const inputPurpose = request.querySelector(".request__input_purpose");
-    const inputPrice = request.querySelector(".request__input_price");
-    const inputInitialFee = request.querySelector(".request__input_initial-fee");
-    const inputTerm = request.querySelector(".request__input_term");
-    const labelPrice = request.querySelector(".request__label_price");
     const inputsUserData = request.querySelectorAll(".request__input_user-data");
     const inputFullname = request.querySelector(".request__input_fullname");
     const inputTelephone = request.querySelector(".request__input_phone-number");
@@ -1199,11 +1181,7 @@
     const closeButton = document.querySelector(".thanks-popup__close");
     const overlay = document.querySelector(".overlay");
     const select = document.querySelector(".calculator__select");
-    const selected = select.querySelector(".calculator__selected");
     const selectValue = select.querySelector(".calculator__select-value");
-    const optionsWrap = select.querySelector(".calculator__options-wrap");
-    const optionsContainer = select.querySelector(".calculator__options");
-    const options = select.querySelectorAll(".calculator__option");
     const customCalculatorContainer = document.querySelector(
       ".calculator__custom-calculator-container"
     );
@@ -1228,7 +1206,6 @@
     }
 
     function checkEmpty(input) {
-      input.nextElementSibling;
       if (!input.value.length) {
         input.nextElementSibling.classList.remove("request__label_moved");
       } else {
@@ -1280,7 +1257,6 @@
       localStorage.setItem(
         "user-data",
         JSON.stringify([
-          //...localStorage.getItem("user-data"),
           {
             fullName: inputFullname.value,
             telephone: inputTelephone.value,
@@ -1461,7 +1437,7 @@
           position: { lat: item.lat, lng: item.lng },
           category: item.category,
           map: map,
-          icon: "../img/map-marker.svg",
+          icon: "img/map-marker.svg",
         });
 
         markers.push(marker);

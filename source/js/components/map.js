@@ -79,7 +79,7 @@ export default function map() {
         position: { lat: item.lat, lng: item.lng },
         category: item.category,
         map: map,
-        icon: "../img/map-marker.svg",
+        icon: "img/map-marker.svg",
       });
 
       markers.push(marker);

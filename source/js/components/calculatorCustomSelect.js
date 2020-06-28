@@ -9,7 +9,6 @@ export default function CalculatorCustomSelect() {
     ".calculator__custom-calculator-container"
   );
   const offer = document.querySelector(".offer");
-  const requestContainer = document.querySelector(".request-container");
   const arrow = document.querySelector(".calculator__arrow");
 
   const optionsOpenedClass = "calculator__options_opened";

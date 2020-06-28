@@ -15,8 +15,6 @@ export default class CalculatorElement extends HTMLElement {
     this.requiredIncomCoefficient = 45;
   }
 
-  // Рендеринг формы и предложния
-
   updateForm() {
     this.inputPrice.value = this.transformValueToString(this.price, [
       "рубль",
@@ -94,6 +92,12 @@ export default class CalculatorElement extends HTMLElement {
 
   hideRequest() {
     this.request.classList.add("visually-hidden");
+
+    this.request
+      .querySelectorAll(".request__input_user-data")
+      .forEach((input) => {
+        input.nextElementSibling.classList.remove("request__label_moved");
+      });
   }
 
   updateRequest() {
@@ -109,7 +113,6 @@ export default class CalculatorElement extends HTMLElement {
       this.request.querySelector(".request__input_fullname").focus();
     }
 
-    //slice(-4) добавляет числу лишние нули
     this.inputRequestNumber.value = `№ ${(
       "0000" +
       (+localStorage.getItem("requestsNumber") + 1)
@@ -142,13 +145,10 @@ export default class CalculatorElement extends HTMLElement {
       ]));
   }
 
-  // Обновление значений формы
-
   updatePriceOnInput(priceValue) {
     this.digitsPattern(this.inputPrice);
     this.price = this.transformStringToNumber(this.inputPrice.value);
 
-    //this.inputPrice.value = this.addSpacesInNumber(this.price);
     this.calculateMinInitialFee();
   }
 
@@ -204,8 +204,6 @@ export default class CalculatorElement extends HTMLElement {
     this.checkValidTerm();
     this.updateForm();
   }
-
-  // Вспомогательные функции
 
   checkValidPrice() {
     if (this.price > this.maxPrice || this.price < this.minPrice) {
@@ -281,9 +279,6 @@ export default class CalculatorElement extends HTMLElement {
 
   hideWords(input) {
     input.value = this.transformStringToNumber(input.value);
-    // this.addSpacesInNumber(
-    //   this.transformStringToNumber(input.value)
-    // );
   }
 
   plural(number, units) {
@@ -304,7 +299,7 @@ export default class CalculatorElement extends HTMLElement {
 
   connectedCallback() {
     this.append(
-      document.querySelector(".calculator-template").content.cloneNode(true)
+      document.querySelector(".calculator__template").content.cloneNode(true)
     );
 
     this.inputPrice = this.querySelector(".calculator__input_price");

@@ -4,7 +4,6 @@ export default function services() {
   const slides = document.querySelectorAll(".service");
   const controlsContainer = document.querySelector(".services__controls");
   const controls = document.querySelectorAll(".services__controls-item input");
-  const serviceLabel = document.querySelectorAll(".services__controls-label");
   let slideWidth = servicesSection.clientWidth;
 
   const firstSlide = slides[0];
@@ -98,8 +97,6 @@ export default function services() {
 
   function dragStart(e) {
     e.preventDefault();
-
-    //if (!window.matchMedia("(max-width: 1023px)").matches) return;
 
     posX1 = e.touches[0].clientX;
     posInitial = -(index + 1) * slideWidth;

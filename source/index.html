@@ -23,16 +23,16 @@
         </a>
 
         <ul class="menu menu_burger">
-          <li class="menu__item">
+          <li class="menu__item menu__item_margin-right">
             <a class="menu__link" href="#services">Услуги</a>
           </li>
-          <li class="menu__item">
+          <li class="menu__item menu__item_margin-right">
             <a class="menu__link" href="#calculator">Рассчитать кредит</a>
           </li>
-          <li class="menu__item">
+          <li class="menu__item menu__item_margin-right">
             <a class="menu__link" href="#footer">Контакты</a>
           </li>
-          <li class="menu__item">
+          <li class="menu__item menu__item_margin-right">
             <a class="menu__link" href="#question">Задать вопрос</a>
           </li>
         </ul>
@@ -40,15 +40,16 @@
         <button class="page-header__button-open" type="button"></button>
 
         <div class="login-popup login-popup__close">
-          <header class="login-popup__header">
+          <div class="login-popup__header">
             <a class="logo-internet-bank" href="#">
               <img
                 class="logo-internet-bank__image"
                 src="img/logo-internet-bank.svg"
+                alt="Лого Лига Банка"
               />
             </a>
             <button class="close-button" type="button"></button>
-          </header>
+          </div>
 
           <form class="form-login">
             <div class="login-input">
@@ -74,22 +75,20 @@
     <section class="slider">
       <div class="slider__slides">
         <div class="slider__slide slider__slide-1">
-          <div class="slider__content slider__content_slider-1">
+          <div class="slider__content slider__content_slider-1 slide">
             <h2 class="slide__title">Лига Банк</h2>
             <p class="slide__tagline">Кредиты на любой случай</p>
-            <a class="slide__link-b" href="#calculator">
-              <button
-                class="slide__button slide__button_color-white"
-                type="button"
-              >
-                Рассчитать кредит
-              </button></a
+            <a
+              class="slide__button slide__button_color-white"
+              href="#calculator"
             >
+              Рассчитать кредит
+            </a>
           </div>
         </div>
 
         <div class="slider__slide slider__slide-2">
-          <div class="slider__content slider__content_slider-2">
+          <div class="slider__content slider__content_slider-2 slide">
             <h2 class="slide__title slide__title_black-color-text">
               Лига Банк
             </h2>
@@ -100,19 +99,16 @@
         </div>
 
         <div class="slider__slide slider__slide-3">
-          <div class="slider__content slider__content_slider-3">
+          <div class="slider__content slider__content_slider-3 slide">
             <h2 class="slide__title slide__title_black-color-text">
               Лига Банк
             </h2>
             <p class="slide__tagline slide__tagline_black-color-text">
               Всегда рядом
             </p>
-            <button
-              class="slide__button slide__button_color-blue"
-              type="button"
-            >
+            <a class="slide__button slide__button_color-blue" href="#branches">
               Найти отделение
-            </button>
+            </a>
           </div>
         </div>
       </div>
@@ -126,32 +122,19 @@
               name="controls"
               value="1"
               checked
-              readonly
             />
             <label for="control-1"></label>
           </div>
         </li>
         <li class="controls__item">
           <div class="controls__button">
-            <input
-              id="control-2"
-              type="radio"
-              name="controls"
-              value="2"
-              readonly
-            />
+            <input id="control-2" type="radio" name="controls" value="2" />
             <label for="control-2"></label>
           </div>
         </li>
         <li class="controls__item">
           <div class="controls__button">
-            <input
-              id="control-3"
-              type="radio"
-              name="controls"
-              value="3"
-              readonly
-            />
+            <input id="control-3" type="radio" name="controls" value="3" />
             <label for="control-3"></label>
           </div>
         </li>
@@ -223,9 +206,9 @@
                   </li>
                 </ul>
 
-                <button class="service__button" type="button">
+                <a class="service__button" href="#">
                   Узнать подробнее
-                </button>
+                </a>
               </div>
 
               <div class="service__image"></div>
@@ -275,9 +258,9 @@
                     Страхование недвижимости
                   </li>
                 </ul>
-                <button class="service__button" type="button">
+                <a class="service__button" href="#">
                   Узнать подробнее
-                </button>
+                </a>
               </div>
 
               <div class="service__image"></div>
@@ -300,9 +283,9 @@
                     всему миру
                   </li>
                 </ul>
-                <button class="service__button" type="button">
+                <a class="service__button" href="#">
                   Узнать подробнее
-                </button>
+                </a>
               </div>
 
               <div class="service__image"></div>
@@ -379,7 +362,9 @@
           </div>
 
           <div class="refuse visually-hidden">
-            <h3 class="refuse__title"></h3>
+            <h3 class="refuse__title">
+              Наш банк не выдает кредиты меньше указанной суммы
+            </h3>
 
             <p class="refuse__text">
               Попробуйте использовать другие параметры для расчёта.
@@ -389,7 +374,7 @@
 
         <div class="request visually-hidden">
           <form class="request__form">
-            <legend class="request__title">Шаг 3. Оформление заявки</legend>
+            <h3 class="request__title">Шаг 3. Оформление заявки</h3>
 
             <fieldset class="request__credit-info">
               <div
@@ -590,16 +575,16 @@
           </li>
           <li class="footer__item footer__item-2">
             <ul class="menu menu_column">
-              <li class="menu__item menu__item_no-right-margin">
+              <li class="menu__item menu__item_margin-bottom">
                 <a class="menu__link" href="#services">Услуги</a>
               </li>
-              <li class="menu__item menu__item_no-right-margin">
+              <li class="menu__item menu__item_margin-bottom">
                 <a class="menu__link" href="#calculator">Рассчитать кредит</a>
               </li>
-              <li class="menu__item menu__item_no-right-margin">
+              <li class="menu__item menu__item_margin-bottom">
                 <a class="menu__link" href="#footer">Контакты</a>
               </li>
-              <li class="menu__item menu__item_no-right-margin">
+              <li class="menu__item menu__item_margin-bottom">
                 <a class="menu__link" href="#question">Задать вопрос</a>
               </li>
             </ul>
@@ -620,7 +605,7 @@
             <div class="footer__number">
               <a
                 class="footer__link footer__link-phone-call footer__link_phone-image"
-                href="tel:8 800 111 22 33"
+                href="tel:88001112233"
                 >8 800 111 22 33</a
               >
               <p class="footer__info">Бесплатный для всех городов России</p>
@@ -629,16 +614,16 @@
           <li class="footer__item footer__item-5">
             <ul class="footer__social">
               <li class="footer__social-item">
-                <a> <img src="img/facebook-icon.svg" /></a>
+                <a> <img src="img/facebook-icon.svg" alt="facebook" /></a>
               </li>
               <li class="footer__social-item">
-                <a> <img src="img/instagram-icon.svg" /></a>
+                <a> <img src="img/instagram-icon.svg" alt="instagram" /></a>
               </li>
               <li class="footer__social-item">
-                <a> <img src="img/twitter-icon.svg" /></a>
+                <a> <img src="img/twitter-icon.svg" alt="twitter" /></a>
               </li>
               <li class="footer__social-item">
-                <a> <img src="img/youtube-icon.svg" /></a>
+                <a> <img src="img/youtube-icon.svg" alt="youtube" /></a>
               </li>
             </ul>
           </li>
@@ -648,7 +633,7 @@
 
     <div class="overlay"></div>
 
-    <template class="calculator-template">
+    <template class="calculator__template">
       <div class="calculator__custom-calculator-wrap">
         <legend class="calculator__legend">
           Шаг 2. Введите параметры кредита
@@ -774,7 +759,6 @@
       async
       defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDgSxrXRGnLYTMT2XxOwXcuTKlBZl2tAr0&callback=initMap"
-      type="text/javascript"
     ></script>
   </body>
 </html>

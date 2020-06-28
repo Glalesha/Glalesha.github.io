@@ -1,18 +1,8 @@
 import forbidScroll from "./forbidScroll";
 
 export default function makeRequest(purpose, price, initialFee, term) {
-  const requestContainer = document.querySelector(".request-container");
-  const requestTemplate = document.querySelector(".request-template");
   const request = document.querySelector(".request");
   const requestForm = document.querySelector(".request__form");
-  const inputRequestNumber = request.querySelector(
-    ".request__input_request-number"
-  );
-  const inputPurpose = request.querySelector(".request__input_purpose");
-  const inputPrice = request.querySelector(".request__input_price");
-  const inputInitialFee = request.querySelector(".request__input_initial-fee");
-  const inputTerm = request.querySelector(".request__input_term");
-  const labelPrice = request.querySelector(".request__label_price");
   const inputsUserData = request.querySelectorAll(".request__input_user-data");
   const inputFullname = request.querySelector(".request__input_fullname");
   const inputTelephone = request.querySelector(".request__input_phone-number");
@@ -21,18 +11,12 @@ export default function makeRequest(purpose, price, initialFee, term) {
   const closeButton = document.querySelector(".thanks-popup__close");
   const overlay = document.querySelector(".overlay");
   const select = document.querySelector(".calculator__select");
-  const selected = select.querySelector(".calculator__selected");
   const selectValue = select.querySelector(".calculator__select-value");
-  const optionsWrap = select.querySelector(".calculator__options-wrap");
-  const optionsContainer = select.querySelector(".calculator__options");
-  const options = select.querySelectorAll(".calculator__option");
   const customCalculatorContainer = document.querySelector(
     ".calculator__custom-calculator-container"
   );
   const offer = document.querySelector(".offer");
   const arrow = document.querySelector(".calculator__arrow");
-  const optionsOpenedClass = "calculator__options_opened";
-  const noBottomRadiusClass = "calculator__selected_no-bottom-radius";
   const arrowUpsidedown = "calculator__arrow_upside-down";
 
   initRequest();
@@ -52,7 +36,6 @@ export default function makeRequest(purpose, price, initialFee, term) {
   }
 
   function checkEmpty(input) {
-    input.nextElementSibling;
     if (!input.value.length) {
       input.nextElementSibling.classList.remove("request__label_moved");
     } else {
@@ -104,7 +87,6 @@ export default function makeRequest(purpose, price, initialFee, term) {
     localStorage.setItem(
       "user-data",
       JSON.stringify([
-        //...localStorage.getItem("user-data"),
         {
           fullName: inputFullname.value,
           telephone: inputTelephone.value,

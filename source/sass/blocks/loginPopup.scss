@@ -94,7 +94,6 @@
   padding: 0;
   border: 1px solid $black;
   border-radius: 4px;
-  outline: none;
 }
 
 .login-input input {
@@ -152,6 +151,11 @@
   transition: background-color 0.3s;
 
   &:hover {
+    background-color: $blue-light;
+  }
+
+  &:focus {
+    border: 2px solid $black;
     background-color: $blue-light;
   }
 

@@ -42,9 +42,12 @@ export default function slider() {
   lastSlide.after(cloneFirst);
 
   function createTimer() {
-    return setInterval(() => {
+    let timerId = setTimeout(function tick() {
       shiftSlide();
+      timerId = setTimeout(tick, 4000);
     }, 4000);
+
+    return timerId;
   }
 
   let timer = createTimer();
@@ -67,7 +70,7 @@ export default function slider() {
   function goTo(slideIndex) {
     if (allowShift) {
       sliderItems.classList.add("shifting");
-      clearInterval(timer);
+      clearTimeout(timer);
       sliderItems.style.transform = `translateX(${
         -(slideIndex + 1) * slideWidth
       }px)`;
@@ -97,7 +100,7 @@ export default function slider() {
   function dragStart(e) {
     e.preventDefault();
 
-    clearInterval(timer);
+    clearTimeout(timer);
 
     posX1 = e.touches[0].clientX;
     posInitial = -(index + 1) * slideWidth;

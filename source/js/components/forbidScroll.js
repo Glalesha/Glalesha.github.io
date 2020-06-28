@@ -11,7 +11,7 @@ export default function forbidScroll(openButton, closeButton) {
     }
   });
 
-  body.dataset.scrollY = getBodyScrollTop(); // сохраним значение скролла
+  body.dataset.scrollY = getBodyScrollTop(); 
 
   if (existVerticalScroll()) {
     body.classList.add("body-lock");
@@ -37,7 +37,6 @@ export default function forbidScroll(openButton, closeButton) {
       body.dataset.scrollY = getBodyScrollTop();
 
       if (existVerticalScroll()) {
-        // новая строка
         body.classList.add("body-lock");
         body.style.top = `-${body.dataset.scrollY}px`;
       }
