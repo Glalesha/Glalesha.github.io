@@ -37,7 +37,7 @@
           </li>
         </ul>
 
-        <button class="page-header__button-open" type="button"></button>
+        <button class="page-header__button-open" type="button" aria-label="open enter modal"></button>
 
         <div class="login-popup login-popup__close">
           <div class="login-popup__header">
@@ -48,7 +48,7 @@
                 alt="Лого Лига Банка"
               />
             </a>
-            <button class="close-button" type="button"></button>
+            <button class="close-button" type="button" aria-label="close enter modal"></button>
           </div>
 
           <form class="form-login">
@@ -64,7 +64,7 @@
               <a class="password__forget" href="#">Забыли пароль?</a>
             </div>
 
-            <button class="login-popup__submit-button" type="submit">
+            <button class="login-popup__submit-button" type="submit" aria-label="enter in the bank">
               Войти
             </button>
           </form>
@@ -358,7 +358,7 @@
               </li>
             </ul>
 
-            <button class="offer__button" type="button">Оформить заявку</button>
+            <button class="offer__button" type="button" aria-label="make a request">Оформить заявку</button>
           </div>
 
           <div class="refuse visually-hidden">
@@ -382,9 +382,10 @@
               >
                 <input
                   class="request__input_credit-data request__input_request-number"
+                  id="request-number"
                   readonly
                 />
-                <label class="request__label request__label_request-number"
+                <label class="request__label request__label_request-number" for="request-number"
                   >Номер заявки</label
                 >
               </div>
@@ -393,9 +394,10 @@
               >
                 <input
                   class="request__input_credit-data request__input_purpose"
+                  id="purpose"
                   readonly
                 />
-                <label class="request__label request__label_purpose"
+                <label class="request__label request__label_purpose" for="purpose"
                   >Цель кредита</label
                 >
               </div>
@@ -404,9 +406,10 @@
               >
                 <input
                   class="request__input_credit-data request__input_price"
+                  id="price"
                   readonly
                 />
-                <label class="request__label request__label_price"
+                <label class="request__label request__label_price" for="price"
                   >Стоимость недвижимости</label
                 >
               </div>
@@ -415,9 +418,10 @@
               >
                 <input
                   class="request__input_credit-data request__input_initial-fee"
+                  id="intial-fee"
                   readonly
                 />
-                <label class="request__label request__label_initial-fee"
+                <label class="request__label request__label_initial-fee" for="intial-fee"
                   >Первоначальный взнос</label
                 >
               </div>
@@ -426,9 +430,10 @@
               >
                 <input
                   class="request__input_credit-data request__input_term"
+                  id="term"
                   readonly
                 />
-                <label class="request__label request__label_term"
+                <label class="request__label request__label_term" for="term"
                   >Срок кредитования</label
                 >
               </div>
@@ -440,10 +445,12 @@
               >
                 <input
                   class="request__input request__input_user-data request__input_fullname"
+                  id="fullname"
                   type="text"
                 />
                 <label
                   class="request__label request__label_user-data request__label_fullname"
+                  for="fullname"
                   >ФИО</label
                 >
                 <span
@@ -457,10 +464,12 @@
                 >
                   <input
                     class="request__input request__input_user-data request__input_phone-number"
+                    id="phone-number"
                     type="tel"
                   />
                   <label
                     class="request__label request__label_user-data request__label_phone-number"
+                    for="phone-number"
                     >Телефон</label
                   >
                   <span
@@ -472,10 +481,12 @@
                 >
                   <input
                     class="request__input request__input_user-data request__input_email"
+                    id="email"
                     type="email"
                   />
                   <label
                     class="request__label request__label_user-data request__label_gmail"
+                    for="email"
                     >E-mail</label
                   >
                   <span
@@ -484,7 +495,7 @@
                 </div>
               </div>
 
-              <button class="request__button" type="submit">Отправить</button>
+              <button class="request__button" type="submit" aria-label="send request">Отправить</button>
             </fieldset>
           </form>
         </div>
@@ -494,7 +505,7 @@
           <p class="thanks-popup__text">
             Наш менеджер скоро свяжется с вами по указанному номеру телефона.
           </p>
-          <button class="thanks-popup__close" type="button"></button>
+          <button class="thanks-popup__close" type="button" aria-label="close thanks modal"></button>
         </div>
       </section>
 
@@ -614,16 +625,24 @@
           <li class="footer__item footer__item-5">
             <ul class="footer__social">
               <li class="footer__social-item">
-                <a> <img src="img/facebook-icon.svg" alt="facebook" /></a>
+                <a href="#">
+                  <img src="img/facebook-icon.svg" alt="facebook" /></a
+                >
               </li>
               <li class="footer__social-item">
-                <a> <img src="img/instagram-icon.svg" alt="instagram" /></a>
+                <a href="#">
+                  <img src="img/instagram-icon.svg" alt="instagram"
+                /></a>
               </li>
               <li class="footer__social-item">
-                <a> <img src="img/twitter-icon.svg" alt="twitter" /></a>
+                <a href="#">
+                  <img src="img/twitter-icon.svg" alt="twitter"
+                /></a>
               </li>
               <li class="footer__social-item">
-                <a> <img src="img/youtube-icon.svg" alt="youtube" /></a>
+                <a href="#">
+                  <img src="img/youtube-icon.svg" alt="youtube"
+                /></a>
               </li>
             </ul>
           </li>
@@ -633,7 +652,7 @@
 
     <div class="overlay"></div>
 
-    <template class="calculator__template">
+    <template class="calculator-template">
       <div class="calculator__custom-calculator-wrap">
         <legend class="calculator__legend">
           Шаг 2. Введите параметры кредита
@@ -646,13 +665,13 @@
           ></label>
 
           <div class="calculator__input-wrap">
-            <button class="calculator__step-down" type="button"></button>
+            <button class="calculator__step-down" type="button" aria-label="step down"></button>
             <input
               class="calculator__input calculator__input_price"
               type="text"
               id="price"
             />
-            <button class="calculator__step-up" type="button"></button>
+            <button class="calculator__step-up" type="button" aria-label="step up"></button>
             <span class="calculator__invalid-input-message"></span>
           </div>
 
@@ -699,7 +718,7 @@
       </div>
     </template>
 
-    <template class="calculator__template-checkbox_mortgage">
+    <template class="calculator-template-checkbox_mortgage">
       <input
         class="calculator__input input-checkbox"
         type="checkbox"
@@ -712,7 +731,7 @@
       >
     </template>
 
-    <template class="calculator__template-checkbox_car-credit">
+    <template class="calculator-template-checkbox_car-credit">
       <div class="calculator__extra-options-casco__margin">
         <input
           class="calculator__input input-checkbox input-checkbox_casco"
@@ -740,7 +759,7 @@
       </div>
     </template>
 
-    <template class="calculator__template-checkbox_consumer-credit">
+    <template class="calculator-template-checkbox_consumer-credit">
       <input
         class="calculator__input input-checkbox input-checkbox_bank-member"
         type="checkbox"

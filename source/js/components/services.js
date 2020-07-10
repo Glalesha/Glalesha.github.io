@@ -24,9 +24,9 @@ export default function services() {
 
   function isAllowSwipe() {
     if (window.matchMedia("(max-width: 1023px)").matches) {
-      sliderItems.addEventListener("touchstart", dragStart);
-      sliderItems.addEventListener("touchend", dragEnd);
-      sliderItems.addEventListener("touchmove", dragAction);
+      sliderItems.addEventListener("touchstart", dragStart, { passive: true });
+      sliderItems.addEventListener("touchend", dragEnd, { passive: true });
+      sliderItems.addEventListener("touchmove", dragAction, { passive: true });
     } else {
       sliderItems.removeEventListener("touchstart", dragStart);
       sliderItems.removeEventListener("touchend", dragEnd);

@@ -19,9 +19,9 @@ export default function slider() {
   let slideWidth2 = 0;
 
   sliderItems.addEventListener("transitionend", checkIndex);
-  sliderItems.addEventListener("touchstart", dragStart);
-  sliderItems.addEventListener("touchend", dragEnd);
-  sliderItems.addEventListener("touchmove", dragAction);
+  sliderItems.addEventListener("touchstart", dragStart, { passive: true });
+  sliderItems.addEventListener("touchend", dragEnd, { passive: true });
+  sliderItems.addEventListener("touchmove", dragAction, { passive: true });
   controls.forEach((item) => {
     item.addEventListener("input", () => goTo(item.value - 1));
   });

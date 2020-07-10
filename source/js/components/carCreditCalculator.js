@@ -37,7 +37,7 @@ export default class CarCreditCalculator extends CalculatorElement {
     super.connectedCallback();
     this.querySelector(".calculator__extra-options").append(
       document
-        .querySelector(".calculator__template-checkbox_car-credit")
+        .querySelector(".calculator-template-checkbox_car-credit")
         .content.cloneNode(true)
     );
 

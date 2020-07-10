@@ -157,9 +157,9 @@
     let slideWidth2 = 0;
 
     sliderItems.addEventListener("transitionend", checkIndex);
-    sliderItems.addEventListener("touchstart", dragStart);
-    sliderItems.addEventListener("touchend", dragEnd);
-    sliderItems.addEventListener("touchmove", dragAction);
+    sliderItems.addEventListener("touchstart", dragStart, { passive: true });
+    sliderItems.addEventListener("touchend", dragEnd, { passive: true });
+    sliderItems.addEventListener("touchmove", dragAction, { passive: true });
     controls.forEach((item) => {
       item.addEventListener("input", () => goTo(item.value - 1));
     });
@@ -306,9 +306,9 @@
 
     function isAllowSwipe() {
       if (window.matchMedia("(max-width: 1023px)").matches) {
-        sliderItems.addEventListener("touchstart", dragStart);
-        sliderItems.addEventListener("touchend", dragEnd);
-        sliderItems.addEventListener("touchmove", dragAction);
+        sliderItems.addEventListener("touchstart", dragStart, { passive: true });
+        sliderItems.addEventListener("touchend", dragEnd, { passive: true });
+        sliderItems.addEventListener("touchmove", dragAction, { passive: true });
       } else {
         sliderItems.removeEventListener("touchstart", dragStart);
         sliderItems.removeEventListener("touchend", dragEnd);
@@ -765,7 +765,7 @@
 
     connectedCallback() {
       this.append(
-        document.querySelector(".calculator__template").content.cloneNode(true)
+        document.querySelector(".calculator-template").content.cloneNode(true)
       );
 
       this.inputPrice = this.querySelector(".calculator__input_price");
@@ -925,7 +925,7 @@
       super.connectedCallback();
       this.querySelector(".calculator__extra-options").append(
         document
-          .querySelector(".calculator__template-checkbox_mortgage")
+          .querySelector(".calculator-template-checkbox_mortgage")
           .content.cloneNode(true)
       );
 
@@ -978,7 +978,7 @@
       super.connectedCallback();
       this.querySelector(".calculator__extra-options").append(
         document
-          .querySelector(".calculator__template-checkbox_consumer-credit")
+          .querySelector(".calculator-template-checkbox_consumer-credit")
           .content.cloneNode(true)
       );
 
@@ -1031,7 +1031,7 @@
       super.connectedCallback();
       this.querySelector(".calculator__extra-options").append(
         document
-          .querySelector(".calculator__template-checkbox_car-credit")
+          .querySelector(".calculator-template-checkbox_car-credit")
           .content.cloneNode(true)
       );
 

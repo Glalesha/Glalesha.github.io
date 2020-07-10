@@ -33,7 +33,7 @@ export default class MortgageCalculator extends CalculatorElement {
     super.connectedCallback();
     this.querySelector(".calculator__extra-options").append(
       document
-        .querySelector(".calculator__template-checkbox_mortgage")
+        .querySelector(".calculator-template-checkbox_mortgage")
         .content.cloneNode(true)
     );
 

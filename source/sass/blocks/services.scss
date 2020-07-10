@@ -159,7 +159,7 @@
     justify-content: space-between;
     width: 100vw;
     max-width: 25%;
-    padding: 52px 49px 47px;
+    padding: 54px 45px 57px;
     opacity: 1;
   }
 
@@ -190,7 +190,7 @@
   color: $black;
 
   @media (max-width: 1023px) {
-    margin-bottom: 26px;
+    margin-bottom: 20px;
     font-size: 18px;
   }
 
@@ -212,6 +212,7 @@
 
   @media (max-width: 1023px) {
     margin-bottom: 24px;
+    padding-left: 21px;
     font-size: 16px;
   }
 
@@ -374,7 +375,6 @@
   line-height: 25px;
 
   @media (max-width: 1023px) {
-    margin-bottom: 60px;
     font-size: 16px;
   }
 

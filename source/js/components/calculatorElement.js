@@ -299,7 +299,7 @@ export default class CalculatorElement extends HTMLElement {
 
   connectedCallback() {
     this.append(
-      document.querySelector(".calculator__template").content.cloneNode(true)
+      document.querySelector(".calculator-template").content.cloneNode(true)
     );
 
     this.inputPrice = this.querySelector(".calculator__input_price");
